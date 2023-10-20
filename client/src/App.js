@@ -22,9 +22,9 @@ function App() {
           <HeaderNavBar />
         </section>
       </header>
-        <section id="page_container">
-          <PageContainer />
-        </section>
+      <section id="page_container">
+        <PageContainer />
+      </section>
     </div>
   );
 }

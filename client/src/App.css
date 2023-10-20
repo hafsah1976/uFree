@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+
+  /* display is set to show elements as a column*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .App-logo {
@@ -18,9 +23,9 @@
   justify-content: space-around;
   align-items: center;
 
-  position: absolute;
-  height: 10%;
   width: 100%;
+
+  background-color: navy;
 }
 
 .App-link {
@@ -37,8 +42,23 @@
 }
 
 /* styles the header elements */
+/* height value is a placeholder */
 #content_header {
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  background-color: navy;
+  height: 100px;
+}
+
+/* styles background for the page container */
+#page_container {
+  border-radius: 10px;
+  border-style: groove;
+  box-shadow: 5px 5px 10px rgb(179, 153, 69), -5px 5px 10px rgb(179, 153, 69);
+
+  margin: 10px;
+
+  height: 900px;
 }
