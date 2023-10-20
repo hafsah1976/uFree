@@ -9,10 +9,17 @@ import { Route } from 'react-router-dom';
 // uses empty URL
 import { Home } from "./pages/Home.js"
 
+// imports HeaderNav
+// elements in HeaderNav will be used as the elements present in the page header
+import { HeaderNav } from "./components/HeaderNavBar/index.js";
+
 function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <section id="content_header">
+          <HeaderNav />
+        </section>
         <section id="page_container">
           <Route path = "/" element={<Home />}></Route>
         </section>
