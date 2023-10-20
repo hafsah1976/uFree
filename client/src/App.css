@@ -1,5 +1,10 @@
 .App {
   text-align: center;
+
+  /* display is set to show elements as a column*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .App-logo {
@@ -14,14 +19,13 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+  width: 100%;
+
+  background-color: navy;
 }
 
 .App-link {
@@ -35,4 +39,26 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* styles the header elements */
+/* height value is a placeholder */
+#content_header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  background-color: navy;
+  height: 100px;
+}
+
+/* styles background for the page container */
+#page_container {
+  border-radius: 10px;
+  border-style: groove;
+  box-shadow: 5px 5px 10px rgb(179, 153, 69), -5px 5px 10px rgb(179, 153, 69);
+
+  margin: 10px;
+
+  height: 900px;
 }
