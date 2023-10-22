@@ -2,6 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// importing normalize.css to normalize page element styling
+import './normalize.css'
+
 // imports Route as page router through URLs
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
