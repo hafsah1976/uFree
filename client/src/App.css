@@ -81,3 +81,25 @@
   box-shadow: 5px 5px 10px;
   text-decoration: none;
 }
+
+#home_page_buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#home_page_buttons div {
+  display: flex;
+  flex-direction: column;
+}
+
+.homepage_button {
+  margin: 10px;
+  background-color: orange;
+  padding: 10px;
+
+  width: 100px;
+
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+  text-decoration: none;
+}
