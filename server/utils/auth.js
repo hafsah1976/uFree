@@ -38,4 +38,4 @@ module.exports = {
     // Return the updated request object (with or without user data)
     return req;
   },
-  
+};

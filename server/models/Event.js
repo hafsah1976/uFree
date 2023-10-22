@@ -1,4 +1,8 @@
 const { Schema, model } = require('mongoose');
+const availabilitiesSchema = require('./AvailabilitiesSchema');
+const generateCode = require('../utils/generateCode');
+
+const CODE_LENGTH = 8;
 
 // The event schema has the following fields:
 // name, admin, location, description, attendees, week, availability, code(event code), and thumbnail
@@ -28,11 +32,10 @@ const eventSchema = new Schema({
         type: Date,
 
     },
-    availability: {
-        type: Date,
-    },
+    availabilities: [availabilitiesSchema],
     code: {
         type: String,
+        default: generateCode(CODE_LENGTH),
     },
     thumbnail: {
         type: String,

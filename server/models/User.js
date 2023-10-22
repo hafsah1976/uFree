@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcyrpt'); // require bcrypt to store and encrypt passwords
+const bcrypt = require('bcrypt'); // require bcrypt to store and encrypt passwords
 
 
 // The user schema has the following fields:
@@ -42,7 +42,7 @@ const userSchema = new Schema({
 userSchema.pre('save', async function (next) {
     if (this.isNew || this.isModified('password')) {
         const saltrounds = 10;
-        this.password = await bcrypt.has(this.password, saltrounds);
+        this.password = await bcrypt.hash(this.password, saltrounds);
     }
 
     next();
