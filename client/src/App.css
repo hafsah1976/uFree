@@ -62,3 +62,12 @@
 
   height: 900px;
 }
+
+#header_nav_buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.header_nav_button{
+  margin: 5px;
+}
