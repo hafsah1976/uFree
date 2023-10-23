@@ -8,15 +8,16 @@ import './normalize.css'
 // imports Route as page router through URLs
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// imports Home as landing page for the site
-// uses empty URL
-import Home from "./pages/Home.js"
-import PageContainer from './pages/PageContainer';
-import Login from './pages/Login.js';
-
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
 import HeaderNavBar from "./components/HeaderNavBar/index.js";
+
+// imports Home as landing page for the site
+// uses empty URL
+//import Home from "./pages/Home.js"
+//import Login from './pages/Login.js';
+
+import { Login, Event, Dashboard, SignUp, Home, Availabilities } from "./pages/PageContainer.js";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             path='/login'
             element={<Login />}
             />
+
           </Routes>
         </section>
       </Router>
