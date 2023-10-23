@@ -38,7 +38,22 @@ function App() {
             path='/login'
             element={<Login />}
             />
-
+            <Route 
+            path='/dashboard'
+            element={<Dashboard />}
+            />
+            <Route 
+            path='/eventPage'
+            element={<Event />}
+            />
+            <Route 
+            path='/signup'
+            element={<SignUp />}
+            />
+            <Route 
+            path='/availabilities'
+            element={<Availabilities />}
+            />              
           </Routes>
         </section>
       </Router>
