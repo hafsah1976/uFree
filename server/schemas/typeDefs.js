@@ -7,25 +7,28 @@ const typeDefs = gql`
     week: Date
     location: String
     description: String
-    image: link?
+    image: String
+    availabilities: [UserAvailibilities]
   }
 
   type User {
     _id: ID
     username: String
-    email: string
-    Password: String ? do i include sensitive data in the typedef
-    events:[Event]
-    availibility: availibility
+    email: String
+    events: [Event]
+    
   }
 
-  type availibility {
-   user: [User]
-    availibility: 
-   }
-    //trying to have it so availibility query brings up all users availibility
+  type UserAvailibilities {
+    userId: ID
+    availabilities: [DayAvailability]
   }
 
+   type DayAvailability {
+      day: String
+      start: Number
+      end: Number
+    }
 
   type Query {
     Events: [Event]
