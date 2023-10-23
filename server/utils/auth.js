@@ -38,4 +38,12 @@ module.exports = {
     // Return the updated request object (with or without user data)
     return req;
   },
-  
+    // Function for signing a JWT with user data
+signToken: function ({ username, email, _id }) {
+  // Create a payload object containing user data (e.g., username, email, and user ID)
+  const payload = { username, email, _id };
+
+  // Sign a JWT with the payload, secret key, and expiration time
+  return jwt.sign({ data: payload }, secret, { expiresIn: EXPIRATION_TIME });
+},
+};
