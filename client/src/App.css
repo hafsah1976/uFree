@@ -62,3 +62,52 @@
 
   height: 900px;
 }
+
+#header_nav_buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#header_nav_buttons a {
+  text-decoration: none;
+}
+
+.header_nav_button {
+  margin: 10px;
+  background-color: orange;
+  padding: 10px;
+
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+  text-decoration: none;
+}
+
+#content_home_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  height: 700px;
+}
+
+#home_page_buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#home_page_buttons div {
+  display: flex;
+  flex-direction: column;
+}
+
+.homepage_button {
+  margin: 10px;
+  background-color: orange;
+  padding: 10px;
+
+  width: 100px;
+
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+  text-decoration: none;
+}
