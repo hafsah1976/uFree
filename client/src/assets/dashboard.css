@@ -10,8 +10,14 @@
     justify-content: center
 }
 
-#header_buttons div {
+.style_link .dashboard_button {
     margin: 10px;
+    background-color: orange;
+    padding: 10px;
+  
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px;
+    text-decoration: none;
 }
 
 #board_elements {
@@ -30,4 +36,14 @@
     background-color: gray;
 
     margin: 20px;
+}
+
+#event_header {
+    height: 50%;
+    background-color: lightgray;
+}
+
+#event_footer {
+    height: 25%;
+    background-color: white;
 }
