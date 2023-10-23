@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // uses empty URL
 import Home from "./pages/Home.js"
 import PageContainer from './pages/PageContainer';
+import Login from './pages/Login.js';
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
@@ -33,8 +34,8 @@ function App() {
             element={<Home />}
             />
             <Route 
-            path='/:pathName'
-            element={<PageContainer />}
+            path='/login'
+            element={<Login />}
             />
           </Routes>
         </section>
