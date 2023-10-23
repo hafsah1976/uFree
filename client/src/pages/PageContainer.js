@@ -5,5 +5,6 @@ import Dashboard from './Dashboard';
 import SignUp from './SignUp';
 import Home from './Home';
 import Availabilities from './Availabilities';
+import CreateEvent from './CreateEvent';
 
-export { Login, Event, Dashboard, SignUp, Home, Availabilities };
+export { Login, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent };
