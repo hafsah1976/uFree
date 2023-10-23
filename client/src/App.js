@@ -17,7 +17,7 @@ import HeaderNavBar from "./components/HeaderNavBar/index.js";
 //import Home from "./pages/Home.js"
 //import Login from './pages/Login.js';
 
-import { Login, Event, Dashboard, SignUp, Home, Availabilities } from "./pages/PageContainer.js";
+import { Login, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent } from "./pages/PageContainer.js";
 
 function App() {
   return (
@@ -45,6 +45,10 @@ function App() {
             <Route 
             path='/eventPage'
             element={<Event />}
+            />
+            <Route 
+            path='/createEventPage'
+            element={<CreateEvent />}
             />
             <Route 
             path='/signup'
