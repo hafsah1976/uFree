@@ -13,3 +13,21 @@
 #header_buttons div {
     margin: 10px;
 }
+
+#board_elements {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    height: 500px;
+}
+
+.event_box {
+    height: 200px;
+    width: 200px;
+
+    background-color: gray;
+
+    margin: 20px;
+}

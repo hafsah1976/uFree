@@ -9,7 +9,7 @@ const Dashboard = () => {
             <p id="DEBUG_dashboard_page_text" className='DEBUG_text'>
                 PLACEHOLDER DASHBOARD TEXT
             </p>
-            <section id="dashboard_header">
+            <section id="dashboard_content">
                 <div id="header_content">
                     <h1 id='header_title'>Dashboard</h1>
                     <div id="header_buttons">
@@ -21,7 +21,34 @@ const Dashboard = () => {
                         </Link>
                     </div>
                 </div>
-                <div id="header_event_board"></div>
+                <div id="dashboard_event_board">
+                    <div id='board_title'>
+                        Events
+                    </div>
+                    <div id='board_elements'>
+                        <div className='event_box'>
+
+                        </div>
+                        <div className='event_box'>
+                            
+                        </div>    
+                        <div className='event_box'>
+                            
+                        </div>
+                        <div className='event_box'>
+                            
+                        </div>
+                        <div className='event_box'>
+                            
+                        </div>
+                        <div className='event_box'>
+                            
+                        </div>
+                        <div className='event_box'>
+                            
+                        </div>
+                    </div>
+                </div>
             </section>
         </section>
     );
