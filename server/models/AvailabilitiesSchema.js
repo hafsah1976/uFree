@@ -11,7 +11,7 @@ const availabilitiesSchema = new Schema({
     // array of availability objects
     availabilities: [{
         day: {
-            type: Date,
+            type: String,
             required: true,
         },
         start: {
