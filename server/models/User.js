@@ -22,21 +22,12 @@ const userSchema = new Schema({
         required: true,
         minLength: 8,
     },
-    firstName: {
-        type: String,
-    },
-    lastName: {
-        type: String,
-    },
     events: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Event',
         }
     ],
-    availability: {
-        type: Date,
-    },
 });
 
 userSchema.pre('save', async function (next) {

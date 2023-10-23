@@ -30,7 +30,6 @@ const eventSchema = new Schema({
     ],
     week: {
         type: Date,
-
     },
     availabilities: [availabilitiesSchema],
     code: {
