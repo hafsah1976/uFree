@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import "../assets/createEvent.css"
 import { eventThumbnails } from '../images';
+import Calendar from 'react-calendar';
+
+// <input type='text' id="event_week" placeholder='Week of your event...' />
 
 const CreateEvent = () => {
     const [eventInputs, setEventInputs] = useState({});
+    const [eventDate, setEventDate] = useState(new Date());
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -14,6 +18,7 @@ const CreateEvent = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(eventInputs);
+        console.log(eventDate);
     }
 
     return (
@@ -34,7 +39,13 @@ const CreateEvent = () => {
                     placeholder='Name your event...'
                     value={eventInputs.eventName} 
                     onChange={handleChange} />
-                    <input type='text' id="event_week" placeholder='Week of your event...' />
+                    <Calendar 
+                    id="event_date"
+                    name='event_date'
+                    value={eventDate}
+                    onChange={setEventDate} 
+                    />
+                    <p id='selected_event_date'>Your event is scheduled in: {eventDate.toDateString()}</p>
                     <input 
                     type='text' 
                     id="event_location" 
