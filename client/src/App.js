@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import './helpers.css';
 import './App.css';
 
 // importing normalize.css to normalize page element styling

@@ -1,0 +1,15 @@
+.signup-container{
+    background-color: white;
+    border-radius: 5px;
+    border-color: #87ceeb;
+    border-style: double;
+    width: 100%;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.signup-button{
+    background-color: #f1c233;
+}
