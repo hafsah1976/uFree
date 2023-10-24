@@ -1,6 +1,7 @@
 /* 
 userAvails -> array of user availability objects for a given day
 {
+    day: String
     start: 10,
     end: 21.5
 }
@@ -31,8 +32,15 @@ function findAvailability(userAvails) {
 }
 
 // returns an array of availability objects
-function getDayAvailabilities(userDayAvails) {
-    return userDayAvails.map(userAvails => findAvailability(userAvails))
+function getDayAvailabilities(userWeekAvails) {
+    return userWeekAvails.map(userAvails => findAvailability(userAvails))
+}
+
+// have an array of user week avails containing avails for each day the week for that user
+// need an array of days containing each user avail for that day
+function getUserWeekAvails(availabilitiesSchemaArray) {
+    const avails = availabilitiesSchemaArray;
+    const days = new Set(availabilitiesSchemaArray.map(a => a.map(b => b.day)))
 }
 
 // function test(args) {

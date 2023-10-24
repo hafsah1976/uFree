@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import './helpers.css';
 import './App.css';
 
 // importing normalize.css to normalize page element styling
@@ -17,7 +18,7 @@ import HeaderNavBar from "./components/HeaderNavBar/index.js";
 //import Home from "./pages/Home.js"
 //import Login from './pages/Login.js';
 
-import { Login, Event, Dashboard, SignUp, Home, Availabilities } from "./pages/PageContainer.js";
+import { Login, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent } from "./pages/PageContainer.js";
 
 function App() {
   return (
@@ -45,6 +46,10 @@ function App() {
             <Route 
             path='/eventPage'
             element={<Event />}
+            />
+            <Route 
+            path='/createEventPage'
+            element={<CreateEvent />}
             />
             <Route 
             path='/signup'

@@ -1,0 +1,62 @@
+.day_widget_container {
+    margin-bottom: 10px;
+}
+
+.day_widget {
+    position: relative;
+
+    width: 50px;
+    height: 65px;
+    
+    margin: 0 10px;
+    padding: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background-color: transparent;
+    border: none;
+    border-radius: var(--common-border-radius);
+}
+
+.day_widget:nth-child(1) {
+    margin-left: 0;
+}
+
+/* .day_widget:hover {
+    cursor: pointer;
+} */
+
+.day_widget_selected {
+    background-color: var(--light-gray)
+}
+
+.day_widget_abbr {
+    font-size: 0.5rem;
+    margin: 0;
+}
+
+.day_widget_char {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.day_widget_select_icon {
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+
+    background-color: var(--light-gray);
+    border-radius: 50%;
+}
