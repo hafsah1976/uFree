@@ -21,3 +21,12 @@ export function getDateFromWeekday(dayOfWeek, weekStartDate) {
 
     return dayjs(weekStartDate).add(daysOfWeek.indexOf(dayOfWeek), 'day');
 }
+
+export function toBeginningOfWeek(date) {
+    let myDate = dayjs(date);
+
+    // if it's Sunday, subtract one day
+    if (myDate.day() === 0) myDate = myDate.subtract(1, 'day');
+
+    return myDate.day(1).toDate();
+}
