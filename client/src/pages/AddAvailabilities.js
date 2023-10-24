@@ -39,7 +39,7 @@ const Availabilities = () => {
             <form onSubmit={handleFormSubmit}>
                 <DayOfWeekSelector setAvails={setAvails} avails={avails}/>
 
-                <button type="submit" className='btn-large btn-accent'>Submit</button>
+                <button type="submit" className='btn_large btn_accent'>Submit</button>
             </form>
         </section>
     );

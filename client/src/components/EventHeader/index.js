@@ -16,14 +16,14 @@ export default function EventHeader({ event }) {
         }}>
             <h1>{event.name}</h1>
 
-            <div className='justify-content-start align-items-center'>
+            <div className='event_header_info justify-content-start align-items-center'>
                 <i className="bi bi-calendar-event"></i>
-                <p>Week of {monthAndDay(event.week)}</p>
+                <p className='no-margin'>Week of {monthAndDay(event.week)}</p>
             </div>
 
-            <div className='justify-content-start align-items-center'>
+            <div className='event_header_info justify-content-start align-items-center'>
                 <i className="bi bi-geo-alt"></i>
-                <p>{event.location}</p>
+                <p className='no-margin'>{event.location}</p>
             </div>
 
             <div className='justify-content-start align-items-center'>
@@ -47,7 +47,7 @@ export default function EventHeader({ event }) {
             <br/>
 
             <Link to={`/events/${event.id}/availabilities`}>
-                <button className='btn-large btn-accent'>Add Your Availability</button>
+                <button className='add_avail_btn btn_large btn_accent'>Add Your Availability</button>
             </Link>
             
         </div>
