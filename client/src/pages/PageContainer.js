@@ -4,7 +4,7 @@ import Event from './Event';
 import Dashboard from './Dashboard';
 import SignUp from './SignUp';
 import Home from './Home';
-import Availabilities from './Availabilities';
+import Availabilities from './AddAvailabilities';
 import CreateEvent from './CreateEvent';
 
 export { Login, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent };

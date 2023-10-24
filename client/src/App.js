@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from './logo.svg';
+import './helpers.css';
 import './App.css';
 
 // importing normalize.css to normalize page element styling
@@ -55,7 +56,7 @@ function App() {
             element={<SignUp />}
             />
             <Route 
-            path='/availabilities'
+            path='events/:eventId?/availabilities'
             element={<Availabilities />}
             />              
           </Routes>
