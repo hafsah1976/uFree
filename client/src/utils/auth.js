@@ -40,4 +40,28 @@ class AuthService {
  getToken() {
     // Retrieves the user token from the browser's local storage
     return localStorage.getItem('id_token');
+ }
+ 
+    // Log in the user by saving the user token to local storage
+login(idToken) {
+    // Save the user token to local storage
+    localStorage.setItem('id_token', idToken);
+  
+    // Redirect the user to the home page
+    window.location.assign('/');
   }
+
+
+// Log out the user by removing the user token from local storage and reloading the page
+ logout() {
+    // Clear the user token and profile data from local storage
+    localStorage.removeItem('id_token');
+  
+    // Reload the page to reset the application state
+    window.location.reload();
+  }
+} 
+
+  // Export the AuthService object, which includes the logout function
+  export default new AuthService();
+  
