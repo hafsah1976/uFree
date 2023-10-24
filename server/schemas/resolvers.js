@@ -66,8 +66,20 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in to create an event');
         },
         // join an event
-        joinEvent: async () => {
+        joinEvent: async (parent, { code, eventId }, context) => {
+            if (context.user) {
+                const event = await Event.findOneAndUpdate(
+                    {_id: eventId},
+                    {
+                        $addToSet: {
+                            attendees: context.user._id
+                        }
+                    }
 
+                )
+            }
+
+            throw new AuthenticationError('You must be logged in join an event');
         },
         // add your availability to an event
         addAvailability: async () => {
@@ -82,8 +94,27 @@ const resolvers = {
 
         },
         // for attendees, leave an event
-        leaveEvent: async () => {
+        leaveEvent: async (parent, { eventId }, context) => {
+            if (context.user) {
+                const updatedEvent = await Event.findOneAndUpdate(
+                    { _id: eventId },
+                    {
+                        $pull: {
+                            attendees: { username: context.user.username }
+                        }
+                    },
+                    { new: true } // return the updated event
+                );
 
+                if (!updatedEvent) {
+                    throw new Error('Event not found');
+                }
+
+                return updatedEvent;
+            }
+
+
+            throw new AuthenticationError('You must be logged in to leave an event');
         },
     },
 }
