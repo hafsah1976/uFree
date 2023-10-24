@@ -9,19 +9,26 @@ import EventDayAvail from './EventDayAvail';
 const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
 export default function EventDaySelector({ avails }) {
-    
-    const [currentDay, setDay] = useState('monday');
 
     const userAvails = getUserWeekAvails(avails);
     const eventTimeSlots = getDayAvailabilities(userAvails);
 
-    console.log(userAvails);
+    let defaultCurrentDay = 'monday';
+
+    for (const day of daysOfWeek) {
+        if (eventTimeSlots[day]) {
+            defaultCurrentDay = day;
+            break;
+        }
+    }
+    
+    const [currentDay, setDay] = useState(defaultCurrentDay);
 
     return (
         <div className="day_selector">
             <div className="day_widget_container">
                 {daysOfWeek.map((day, key) => 
-                    <DayWidget key={key} day={day} currentDay={currentDay} setDay={() => setDay(day)}/>
+                    <DayWidget key={key} day={day} currentDay={currentDay} isOpen={eventTimeSlots[day] != null} setDay={() => setDay(day)}/>
                 )}
             </div>
 

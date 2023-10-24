@@ -31,12 +31,14 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails })
             <div className="horizontal_line"></div>
 
             <table>
-                {userAvails.map(user =>
-                    <tr>
-                        <td>{user.userId}</td>
-                        <td>{getTimeSpanText(user, "")}</td>
-                    </tr>
-                )}
+                <tbody>
+                    {userAvails.map(user =>
+                        <tr key={user.userId}>
+                            <td>{user.userId}</td>
+                            <td>{getTimeSpanText(user, "")}</td>
+                        </tr>
+                    )}
+                </tbody>
             </table>
 
             <button className="btn btn-accent" onClick={handleLeaveEvent}>Leave Event</button>

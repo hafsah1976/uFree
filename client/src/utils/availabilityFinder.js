@@ -44,8 +44,6 @@ function getDayAvailabilities(userWeekAvails) {
         obj[day] = findAvailability(userWeekAvails[day]);
     });
 
-    console.log('obj', obj);
-
     return obj;
 }
 
@@ -69,12 +67,12 @@ function getUserWeekAvails(availabilitiesSchemaArray) {
     return userWeekAvails;
 }
 
-function test(args) {
-    const weekAvails = getUserWeekAvails(args);
-    console.log(JSON.stringify(getUserWeekAvails(args), null, 4));
-    console.log(getDayAvailabilities(weekAvails));
-    // console.log();
-}
+// function test(args) {
+//     const weekAvails = getUserWeekAvails(args);
+//     console.log(JSON.stringify(getUserWeekAvails(args), null, 4));
+//     console.log(getDayAvailabilities(weekAvails));
+//     console.log();
+// }
 
 // test([
 //     {

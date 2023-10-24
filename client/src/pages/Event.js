@@ -29,7 +29,7 @@ const data = {
         {
             userId: 'iusdbv832989',
             availabilities: [
-                { day: 'monday', start: 0, end: 12 },
+                { day: 'monday', start: 0, end: 9 },
                 { day: 'tuesday', start: 12, end: 17 },
                 { day: 'wednesday', start: 13, end: 24 },
                 { day: 'thursday', start: 0, end: 0 },
