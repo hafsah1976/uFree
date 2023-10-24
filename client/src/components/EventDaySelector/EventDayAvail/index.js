@@ -1,6 +1,8 @@
 import { getDateFromWeekday, dayMonthDate, to12Hour } from "../../../utils/convertDate";
 import { useNavigate } from "react-router-dom";
 
+import './EventDayAvail.css';
+
 export default function EventDayAvail({ day, isSelected, timeSlot, userAvails }) {
 
     const navigate = useNavigate();
@@ -19,7 +21,7 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails })
 
     return (
         <div className={`${!isSelected ? "hidden" : ""}`}>
-            <p>{dayMonthDate(getDateFromWeekday(day))}</p>
+            <p className="event_day">{dayMonthDate(getDateFromWeekday(day))}</p>
 
             {timeSlot 
             ? 
@@ -30,7 +32,7 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails })
 
             <div className="horizontal_line"></div>
 
-            <table>
+            <table className="avails_table">
                 <tbody>
                     {userAvails.map(user =>
                         <tr key={user.userId}>
@@ -41,7 +43,7 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails })
                 </tbody>
             </table>
 
-            <button className="btn btn-accent" onClick={handleLeaveEvent}>Leave Event</button>
+            <button className="drop_event_btn btn btn_accent" onClick={handleLeaveEvent}>Leave Event</button>
         </div>
     )
 }

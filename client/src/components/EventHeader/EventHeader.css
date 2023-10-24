@@ -1,8 +1,14 @@
 .event_header_container {
-    width: 100%;
+    width: calc(100% - (2 * var(--page-padding)));
     height: 400px;
+
+    padding-left: var(--page-padding);
+    padding-right: var(--page-padding);
+    padding-top: min(var(--page-padding), 40px);
     
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 0;
     isolation: isolate;
 
     background-size: cover;
@@ -28,6 +34,14 @@
     margin-top: 0;
 }
 
+.event_header_info {
+    margin: var(--padding-sm) 0;
+}
+
+.event_header_container .bi {
+    margin-right: var(--padding-sm);
+}
+
 .event_read_more {
     display: inline;
     text-decoration: underline;
@@ -43,4 +57,8 @@
 
 .modal_close:hover {
     cursor: pointer;
+}
+
+.add_avail_btn {
+    margin-top: var(--padding-lg);
 }
