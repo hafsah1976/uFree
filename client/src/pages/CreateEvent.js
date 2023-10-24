@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import "../assets/createEvent.css"
+import { eventThumbnails } from '../images';
 
 const CreateEvent = () => {
     const [eventInputs, setEventInputs] = useState({});
@@ -51,11 +52,17 @@ const CreateEvent = () => {
                     onChange={handleChange}
                     />         
 
-                    <select id='event_thumbnail'>
-                        <option value="thumbnail_tools">Tools</option>
-                        <option value="thumbnail_party">Party</option>
-                        <option value="thumbnail_celebration">Celebration</option>
-                        <option value="thumbnail_scenery">Scenery</option>
+                    <select 
+                    id='event_thumbnail' 
+                    name='event_thumbnail' 
+                    value={eventInputs.eventThumbnail}
+                    onChange={handleChange}>
+                        <option value={eventThumbnails.home}>Home</option>
+                        <option value={eventThumbnails.dinner}>Dinner</option>
+                        <option value={eventThumbnails.game}>Game</option>
+                        <option value={eventThumbnails.friends}>Friends</option>
+                        <option value={eventThumbnails.park}>Park</option>
+                        <option value={eventThumbnails.concert}>Concert</option>
                     </select>
                 
                     <input type='submit' value="submit" />           
