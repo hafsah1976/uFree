@@ -1,3 +1,5 @@
+const DAYS_OF_WEEK = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+
 function isNotAvailable(avail) {
     return (avail.start === 0 && avail.end === 0);
 }
@@ -37,24 +39,31 @@ function findAvailability(userAvails) {
 
 // returns an array of availability objects
 function getDayAvailabilities(userWeekAvails) {
-    return userWeekAvails.map(userAvails => {
-        return {
-            [userAvails[0].day]: findAvailability(userAvails)
-        }
-    })
+    const obj = {};
+    Object.keys(userWeekAvails).forEach(day => {
+        obj[day] = findAvailability(userWeekAvails[day]);
+    });
+
+    console.log('obj', obj);
+
+    return obj;
 }
 
 // have an array of user week avails containing avails for each day the week for that user
 // need an array of days containing each user avail for that day
 function getUserWeekAvails(availabilitiesSchemaArray) {
     const avails = availabilitiesSchemaArray;
-    const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
-    const userWeekAvails = [];
-    for (const day of daysOfWeek) {
-        userWeekAvails.push(avails.map(user => 
-            user.availabilities.find(a => a.day === day)
-        ))
+    const userWeekAvails = {};
+    for (const day of DAYS_OF_WEEK) {
+        userWeekAvails[day] = avails.map(user => {
+            const obj = user.availabilities.find(a => a.day === day);
+            return {
+                userId: user.userId,
+                start: obj.start,
+                end: obj.end,
+            }
+        })
     }
 
     return userWeekAvails;
@@ -94,4 +103,4 @@ function test(args) {
 //     },
 // ])
 
-// export { getDayAvailabilities };
+export { getUserWeekAvails, getDayAvailabilities };
