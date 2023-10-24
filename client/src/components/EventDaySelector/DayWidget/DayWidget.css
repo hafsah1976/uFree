@@ -1,1 +1,19 @@
+.day_widget_check_icon {
+    background-color: var(--primary);
+    color: var(--light);
 
+    width: 18px;
+    height: 18px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: -9px;
+    right: -15px;
+    transform: translateX(-50%) scale(1);
+
+    border-radius: 50%;
+}

@@ -1,0 +1,9 @@
+.horizontal_line {
+    /* width: 100%; */
+    /* height: 10px; */
+    border-bottom: 1px solid var(--dark);
+}
+
+.sweet_spot_time_span {
+    border-bottom: 3px solid var(--accent);
+}

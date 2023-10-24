@@ -48,7 +48,7 @@ function App() {
             element={<Event />}
             />
             <Route 
-            path='/createEventPage'
+            path='/events/create'
             element={<CreateEvent />}
             />
             <Route 
