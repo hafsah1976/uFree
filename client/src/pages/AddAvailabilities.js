@@ -33,13 +33,13 @@ const Availabilities = () => {
 
     return (
         <section id="content_availabilities_page">
-            <h1>Add Your Availabilities</h1>
-            <p>Week of {monthAndDay(eventWeek)}</p>
+            <h1 className='text-align-start'>Add Your Availabilities</h1>
+            <p className='text-align-start'>Week of {monthAndDay(eventWeek)}</p>
 
             <form onSubmit={handleFormSubmit}>
                 <DayOfWeekSelector setAvails={setAvails} avails={avails}/>
 
-                <button type="submit">Submit</button>
+                <button type="submit" className='btn-large btn-accent'>Submit</button>
             </form>
         </section>
     );

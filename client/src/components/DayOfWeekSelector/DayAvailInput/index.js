@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 
+import './DayAvailInput.css';
+
 import RadioOption from './RadioOption';
 
 const NOT_AVAILABLE = { start: 0, end: 0 };
@@ -102,23 +104,21 @@ export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
             </div>
 
             {/* if we choose an availability slot, show time options menu */}
-            {currentOption === 2 && (
-                <div className='day_avail_time_input'>
-                    <div>
-                        <label htmlFor='time_slot_select_from'>From</label>
-                        <select id="time_slot_select_from" value={timeInput.start} onChange={handleTimeInputChange}>
-                            {getTimeOptions()}
-                        </select>
-                    </div>
-
-                    <div>
-                        <label htmlFor='time_slot_select_to'>To</label>
-                        <select id="time_slot_select_to" value={timeInput.end} onChange={handleTimeInputChange}>
-                            {getTimeOptions()}
-                        </select>
-                    </div>
+            <div className={`day_avail_time_input ${currentOption !== 2 ? 'invisible' : ''}`}>
+                <div>
+                    <label htmlFor='time_slot_select_from'>From</label>
+                    <select id="time_slot_select_from" value={timeInput.start} onChange={handleTimeInputChange}>
+                        {getTimeOptions()}
+                    </select>
                 </div>
-            )}
+
+                <div>
+                    <label htmlFor='time_slot_select_to'>To</label>
+                    <select id="time_slot_select_to" value={timeInput.end} onChange={handleTimeInputChange}>
+                        {getTimeOptions()}
+                    </select>
+                </div>
+            </div>
         </div>
     )
 }

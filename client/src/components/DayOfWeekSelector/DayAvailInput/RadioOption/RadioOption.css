@@ -1,3 +1,7 @@
-.radio_option_selected {
-    color: blue;
+.radio_option:hover {
+    cursor: pointer;
 }
+
+/* .radio_option .bi-record-circle {
+    color: var(--primary);
+} */
