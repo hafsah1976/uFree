@@ -9,6 +9,7 @@
   --primary: #87ceeb;
   --accent: #f1c233;
   --light-gray: #eeeeee;
+  --light: #ffffff;
   --dark: #000000;
 
   --common-border-radius: 5px;
@@ -135,6 +136,19 @@ button:hover {
   border-radius: 5px;
   box-shadow: 5px 5px 10px;
   text-decoration: none;
+}
+
+.btn {
+  /* min-width: 150px; */
+  padding: 10px 15px;
+
+  /* font-size: 1.0rem; */
+  /* font-weight: bold; */
+
+  border: none;
+  border-radius: var(--common-border-radius);
+
+  box-shadow: var(--common-box-shadow);
 }
 
 .btn-large {

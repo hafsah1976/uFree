@@ -1,26 +1,40 @@
 import { useState } from 'react';
+import { getUserWeekAvails, getDayAvailabilities } from '../../utils/availabilityFinder';
 
 import './EventDaySelector.css';
 
 import DayWidget from "./DayWidget";
+import EventDayAvail from './EventDayAvail';
 
 const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
-export default function DayOfWeekSelector({ avails }) {
+export default function EventDaySelector({ avails }) {
+
+    const userAvails = getUserWeekAvails(avails);
+    const eventTimeSlots = getDayAvailabilities(userAvails);
+
+    let defaultCurrentDay = 'monday';
+
+    for (const day of daysOfWeek) {
+        if (eventTimeSlots[day]) {
+            defaultCurrentDay = day;
+            break;
+        }
+    }
     
-    const [currentDay, setDay] = useState('monday');
+    const [currentDay, setDay] = useState(defaultCurrentDay);
 
     return (
         <div className="day_selector">
             <div className="day_widget_container">
                 {daysOfWeek.map((day, key) => 
-                    <DayWidget key={key} day={day} currentDay={currentDay} setDay={() => setDay(day)}/>
+                    <DayWidget key={key} day={day} currentDay={currentDay} isOpen={eventTimeSlots[day] != null} setDay={() => setDay(day)}/>
                 )}
             </div>
 
-            <div className='current_day_container'>
-                {avails.map((day, key) => 
-                    <></>
+            <div className='event_day_container'>
+                {daysOfWeek.map((day, key) =>
+                    <EventDayAvail key={key} day={day} isSelected={day === currentDay} timeSlot={eventTimeSlots[day]} userAvails={userAvails[day]} />
                 )}
             </div>
         </div>

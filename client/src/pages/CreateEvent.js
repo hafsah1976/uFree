@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toBeginningOfWeek } from '../utils/convertDate';
 import "../assets/createEvent.css"
 import { eventThumbnails } from '../images';
 import Calendar from 'react-calendar';
@@ -18,7 +19,7 @@ const CreateEvent = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         console.log(eventInputs);
-        console.log(eventDate);
+        console.log(toBeginningOfWeek(eventDate));
     }
 
     return (
