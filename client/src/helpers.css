@@ -10,6 +10,10 @@
     text-align: start;
 }
 
+.no-margin {
+    margin: 0;
+}
+
 /* Flexbox helpers */
 
 .justify-content-start {
