@@ -34,8 +34,22 @@ const CreateEvent = () => {
                     value={eventInputs.eventName} 
                     onChange={handleChange} />
                     <input type='text' id="event_week" placeholder='Week of your event...' />
-                    <input type='text' id="event_location" placeholder='Location of your event...' />
-                    <input type='text' id="event_description" placeholder='Description of your event...' />         
+                    <input 
+                    type='text' 
+                    id="event_location" 
+                    name='event_location'
+                    placeholder='Location of your event...' 
+                    value={eventInputs.eventLocation} 
+                    onChange={handleChange}
+                    />
+                    <input 
+                    type='text' 
+                    id="event_description" 
+                    name='event_description'
+                    placeholder='Description of your event...'
+                    value={eventInputs.eventDescription} 
+                    onChange={handleChange}
+                    />         
 
                     <select id='event_thumbnail'>
                         <option value="thumbnail_tools">Tools</option>
