@@ -1,6 +1,27 @@
-.App {
-  text-align: center;
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
 
+@font-face {
+  font-family: 'Doppio One';
+  src: url(./assets/DoppioOne.ttf);
+}
+
+:root {
+  --primary: #87ceeb;
+  --accent: #f1c233;
+  --light-gray: #eeeeee;
+  --dark: #000000;
+
+  --common-border-radius: 5px;
+  --large-border-radius: 10px;
+  --common-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.302);
+}
+
+* {
+  font-family: 'Doppio One', sans-serif;
+}
+
+
+.App {
   /* display is set to show elements as a column*/
   display: flex;
   flex-direction: column;
@@ -39,6 +60,10 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 /* styles the header elements */
@@ -110,4 +135,21 @@
   border-radius: 5px;
   box-shadow: 5px 5px 10px;
   text-decoration: none;
+}
+
+.btn-large {
+  /* min-width: 150px; */
+  padding: 20px 30px;
+
+  font-size: 1.0rem;
+  font-weight: bold;
+
+  border: none;
+  border-radius: var(--large-border-radius);
+
+  box-shadow: var(--common-box-shadow);
+}
+
+.btn-accent {
+  background-color: var(--accent);
 }
