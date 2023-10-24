@@ -1,0 +1,7 @@
+.radio_option:hover {
+    cursor: pointer;
+}
+
+.radio_option .bi {
+    margin-right: 5px;
+}

@@ -11,8 +11,5 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "react-calendar": "^4.6.1"
   }
 }
