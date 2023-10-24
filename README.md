@@ -6,6 +6,7 @@
 - [Getting Started](#getting-started)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [Credits](#credits)
 - [License](#license)
 
 ## Introduction
@@ -35,3 +36,10 @@ To get started with **uFree**, follow these steps:
 1. **Installation**: Clone the uFree repository from GitHub:
 
   
+## Credits
+
+The following packages were used in the development of uFree:
+
+- day.js
+- react-modal
+- react-calendar

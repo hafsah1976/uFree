@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import './DayAvailInput.css';
 
-import RadioOption from './RadioOption';
+import RadioOption from '../../RadioOption';
 
 const NOT_AVAILABLE = { start: 0, end: 0 };
 const ALL_DAY = { start: 0, end: 24 };
