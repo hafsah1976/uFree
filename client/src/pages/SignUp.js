@@ -1,10 +1,17 @@
 import React from 'react';
 import { useState } from 'react'; // Importing the useState hook
-import { Link, useNavigate } from 'react-router-dom'; // Importing the Link component and useNavigate hook
+import { Link, useNavigate } from 'react-router-dom'; // Importing the Link component and useNavigate hook.
 import Auth from '../utils/auth'; // Importing the Auth utility
+import '../assets/signup.css';
 
 // Defining the Signup component/page
 const Signup = () => {
+
+  <section id="signup_page">
+  <p id="DEBUG_signup_page" >
+      PLACEHOLDER SIGNUP TEXT
+  </p>
+</section>
 
   // Initializing state using the useState hook
   const [data, setData] = useState({
@@ -22,7 +29,7 @@ const Signup = () => {
   // Rendering of the Signup component
   return (
     <>
-      <div>
+      <div className='signup-container'>
         {/* The Signup form */}
         <form>
           {/* Input field for the username */}
@@ -53,7 +60,17 @@ const Signup = () => {
             // Add an event handler (onChange) to update the password in the state, 
             //validation for password exists in the user model..??
           />
-</form>
+          {/* Display any error messages */}
+          {error && <p className="error">{error}</p>}
+
+          {/* Submit button */}
+          <button type="submit">Sign Up</button>
+        </form>
+
+        {/* Link to navigate to a different page, e.g., the login page if the user already has an account */}
+        <p>
+          Already have an account? <Link to="/login">Log In</Link>
+        </p>
       </div>
     </>
   );
