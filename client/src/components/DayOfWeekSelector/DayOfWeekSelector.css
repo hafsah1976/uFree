@@ -1,0 +1,4 @@
+.day_widget_container {
+    display: flex;
+    flex-wrap: nowrap;
+}

@@ -1,0 +1,19 @@
+.day_widget {
+    border: 1px solid black;
+}
+
+.day_widget:hover {
+    cursor: pointer;
+}
+
+.day_widget_selected {
+    background-color: gray;
+}
+
+.day_widget_abbr {
+    font-size: 0.5rem;
+}
+
+.day_widget_char {
+    font-size: 1.5rem;
+}

@@ -1,3 +1,14 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+
+@font-face {
+  font-family: 'Doppio One';
+  src: url(./assets/DoppioOne.ttf);
+}
+
+* {
+  font-family: 'Doppio One', sans-serif;
+}
+
 .App {
   text-align: center;
 
@@ -110,4 +121,8 @@
   border-radius: 5px;
   box-shadow: 5px 5px 10px;
   text-decoration: none;
+}
+
+.hidden {
+  display: none;
 }
