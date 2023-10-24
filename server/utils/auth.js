@@ -1,14 +1,12 @@
-//import JWT, a library to handle JSON Web Tokens
+// Import JWT, a library to handle JSON Web Tokens
 const jwt = require("jsonwebtoken");
 
-//Import secret key from .env
+// Import the secret key from .env
 require('dotenv').config();
 
 // Set the secret key and expiration time for your JWT token
 const SECRET_KEY = process.env.JWT_SECRETKEY;
 const EXPIRATION_TIME = process.env.JWT_EXPIRATION;
-
-// Define 'secret' and 'expiration' values (defined in .env file)
 
 // Export an object with two methods: 'authMiddleware' and 'signToken'
 module.exports = {
@@ -43,9 +41,21 @@ module.exports = {
       return req; // Return the original request object in case of an error
     }
   },
+
+  // Function to validate an email address
+  isValidEmail: function (email) {
+    const emailRegex = /.+@.+\..+/;
+    return emailRegex.test(email);
+  },
+
   // Function for signing a JWT with user data
   signToken: function ({ username, email, _id }) {
     try {
+      // Add email validation here before creating the payload
+      if (!this.isValidEmail(email)) {
+        throw new Error('Invalid email address');
+      }
+
       // Create a payload object containing user data (e.g., username, email, and user ID)
       const payload = { username, email, _id };
 
