@@ -5,3 +5,20 @@
     background-size: cover;
     background-position: 50% 50%;
 }
+
+.event_read_more {
+    display: inline;
+    text-decoration: underline;
+}
+
+.event_read_more:hover {
+    cursor: pointer;
+}
+
+.modal_close {
+    text-decoration: underline;
+}
+
+.modal_close:hover {
+    cursor: pointer;
+}

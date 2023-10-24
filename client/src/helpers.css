@@ -9,3 +9,15 @@
 .text-align-start {
     text-align: start;
 }
+
+/* Flexbox helpers */
+
+.justify-content-start {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.align-items-center {
+    display: flex;
+    align-items: center;
+}

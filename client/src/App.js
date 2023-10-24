@@ -56,7 +56,7 @@ function App() {
             element={<SignUp />}
             />
             <Route 
-            path='/availabilities'
+            path='events/:eventId?/availabilities'
             element={<Availabilities />}
             />              
           </Routes>
