@@ -7,7 +7,7 @@ const typeDefs = gql`
     week: Date
     location: String
     description: String
-    image: String
+    thumbnail: String
     availabilities: [UserAvailibilities]
   }
 

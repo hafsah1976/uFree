@@ -94,10 +94,10 @@ const Signup = () => {
                   required
                   className={'input'}
                   onChange={(e) => {
-    setData({ ...data, username: e.target.value });
-    checkUsernameAvailability(e.target.value);
-  }}
-/>
+                  setData({ ...data, username: e.target.value });
+                  checkUsernameAvailability(e.target.value);
+                  }}
+                  />
 
                   {/* Input field for the email address */}
                   <input 
@@ -124,8 +124,8 @@ const Signup = () => {
                   />
                   {/* Display any error messages */}
                   {isUsernameTaken ? (
-  <p className="error_msg">Username is already taken.</p>
-) : null}
+                    <p className="error_msg">Username is already taken.</p>
+                  ) : null}
 
                   {error && <p className="error_msg">{error}</p>}
 
