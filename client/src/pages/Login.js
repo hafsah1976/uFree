@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import "../assets/login.css";
-import { LOGIN_USER } from "../utils/mutations"; // Import the LOGIN_USER mutation
+import { AUTH_MUTATION, ADD_AVAILABILITY, ADD_EVENT, LOGIN_USER } from "../utils/mutations"; // Import the LOGIN_USER mutation
 import { useMutation } from "@apollo/client";
 import Auth from '../utils/auth';
 
