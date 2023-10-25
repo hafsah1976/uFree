@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../assets/dashboard.css";
 
 const Dashboard = () => {
+
+    const eventBoxes = [1, 2, 3, 4];
 
     return (
         <section id="content_dashboard_page">
@@ -26,6 +28,7 @@ const Dashboard = () => {
                         Events
                     </h2>
                     <div id='board_elements'>
+                        {eventBoxes.map(() => (
                         <div className='event_box'>
                             <div id='event_header'>
                                 <h3>An Event</h3>
@@ -33,30 +36,8 @@ const Dashboard = () => {
                             <div id="event_footer">
                                 <p>An event's description</p>
                             </div>
-                        </div>
-                        <div className='event_box'>
-                            
-                        </div>    
-                        <div className='event_box'>
-                            
-                        </div>
-                        <div className='event_box'>
-                            
-                        </div>
-                        <div className='event_box'>
-                            
-                        </div>
-                        <div className='event_box'>
-                            <div id='event_header'>
-                                <h3>An Event</h3>
-                            </div>
-                            <div id="event_footer">
-                                <p>An event's description</p>
-                            </div>
-                        </div>
-                        <div className='event_box'>
-                            
-                        </div>
+                        </div>                            
+                        ))}
                     </div>
                 </div>
             </section>
