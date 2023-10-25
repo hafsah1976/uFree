@@ -63,12 +63,39 @@ const handleOnSubmitEvent = async (event) => {
                             <h1>Login to Your Account</h1>
                             <input
                                 type="email"
-                                placeholder="E-mail"
+                                placeholder="Your E-mail"
                                 name="email"
                                 onChange={handleChange}
                                 value={userCredentials.email}
                                 required
                                 className='input'
                             />
-</div>
-</form>
+                            <input
+							type="password"
+							placeholder="Your Password"
+							name="password"
+							onChange={handleChange}
+							value={userCredentials.password}
+							required
+							className='input'
+						/>
+						{error && <div className='error_msg'>{error}</div>}
+						<button type="submit" className='login_btn'>
+							Log In
+						</button>
+					</form>
+				</div>
+				<div className='right'>
+					<h1>New Here?</h1>
+					<Link to="/signup">
+						<button type="button" className='signup_btn' >
+							Sign Up Now
+						</button>
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+export default Login;
