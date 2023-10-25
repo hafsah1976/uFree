@@ -97,8 +97,28 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in join an event');
         },
         // add your availability to an event
-        addAvailability: async () => {
+        addAvailability: async (parent, { day, start, end, eventId }, context) => {
+            if (context.user) {
+                // create an availability object with day, start, and end
+                const availability = { day, start, end };
 
+                // find event by its id
+                const event = await Event.findOne({ _id: eventId });
+
+                if (!event) {
+                    throw new Error('Event not found');
+                }
+
+                // add the availability object to the event's availabilities array
+                event.availabilities.push(availability);
+
+                // save the updated event
+                const updatedEvent = await event.save();
+
+                return updatedEvent;
+            }
+
+            throw new AuthenticationError('You must be logged in to add your availability to an event');
         },
         // edit your availability
         editAvailability: async () => {
