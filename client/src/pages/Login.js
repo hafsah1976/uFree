@@ -5,7 +5,6 @@ import { LOGIN_USER } from "../utils/mutations"; // Import the LOGIN_USER mutati
 import { useMutation } from "@apollo/client";
 import { Auth } from 'client/src/utils/auth.js';
 
-
 // contains the elements that will be present in the login page
 // element ids with DEBUG are dev only and should be removed in working product
 const Login = () => {
@@ -53,8 +52,14 @@ const handleOnSubmitEvent = async (event) => {
         ) {
             setShowAlert(true); // Display an alert for login failure
         }
-    }
-};
+    // Clear the form data
+setUserCredentials({
+    email: '',
+    password: '',
+   });
+   };
+
+}
           return (
             <div className='login_container'>
                 <div className='login_form_container'>
