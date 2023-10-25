@@ -18,7 +18,8 @@ const resolvers = {
 
         // finds the availabilities of an event
         availabilities: async (parent, { eventId }) => {
-            return User.findOne({ _id: eventId }).populate('availabilities');
+            const event = await Event.findOne({ _id: eventId }).populate('availabilities');
+            return event.availabilities;
         },
 
         // displays the current logged in user's info
@@ -32,9 +33,7 @@ const resolvers = {
 
 
     Mutation: {
-
         // create a new account
-
         signup: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
             const token = signToken(user);
@@ -57,6 +56,7 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+
         // create a new event
         createEvent: async (parent, { eventName }, context) => {
             if (context.user) {
@@ -67,6 +67,7 @@ const resolvers = {
 
             throw new AuthenticationError('You must be logged in to create an event');
         },
+
         // join an event
         joinEvent: async (parent, { code, eventId }, context) => {
             if (context.user) {
@@ -100,52 +101,58 @@ const resolvers = {
         },
         // add your availability to an event
         addAvailability: async (parent, { day, start, end, eventId }, context) => {
-            if (context.user) {
-                // create an availability object with day, start, and end
-                const availability = { day, start, end };
+        if (context.user) {
+            // create an availability object with day, start, and end
+            const availability = { day, start, end };
 
-                // find event by its id
-                const event = await Event.findOne({ _id: eventId });
+            // find event by its id
+            const event = await Event.findOne({ _id: eventId });
 
-                if (!event) {
-                    throw new Error('Event not found');
-                }
-
-                // add the availability object to the event's availabilities array
-                event.availabilities.push(availability);
-
-                // save the updated event
-                const updatedEvent = await event.save();
-
-                return updatedEvent;
+            if (!event) {
+                throw new Error('Event not found');
             }
 
-            throw new AuthenticationError('You must be logged in to add your availability to an event');
+            // add the availability object to the event's availabilities array
+            event.availabilities.push(availability);
+
+            // save the updated event
+            const updatedEvent = await event.save();
+
+            return updatedEvent;
+        }
+
+        throw new AuthenticationError('You must be logged in to add your availability to an event');
         },
+
         // edit your availability
         editAvailability: async (parent, { day, start, end, eventId }, context) => {
             if (context.user) {
-                // create an availability object with day, start, and end
-                const availability = { day, start, end };
+                // find event of availability you want to update
+                const eventAvailability = await Event.findOne({ _id: eventId });
 
-                // find event by its id
-                const event = await Event.findOne({ _id: eventId });
-
-                if (!event) {
+                if (!eventAvailability) {
                     throw new Error('Event not found');
                 }
 
-                // add the availability object to the event's availabilities array
-                event.availabilities.push(availability);
-
+                // update the availability fields if new values are provided
+                if (day) {
+                    eventAvailability.day = day;
+                }
+                if (start) {
+                    eventAvailability.start = start;
+                }
+                if (end) {
+                    eventAvailability.end = end;
+                }
                 // save the updated event
-                const updatedEvent = await event.save();
+                const updatedAvailability = await eventAvailability.save();
 
-                return updatedEvent;
+                return updatedAvailability;
             }
 
-            throw new AuthenticationError('You must be logged in to add your availability to an event');
+            throw new AuthenticationError('You must be logged in to update your availability');
         },
+
         // for admins only, delete an event
         deleteEvent: async (parent, { eventId, }, context) => {
             if (context.user) {
