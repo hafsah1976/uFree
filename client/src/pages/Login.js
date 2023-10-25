@@ -55,18 +55,20 @@ const handleOnSubmitEvent = async (event) => {
         }
     }
 };
-
-   // Create a function to handle the form submission
-const handleFormSubmit = async (event) => {
-    event.preventDefault();
-  
-    return (
-        <section id="content_login_page">
-            <p id="DEBUG_login_page_text" className='DEBUG_text'>
-                PLACEHOLDER LOGIN TEXT
-            </p>
-        </section>
-    );
-};
-}
-export default Login;
+          return (
+            <div className='login_container'>
+                <div className='login_form_container'>
+                    <div className='left'>
+                        <form className='form_container' onSubmit={handleOnSubmitEvent}>
+                            <h1>Login to Your Account</h1>
+                            <input
+                                type="email"
+                                placeholder="E-mail"
+                                name="email"
+                                onChange={handleChange}
+                                value={userCredentials.email}
+                                required
+                                className='input'
+                            />
+</div>
+</form>
