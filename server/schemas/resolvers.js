@@ -18,7 +18,7 @@ const resolvers = {
 
         // finds the availabilities of an event
         availabilities: async (parent, { eventId }) => {
-
+            return User.findOne({ _id: eventId }).populate('availabilities');
         },
 
         // displays the current logged in user's info
@@ -32,7 +32,9 @@ const resolvers = {
 
 
     Mutation: {
+        
         // create a new account
+
         signup: async (parent, { username, email, password }) => {
             const user = await User.create({ username, email, password });
             const token = signToken(user);
