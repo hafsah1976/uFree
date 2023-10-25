@@ -18,11 +18,24 @@ const handleChange = ({ currentTarget: input }) => {
   setData({ ...data, [input.name]: input.value });
 };
 
+const handleSubmit = (data) => {
+    data.preventDefault();
+    console.log(data);
+}
+
     return (
         <section id="content_login_page">
             <p id="DEBUG_login_page_text" className='DEBUG_text'>
                 PLACEHOLDER LOGIN TEXT
             </p>
+            <div id='login_page_title'>
+                <h1>Login to Your Account</h1>
+            </div>
+            <div id='login_form'>
+                <form onSubmit={handleSubmit}>
+
+                </form>
+            </div>
         </section>
     );
 };
