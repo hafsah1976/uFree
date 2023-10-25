@@ -52,7 +52,7 @@
 
   width: 100%;
 
-  background-color: navy;
+  background-color: var(--primary);
 }
 
 .App-link {
@@ -79,7 +79,6 @@ button:hover {
   justify-content: space-around;
   align-items: center;
 
-  background-color: navy;
   height: 100px;
 }
 

@@ -1,3 +1,7 @@
+.radio_option {
+    width: fit-content;
+}
+
 .radio_option:hover {
     cursor: pointer;
 }
