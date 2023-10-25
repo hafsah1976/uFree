@@ -1,3 +1,4 @@
+import { gql } from '@apollo/client';
 
 export const QUERY_SINGLE_EVENT = gql`
   query getSingleEvent($eventId: ID!) {

@@ -63,5 +63,6 @@ login(idToken) {
 } 
 
   // Export the AuthService object, which includes the logout function
-  export { AuthService } ;
+  const Auth = new AuthService();
+  export default Auth;
   
