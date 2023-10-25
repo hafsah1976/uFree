@@ -121,12 +121,54 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in to add your availability to an event');
         },
         // edit your availability
-        editAvailability: async () => {
+        editAvailability: async (parent, { day, start, end, eventId }, context) => {
+            if (context.user) {
+                // create an availability object with day, start, and end
+                const availability = { day, start, end };
 
+                // find event by its id
+                const event = await Event.findOne({ _id: eventId });
+
+                if (!event) {
+                    throw new Error('Event not found');
+                }
+
+                // add the availability object to the event's availabilities array
+                event.availabilities.push(availability);
+
+                // save the updated event
+                const updatedEvent = await event.save();
+
+                return updatedEvent;
+            }
+
+            throw new AuthenticationError('You must be logged in to add your availability to an event');
         },
         // for admins only, delete an event
-        deleteEvent: async () => {
+        deleteEvent: async (parent, { eventId, }, context) => {
+            if (context.user) {
+                // find event by its id and check if it exists
+                const event = await Event.findOne({ _id: eventId });
 
+                if (!event) {
+                    throw new Error('Event not found');
+                }
+
+                // check if user is admin
+                if (event.admin !== context.user._id) {
+                    throw new Error('Only admins can delete this event');
+                }
+
+                const deletedEvent = await Event.findOneAndDelete({ _id: eventId });
+
+                if (!deletedEvent) {
+                    throw new Error('Error deleting the event');
+                }
+
+                return 'Event deleted successfully';
+            }
+
+            throw new AuthenticationError('You must be logged in to delete and event');
         },
         // for attendees, leave an event
         leaveEvent: async (parent, { eventId }, context) => {
