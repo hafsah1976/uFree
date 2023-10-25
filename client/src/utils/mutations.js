@@ -9,7 +9,7 @@ export const AUTH_MUTATION = gql`
 `;
 
 export const ADD_EVENT = gql`
-  mutation addEvent($name: String!, $week: Date!, $location: String!, $description: String!, $image:link?) {
+  mutation addEvent($name: String!, $week: Date!, $location: String!, $description: String!, $image: String) {
     addEvent(name: $name, week: $week, location:$location, description: $description, image: $image) {
       _id
       name

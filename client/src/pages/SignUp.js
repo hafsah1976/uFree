@@ -3,9 +3,9 @@ import { useState } from 'react'; // Importing the useState hook
 import { Link, useNavigate } from 'react-router-dom'; // Importing the Link component and useNavigate hook.
 import Auth from '../utils/auth'; // Importing the Auth utility
 import '../assets/signup.css';
-import { useMutation } from "../utils/mutations"; // Import the useMutation hook from Apollo Client
-import { REGISTER_USER_MUTATION } from "./graphql"; // Importing GraphQL mutation
-import { signToken } from '../../../server/utils/auth';
+import { useMutation } from "@apollo/client"; // Import the useMutation hook from Apollo Client
+// import { REGISTER_USER_MUTATION } from "./graphql"; // Importing GraphQL mutation
+// import { signToken } from '../../../server/utils/auth';
 
 // Defining the Signup component/page
 const Signup = () => {
@@ -21,6 +21,12 @@ const Signup = () => {
 
  // Define a state variable to track whether the username is available or taken
   const [isUsernameTaken, setIsUsernameTaken] = useState(false);
+
+  // Use the useMutation hook to execute your GraphQL mutation
+  const signup = () => console.warn('TODO: add useMutation when ready for signup');
+  // const [signup] = useMutation(REGISTER_USER_MUTATION, {
+  //   variables: { input: data }, // Assuming data contains user registration input
+  // });
 
   //Create a function to check if the username is taken
   const checkUsernameAvailability = async (username) => {
@@ -39,15 +45,15 @@ const Signup = () => {
   // Obtaining a navigation function using the useNavigate hook
   const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    console.warn('TODO: handle change');
+  }
+
   // Handle form submission when the user attempts to sign up
   const handleSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
 
     try {
-      // Use the useMutation hook to execute your GraphQL mutation
-      const [signup] = useMutation(REGISTER_USER_MUTATION, {
-        variables: { input: data }, // Assuming data contains user registration input
-      });
 
       // Execute the GraphQL mutation by invoking the signup function
       const response = await signup();
