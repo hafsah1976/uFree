@@ -1,0 +1,19 @@
+.dav_avail_input_options .radio_option,
+.time_slot_container {
+    margin: 0.5rem 0;
+}
+
+.day_avail_time_input {
+    margin-top: 2rem;
+    width: 200px;
+}
+
+.time_slot_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.react-time-picker__wrapper {
+    border: none !important;
+    border-radius: var(--common-border-radius);
+}
