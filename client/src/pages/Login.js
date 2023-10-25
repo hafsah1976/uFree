@@ -33,7 +33,23 @@ const handleSubmit = (data) => {
             </div>
             <div id='login_form'>
                 <form onSubmit={handleSubmit}>
-
+                    <input
+                    type='text'
+                    id='login_username'
+                    name='login_username'
+                    placeholder='Username'
+                    value={data.userNameInput}
+                    onChange={handleChange}
+                    />
+                    <input
+                    type='text'
+                    id='login_password'
+                    name='login_password'
+                    placeholder='Password'
+                    value={data.passwordInput}
+                    onChange={handleChange}
+                    />
+                    <input type='submit' value="submit" />
                 </form>
             </div>
         </section>
