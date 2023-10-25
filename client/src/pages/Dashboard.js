@@ -4,7 +4,7 @@ import "../assets/dashboard.css";
 
 const Dashboard = () => {
 
-    const eventBoxes = [1, 2, 3, 4];
+    const eventBoxes = [1, 2, 3, 4, 5, 6];
 
     return (
         <section id="content_dashboard_page">
