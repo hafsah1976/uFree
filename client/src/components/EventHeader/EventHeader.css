@@ -52,10 +52,23 @@
 }
 
 .modal_close {
-    text-decoration: underline;
+    float: right;
+    font-weight: bold;
+    padding: 5px;
+    margin-bottom: 0;
+    /* text-decoration: underline; */
 }
 
-.modal_close:hover {
+.modal_x {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    font-size: 1.5rem;
+}
+
+.modal_close:hover,
+.modal_x:hover {
     cursor: pointer;
 }
 

@@ -1,5 +1,13 @@
 import { gql } from '@apollo/client';
 
+export const AUTH_MUTATION = gql`
+  mutation AuthenticateUser($email: String!, $password: String!) {
+    authenticateUser(email: $email, password: $password) {
+      token
+    }
+  }
+`;
+
 export const ADD_EVENT = gql`
   mutation addEvent($name: String!, $week: Date!, $location: String!, $description: String!, $image:link?) {
     addEvent(name: $name, week: $week, location:$location, description: $description, image: $image) {
@@ -27,3 +35,4 @@ export const ADD_AVAILABILITY = gql`
     }
   }
 `;
+

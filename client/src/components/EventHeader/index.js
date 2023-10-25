@@ -33,14 +33,26 @@ export default function EventHeader({ event }) {
 
             <p className='event_read_more' onClick={() => setDescriptionModal(true)}>Read more</p>
 
-            <ReactModal isOpen={descriptionModal}>
-                <p style={{
-                    whiteSpace: 'pre-line'
+            <ReactModal isOpen={descriptionModal} onRequestClose={() => setDescriptionModal(false)} appElement={document.querySelector('.App')} style={{
+                    overlay: {
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                    },
+                    content: {
+                        whiteSpace: 'pre-line',
+                        border: 'none',
+                        borderRadius: 'var(--large-border-radius)',
+                        width: 'fit-content',
+                        height: 'fit-content',
+                        padding: '30px',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                    }
                 }}>
-                    {event.description}
-                </p>
+                    <i className="modal_x bi bi-x" onClick={() => setDescriptionModal(false)}></i>
+                    <p>{event.description}</p>
 
-                <p className='modal_close' onClick={() => setDescriptionModal(false)}>Close</p>
+                    <p className='modal_close' onClick={() => setDescriptionModal(false)}>Close</p>
 
             </ReactModal>
 

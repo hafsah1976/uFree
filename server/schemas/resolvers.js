@@ -32,7 +32,7 @@ const resolvers = {
 
 
     Mutation: {
-        
+
         // create a new account
 
         signup: async (parent, { username, email, password }) => {
