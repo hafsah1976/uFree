@@ -11,7 +11,7 @@ const data = {
     week: Date.now(),
     location: '4138 Brunkzy Pl',
     code: 'UFG65TY',
-    description: `- Dress Code: busniess casual\n- All you can eat crackers!`,
+    description: `- Dress Code: busniess casual\n- All you can eat crackers!\n\nWe will be serving a deluxe meal of hotdogs, cornflakes, and plain white bread with a mayonnaise spread.`,
     thumbnail: eventThumbnails.dinner,
     availabilities: [
         {
