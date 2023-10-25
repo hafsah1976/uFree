@@ -68,15 +68,30 @@ const resolvers = {
         // join an event
         joinEvent: async (parent, { code, eventId }, context) => {
             if (context.user) {
-                const event = await Event.findOneAndUpdate(
+
+                const event = Event.findOne({ _id: eventId, code });
+
+                if (!event) {
+                    throw new Error('Event not found or incorrect access code');
+                }
+
+                // if event is found and access code is correct, add user to attendees array
+                const updatedEvent = await Event.findOneAndUpdate(
                     {_id: eventId},
                     {
                         $addToSet: {
                             attendees: context.user._id
                         }
-                    }
+                    },
+                    { new: true }
 
-                )
+                );
+
+                if (!updatedEvent) {
+                    throw new Error('Event not found')
+                }
+
+                return updatedEvent;
             }
 
             throw new AuthenticationError('You must be logged in join an event');
