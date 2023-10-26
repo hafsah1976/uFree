@@ -31,11 +31,11 @@ const CreateEvent = () => {
         // gql queries addEvent when form is submitted
         addEvent({
             variables: {
-                name: eventName,
+                name: eventInputs.eventName,
                 week: eventDate,
-                location: eventLocation,
-                description: eventDescription,
-                image: eventThumbnails
+                location: eventInputs.eventLocation,
+                description: eventInputs.eventDescription,
+                image: eventInputs.eventThumbnail
             }
         })
     }
