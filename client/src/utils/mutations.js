@@ -1,23 +1,35 @@
 import { gql } from '@apollo/client';
 
-export const AUTH_MUTATION = gql`
-  mutation AuthenticateUser($email: String!, $password: String!) {
-    authenticateUser(email: $email, password: $password) {
+export const login = gql`
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       token
+      user {
+        email
+        password
+      }
     }
   }
 `;
 
-export const ADD_EVENT = gql`
-  mutation addEvent($name: String!, $week: Date!, $location: String!, $description: String!, $image: String) {
-    addEvent(name: $name, week: $week, location:$location, description: $description, image: $image) {
-      _id
+export const signup = gql`
+  mutation signup($username: String!, $email: String!, $password: String!) {
+    signup(username: $username, email: $email, password: $password) {
+      token
+      user {
+        _id
+        email
+        username
+      }
+    }
+  }
+`;
+
+export const CreateEvent = gql`
+  mutation createEvent($name: String!) {
+    createEvent(name: $name) {
       name
-      week
-      location
-      decription
-      image
-     
+      _id
     }
   }
 `;
@@ -25,14 +37,12 @@ export const ADD_EVENT = gql`
 // update availibility mutation once get model
 //not sure if i make $time a integer to make it easier to compare 
 export const ADD_AVAILABILITY = gql`
-  mutation addAvailablity($day: Date!, $start: int!, $end: int!) {
-    addEvent(day: $day, start: $start, end:$end) {
+  mutation addAvailability($day: Date!, $start: Int!, $end: Int!) {
+    addAvailability(day: $day, start: $start, end: $end) {
       _id
       day
       start
       end
-     
     }
   }
 `;
-

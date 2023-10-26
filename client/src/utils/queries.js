@@ -40,15 +40,6 @@ export const QUERY_SINGLE_USER = gql`
         availabilities  
      }
       }
-     
-   }
     }
+   }
 `;
-
-
-
-   
-    
-  
-
- //,  dont need availabilities because we are getting it when returning single user, me
