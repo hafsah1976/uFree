@@ -25,13 +25,13 @@ const CreateEvent = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(eventInputs);
+        console.log(eventInputs.event_name);
         console.log(toBeginningOfWeek(eventDate));
 
         // gql queries addEvent when form is submitted
         createEvent({
             variables: {
-                name: eventInputs.eventName,
+                name: eventInputs.event_name,
             }
         })
     }

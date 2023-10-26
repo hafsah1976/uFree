@@ -9,7 +9,7 @@ export const AUTH_MUTATION = gql`
 `;
 
 export const CREATE_EVENT = gql`
-  mutation CreateEvent($name: String!) {
+  mutation createEvent($name: String!) {
     createEvent(name: $name) {
       _id
       name
