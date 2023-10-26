@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_SINGLE_EVENT = gql`
-  query getSingleEvent($eventId: ID!) {
+export const GET_EVENT = gql`
+  query getEvent($eventId: ID!) {
     event(eventId: $eventId) {
       _id 
       name
@@ -22,8 +22,8 @@ export const QUERY_SINGLE_EVENT = gql`
   }
 `;
 
-export const QUERY_SINGLE_USER = gql`
-  query getSingleUser($userId: ID!) {
+export const QUERY_USER = gql`
+  query getUser($userId: ID!) {
     user(userId: $userId) {
       _id  
       username
@@ -47,6 +47,8 @@ export const QUERY_SINGLE_USER = gql`
 
 
 
+   
+ 
    
     
   
