@@ -25,7 +25,7 @@ const resolvers = {
         // displays the current logged in user's info
         me: async (parent, args, context) => {
             if (context.user) {
-                return await User.findOne({ _id: context.user._id }).populate('events').exec();
+                return await User.findOne({ _id: context.user._id }).populate('events');
             }
             throw new AuthenticationError('You need to be logged in!');
         },
@@ -79,10 +79,11 @@ const resolvers = {
         },
 
         // join an event
-        joinEvent: async (parent, { code, eventId }, context) => {
+        joinEvent: async (parent, { code }, context) => {
             if (context.user) {
 
-                const event = Event.findOne({ _id: eventId, code });
+                const event = Event.findOne({ code });
+                console.log(event._id);
 
                 if (!event) {
                     throw new Error('Event not found or incorrect access code');
@@ -90,7 +91,7 @@ const resolvers = {
 
                 // if event is found and access code is correct, add user to attendees array
                 const updatedEvent = await Event.findOneAndUpdate(
-                    {_id: eventId},
+                    { code },
                     {
                         $addToSet: {
                             attendees: context.user._id
@@ -100,11 +101,26 @@ const resolvers = {
 
                 );
 
+                // add event to user's events array
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    {
+                        $addToSet: {
+                            events: event._id
+                        }
+                    },
+                    { new: true }
+                    );
+
                 if (!updatedEvent) {
                     throw new Error('Event not found')
                 }
 
+
+
                 return updatedEvent;
+
+
             }
 
             throw new AuthenticationError('You must be logged in join an event');
@@ -193,7 +209,7 @@ const resolvers = {
                     { _id: eventId },
                     {
                         $pull: {
-                            attendees: { username: context.user.username }
+                            attendees: { _id: context.user._id }
                         }
                     },
                     { new: true } // return the updated event
@@ -203,7 +219,7 @@ const resolvers = {
                     throw new Error('Event not found');
                 }
 
-                return updatedEvent;
+                return 'you have left the event';
             }
 
 

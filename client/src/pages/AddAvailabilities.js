@@ -24,7 +24,15 @@ const Availabilities = () => {
     async function handleFormSubmit(event) {
         event.preventDefault();
 
-        console.warn('TODO: HANDLE MUTATION', avails);
+        const formattedAvails = Object.keys(avails).map(day => {
+            return {
+                day: day,
+                start: avails[day].start,
+                end: avails[day].end,
+            }
+        })
+
+        console.warn('TODO: HANDLE MUTATION', formattedAvails);
 
         navigate('/eventPage');
     }
