@@ -14,7 +14,10 @@ const Signup = () => {
 
   const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
   const [error, setError] = useState(""); // State for storing error messages
-  const [addUser] = useMutation(SIGN_UP); // Use the signup mutation
+  // Use the signup mutation
+  const [signUp] = useMutation(SIGN_UP, {
+    variables: { ...userCredentials },
+  });
 
   // Function to handle changes in form inputs
   const handleInputChange = (event) => {
@@ -29,35 +32,31 @@ const Signup = () => {
 
   const handleSubmitEvent = async (event) => {
     event.preventDefault();
-    const signupForm = event.currentTarget;
 
-    if (signupForm.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
+    // const signupForm = event.currentTarget;
+    // if (signupForm.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
 
     // Perform user registration by calling the addUser mutation
-    const { data, error } = await addUser({
-      variables: { ...userCredentials },
-    });
+    const { data, error } = await signUp();
 
     if (error) {
       console.error("Failed to sign-up user");
       setError(error.message);
       setShowAlert("Failed to sign up. Please try again.");
+      return;
     }
 
-    else {
-      console.log('Data:', data);
-      alert(data);
-      // Auth.login(data.addUser.token); // Log in the user
-  
-      // // Check if the registration was successful
-      // if (data.addUser) {
-      //   Auth.login(data.addUser.token);
-      //   navigate("/dashboard");
-      //   setShowAlert(true);
-      // }
+    console.log('Data:', data);
+    console.log('Data Signup:', data.signup);
+
+    // Check if the registration was successful
+    if (data.signup) {
+      Auth.login(data.signup.token); // Log in the user
+      navigate("/dashboard");
+      setShowAlert(true);
     }
 
     // Clear the form inputs
@@ -81,7 +80,7 @@ const Signup = () => {
             </Link>
           </div>
           <div className="right">
-            <form className="form_container" onSubmit={handleSubmitEvent}>
+            <div className="form_container" onSubmit={handleSubmitEvent}>
               <div className="signup-container">
                 <form className="form-container" onSubmit={handleSubmitEvent}>
                   <h1>Please Create an Account</h1>
@@ -129,7 +128,7 @@ const Signup = () => {
                   Already have an account? <Link to="/login">Log In</Link>
                 </p>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
