@@ -23,8 +23,8 @@ export const QUERY_SINGLE_EVENT = gql`
 `;
 
 export const QUERY_SINGLE_USER = gql`
-  query getSingleUser($userId: ID!) {
-    user(userId: $userId) {
+  query getSingleUser($username: String!) {
+    user(username: $username) {
       _id  
       username
       email

@@ -26,8 +26,8 @@ const typeDefs = gql`
 
    type DayAvailability {
       day: String
-      start: Number
-      end: Number
+      start: Float
+      end: Float
     }
 
   type Query {
@@ -43,8 +43,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     createEvent(name: String!, location: String, description: String, week: Date, thumbnail: String): Event
     joinEvent(eventId: ID!, code: String!): Event
-    addAvailibility(eventId: ID!, day: String!, start: String!, end: String!): UserAvailibilities
-    editAvailability(eventId: ID!, day: String, start: String, end: String): UserAvailibilities ##
+    addAvailibility(eventId: ID!, day: String!, start: Float!, end: Float!): UserAvailibilities
+    editAvailability(eventId: ID!, day: String, start: Float, end: Float): UserAvailibilities ##
     deleteEvent(eventId: ID!): Event
     leaveEvent(eventId: ID!): Event
   }
