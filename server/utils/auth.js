@@ -1,14 +1,16 @@
-//import JWT, a library to handle JSON Web Tokens
+// Import JWT, a library to handle JSON Web Tokens
 const jwt = require("jsonwebtoken");
 
-//Import secret key from .env
-require('dotenv').config();
+// Import the secret key from .env
 
 // Set the secret key and expiration time for your JWT token
-const SECRET_KEY = process.env.JWT_SECRETKEY;
-const EXPIRATION_TIME = process.env.JWT_EXPIRATION;
+// const SECRET_KEY = process.env.JWT_SECRETKEY;
+// const EXPIRATION_TIME = process.env.JWT_EXPIRATION;
 
-// Define 'secret' and 'expiration' values (defined in .env file)
+function isValidEmail (email) {
+  const emailRegex = /.+@.+\..+/;
+  return emailRegex.test(email);
+}
 
 // Export an object with two methods: 'authMiddleware' and 'signToken'
 module.exports = {
@@ -28,9 +30,12 @@ module.exports = {
         return req;
       }
 
+      console.log('-----------CONSOLEEEEEE_-------')
+      console.log(process.env.EXPIRATION_TIME);
+      console.log('-----------CONSOLEEEEEE_-------')
       // Verify the token and extract user data from it
       try {
-        const { data } = jwt.verify(token, SECRET_KEY, { maxAge: EXPIRATION_TIME });
+        const { data } = jwt.verify(token, process.env.SECRET_KEY);
         req.user = data; // Attach user data to the request object
       } catch (error) {
         console.log("Invalid token:", error); // Handle invalid tokens (for debugging)
@@ -43,14 +48,23 @@ module.exports = {
       return req; // Return the original request object in case of an error
     }
   },
+
+  // Function to validate an email address
+
+
   // Function for signing a JWT with user data
   signToken: function ({ username, email, _id }) {
     try {
+      // Add email validation here before creating the payload
+      if (!isValidEmail(email)) {
+        throw new Error('Invalid email address');
+      }
+
       // Create a payload object containing user data (e.g., username, email, and user ID)
       const payload = { username, email, _id };
 
       // Sign a JWT with the payload, secret key, and expiration time
-      return jwt.sign({ data: payload }, SECRET_KEY, { expiresIn: EXPIRATION_TIME });
+      return jwt.sign({ data: payload }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
     } catch (error) {
       console.error("Error in signToken:", error);
       return null; // Return null in case of an error

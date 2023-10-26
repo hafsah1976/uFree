@@ -48,7 +48,7 @@ login(idToken) {
     localStorage.setItem('id_token', idToken);
   
     // Redirect the user to the home page
-    window.location.assign('/');
+    // window.location.assign('/');
   }
 
 
@@ -63,5 +63,6 @@ login(idToken) {
 } 
 
   // Export the AuthService object, which includes the logout function
-  export default new AuthService();
+  const Auth = new AuthService();
+  export default Auth;
   

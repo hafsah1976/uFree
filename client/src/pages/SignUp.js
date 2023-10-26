@@ -1,79 +1,139 @@
-import React from 'react';
-import { useState } from 'react'; // Importing the useState hook
-import { Link, useNavigate } from 'react-router-dom'; // Importing the Link component and useNavigate hook.
-import Auth from '../utils/auth'; // Importing the Auth utility
-import '../assets/signup.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Auth from "../utils/auth";
+import "../assets/signup.css";
+import { useMutation } from "@apollo/client";
+import { SIGN_UP } from "../utils/mutations";
 
-// Defining the Signup component/page
 const Signup = () => {
-
-  <section id="signup_page">
-  <p id="DEBUG_signup_page" >
-      PLACEHOLDER SIGNUP TEXT
-  </p>
-</section>
-
-  // Initializing state using the useState hook
-  const [data, setData] = useState({
-    username: '',
-    email: '',
-    password: '',
+  const [userCredentials, setUserCredentials] = useState({
+    username: "",
+    email: "",
+    password: "",
   });
 
-  // Initializing state to manage error messages
-  const [error, setError] = useState('');
+  const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
+  const [error, setError] = useState(""); // State for storing error messages
+  // Use the signup mutation
+  const [signUp] = useMutation(SIGN_UP, {
+    variables: { ...userCredentials },
+  });
 
-  // Obtaining a navigation function using the useNavigate hook
+  // Function to handle changes in form inputs
+  const handleInputChange = (event) => {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    setUserCredentials({ ...userCredentials, [name]: value });
+  };
+
   const navigate = useNavigate();
 
-  // Rendering of the Signup component
+  const handleSubmitEvent = async (event) => {
+    event.preventDefault();
+
+    // const signupForm = event.currentTarget;
+    // if (signupForm.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
+
+    // Perform user registration by calling the addUser mutation
+    const { data, error } = await signUp();
+
+    if (error) {
+      console.error("Failed to sign-up user");
+      setError(error.message);
+      setShowAlert("Failed to sign up. Please try again.");
+      return;
+    }
+
+    console.log('Data:', data);
+    console.log('Data Signup:', data.signup);
+
+    // Check if the registration was successful
+    if (data.signup) {
+      Auth.login(data.signup.token); // Log in the user
+      navigate("/dashboard");
+      setShowAlert(true);
+    }
+
+    // Clear the form inputs
+    setUserCredentials({
+      username: "",
+      email: "",
+      password: "",
+    });
+  };
+
   return (
     <>
-      <div className='signup-container'>
-        {/* The Signup form */}
-        <form>
-          {/* Input field for the username */}
-          <input
-            type="text"
-            placeholder="Create your Username"
-            name="username"
-            value={data.username}
-            // Add validation to check if the username is taken
-          />
-
-          {/* Input field for the email address */}
-          <input 
-            type="email"
-            placeholder="Your Email"
-            name="email"
-            value={data.email}
-            // add validation to check if the user with this email already exists
-          />
-
-          {/* Input field for the password */}
-          <input
-            type="password"
-            placeholder="Create Your Password"
-            name="password"
-            value={data.password}
-            onChange={(e) => {setData({...data, password: e.target.value})}}
-            // Add an event handler (onChange) to update the password in the state, 
-            //validation for password exists in the user model..??
-          />
-          {/* Display any error messages */}
-          {error && <p className="error">{error}</p>}
-
-          {/* Submit button */}
-          <button type="submit">Sign Up</button>
-        </form>
-
-        {/* Link to navigate to a different page, e.g., the login page if the user already has an account */}
-        <p>
-          Already have an account? <Link to="/login">Log In</Link>
-        </p>
+      <div className={"signup_container"}>
+        <div className={"signup_form_container"}>
+          <div className={"left"}>
+            <h1>Welcome Back</h1>
+            <Link to="/login">
+              <button type="button" className={"login_btn"}>
+                Log in
+              </button>
+            </Link>
+          </div>
+          <div className="right">
+            <div className="form_container">
+              <div className="signup-container">
+                <form className="form-container" onSubmit={handleSubmitEvent}>
+                  <h1>Please Create an Account</h1>
+                  <input
+                    type="text"
+                    placeholder="Create your unique Username"
+                    name="username"
+                    value={userCredentials.username}
+                    required
+                    className="input"
+                    onChange={(event) => {
+                      setUserCredentials({ ...userCredentials, username: event.target.value });
+                    }}
+                  />
+                  <input
+                    type="email"
+                    placeholder="Your Email"
+                    name="email"
+                    onChange={handleInputChange}
+                    value={userCredentials.email}
+                    required
+                    className="input"
+                  />
+                  <input
+                    type="password"
+                    placeholder="Create Your Password"
+                    name="password"
+                    value={userCredentials.password}
+                    required
+                    onChange={(event) => {
+                      setUserCredentials({ ...userCredentials, password: event.target.value });
+                    }}
+                    className={"input"}
+                  />
+                  {showAlert && <p className={"error_msg"}>Something went wrong with your signup!</p>}
+                  <button className="signup-btn" type="submit">
+                    Sign Up
+                  </button>
+                  {showAlert && (
+                      <p className={"success_msg"}>
+                        Success! You may proceed and start creating your events! Don't Forget to Share! </p>
+                        )}
+                </form>
+                <p>
+                  Already have an account? <Link to="/login">Log In</Link>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
-}
+};
 
-export default Signup; // Export the Signup component
+export default Signup;

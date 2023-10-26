@@ -4,10 +4,10 @@ const typeDefs = gql`
   type Event {
     _id: ID
     name: String
-    week: Date
+    week: String
     location: String
     description: String
-    image: String
+    thumbnail: String
     availabilities: [UserAvailibilities]
   }
 
@@ -16,7 +16,7 @@ const typeDefs = gql`
     username: String
     email: String
     events: [Event]
-    
+
   }
 
   type UserAvailibilities {
@@ -24,23 +24,45 @@ const typeDefs = gql`
     availabilities: [DayAvailability]
   }
 
-   type DayAvailability {
-      day: String
-      start: Number
-      end: Number
-    }
+  input UserAvailibilitiesInput {
+    userId: ID
+    availabilities: [DayAvailabilityInput]
+  }
+
+  type DayAvailability {
+    day: String
+    start: Float
+    end: Float
+  }
+
+  input DayAvailabilityInput {
+    day: String
+    start: Float
+    end: Float
+  }
+
+  type Auth {
+    token: ID!
+    user: User
+  }
 
   type Query {
-    Events: [Event]
-    Event(eventId: ID!): Event
+    user(username: String!): User
+    event(eventId: ID!): Event
+    # availabilities(eventId: ID!): [UserAvailibilities] ###
+    me: User
   }
 
 
   type Mutation {
-    addEvent(name: String!, week: Date!, location: String!, description: String!, image: link): Thought
-    addavailibility(thoughtId: ID!, commentText: String!): Thought
-    removeEvent(eventId: ID!): Event
-    
+    signup(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    createEvent(name: String!, location: String, description: String, week: String, thumbnail: String): Event
+    joinEvent(code: String!): Event
+    addAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
+    editAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
+    deleteEvent(eventId: ID!): Event
+    leaveEvent(eventId: ID!): Event
   }
 `;
 
