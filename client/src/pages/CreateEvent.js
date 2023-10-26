@@ -4,6 +4,10 @@ import "../assets/createEvent.css"
 import { eventThumbnails } from '../images';
 import Calendar from 'react-calendar';
 
+// importing ADD_EVENT mutation
+import { ADD_EVENT } from '../utils/mutations';
+import { useMutation } from '@apollo/client';
+
 // <input type='text' id="event_week" placeholder='Week of your event...' />
 
 const CreateEvent = () => {
