@@ -30,16 +30,38 @@ export const QUERY_SINGLE_USER = gql`
       email
       events {
         _id 
-      name
-      admin
-      location
-      description 
-      week
-      availabilities {
-        userId
-        availabilities  
-     }
+        name
+        admin
+        location
+        description 
+        week
+        availabilities {
+          userId
+          availabilities  
+        }
       }
     }
-   }
+  }
+`;
+
+export const QUERY_ME = gql`
+  query me {
+    user {
+      _id  
+      username
+      email
+      events {
+        _id 
+        name
+        admin
+        location
+        description 
+        week
+        availabilities {
+          userId
+          availabilities  
+        }
+      }
+    }
+  }
 `;
