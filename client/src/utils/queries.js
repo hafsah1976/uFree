@@ -22,9 +22,9 @@ export const GET_EVENT = gql`
   }
 `;
 
-export const QUERY_USER = gql`
-  query getUser($userId: ID!) {
-    user(userId: $userId) {
+export const QUERY_SINGLE_USER = gql`
+  query getSingleUser($username: String!) {
+    user(username: $username) {
       _id  
       username
       email
@@ -40,17 +40,6 @@ export const QUERY_USER = gql`
         availabilities  
      }
       }
-     
-   }
     }
+   }
 `;
-
-
-
-   
- 
-   
-    
-  
-
- //,  dont need availabilities because we are getting it when returning single user, me
