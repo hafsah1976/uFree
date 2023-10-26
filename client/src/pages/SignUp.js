@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
 import "../assets/signup.css";
 import { useMutation } from "@apollo/client";
-import { SIGNUP } from "../utils/mutations";
+import { SIGN_UP } from "../utils/mutations";
 
 const Signup = () => {
   const [userCredentials, setUserCredentials] = useState({
@@ -14,7 +14,7 @@ const Signup = () => {
 
   const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
   const [error, setError] = useState(""); // State for storing error messages
-  const [addUser] = useMutation(SIGNUP); // Use the signup mutation
+  const [addUser] = useMutation(SIGN_UP); // Use the signup mutation
 
   // Function to handle changes in form inputs
   const handleInputChange = (event) => {
@@ -48,15 +48,16 @@ const Signup = () => {
     }
 
     else {
-      console.log(data);
-      Auth.login(data.addUser.token); // Log in the user
+      console.log('Data:', data);
+      alert(data);
+      // Auth.login(data.addUser.token); // Log in the user
   
-      // Check if the registration was successful
-      if (data.addUser) {
-        Auth.login(data.addUser.token);
-        navigate("/login");
-        setShowAlert(true);
-      }
+      // // Check if the registration was successful
+      // if (data.addUser) {
+      //   Auth.login(data.addUser.token);
+      //   navigate("/dashboard");
+      //   setShowAlert(true);
+      // }
     }
 
     // Clear the form inputs
