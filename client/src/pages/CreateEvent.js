@@ -4,8 +4,8 @@ import "../assets/createEvent.css"
 import { eventThumbnails } from '../images';
 import Calendar from 'react-calendar';
 
-// importing ADD_EVENT mutation
-import { ADD_EVENT } from '../utils/mutations';
+// importing CREATE_EVENT mutation
+import { CREATE_EVENT } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
 // <input type='text' id="event_week" placeholder='Week of your event...' />
@@ -15,7 +15,7 @@ const CreateEvent = () => {
     const [eventDate, setEventDate] = useState(new Date());
 
     // gqp query to add event to database
-    const addEvent = useMutation(ADD_EVENT);
+    const [createEvent] = useMutation(CREATE_EVENT);
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -29,13 +29,9 @@ const CreateEvent = () => {
         console.log(toBeginningOfWeek(eventDate));
 
         // gql queries addEvent when form is submitted
-        addEvent({
+        createEvent({
             variables: {
                 name: eventInputs.eventName,
-                week: eventDate,
-                location: eventInputs.eventLocation,
-                description: eventInputs.eventDescription,
-                image: eventInputs.eventThumbnail
             }
         })
     }
