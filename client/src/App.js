@@ -19,50 +19,51 @@ import HeaderNavBar from "./components/HeaderNavBar/index.js";
 //import Login from './pages/Login.js';
 
 import { Login, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent } from "./pages/PageContainer.js";
+import { ApolloProvider } from '@apollo/client';
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <header className="App-header">
-          <section id="content_header">
-            <HeaderNavBar />
+      <div className="App">
+        <Router>
+          <header className="App-header">
+            <section id="content_header">
+              <HeaderNavBar />
+            </section>
+          </header>
+          <section id="page_container">
+            <Routes>
+              <Route 
+              path='/'
+              element={<Home />}
+              />
+              <Route 
+              path='/login'
+              element={<Login />}
+              />
+              <Route 
+              path='/dashboard'
+              element={<Dashboard />}
+              />
+              <Route 
+              path='/eventPage'
+              element={<Event />}
+              />
+              <Route 
+              path='/events/create'
+              element={<CreateEvent />}
+              />
+              <Route 
+              path='/signup'
+              element={<SignUp />}
+              />
+              <Route 
+              path='events/:eventId?/availabilities'
+              element={<Availabilities />}
+              />              
+            </Routes>
           </section>
-        </header>
-        <section id="page_container">
-          <Routes>
-            <Route 
-            path='/'
-            element={<Home />}
-            />
-            <Route 
-            path='/login'
-            element={<Login />}
-            />
-            <Route 
-            path='/dashboard'
-            element={<Dashboard />}
-            />
-            <Route 
-            path='/eventPage'
-            element={<Event />}
-            />
-            <Route 
-            path='/events/create'
-            element={<CreateEvent />}
-            />
-            <Route 
-            path='/signup'
-            element={<SignUp />}
-            />
-            <Route 
-            path='events/:eventId?/availabilities'
-            element={<Availabilities />}
-            />              
-          </Routes>
-        </section>
-      </Router>
-    </div>
+        </Router>
+      </div>
   );
 }
 
