@@ -59,7 +59,7 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     createEvent(name: String!, location: String, description: String, week: String, thumbnail: String): Event
     joinEvent(eventId: ID!, code: String!): Event
-    addAvailability(eventId: ID!, input: UserAvailibilitiesInput!): UserAvailibilities
+    addAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
     editAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
     deleteEvent(eventId: ID!): Event
     leaveEvent(eventId: ID!): Event
