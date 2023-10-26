@@ -14,6 +14,9 @@ const CreateEvent = () => {
     const [eventInputs, setEventInputs] = useState({});
     const [eventDate, setEventDate] = useState(new Date());
 
+    // gqp query to add event to database
+    const addEvent = useMutation(ADD_EVENT);
+
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -24,6 +27,17 @@ const CreateEvent = () => {
         event.preventDefault();
         console.log(eventInputs);
         console.log(toBeginningOfWeek(eventDate));
+
+        // gql queries addEvent when form is submitted
+        addEvent({
+            variables: {
+                name: eventName,
+                week: eventDate,
+                location: eventLocation,
+                description: eventDescription,
+                image: eventThumbnails
+            }
+        })
     }
 
     return (
