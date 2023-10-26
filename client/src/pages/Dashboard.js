@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import "../assets/dashboard.css";
 
 // import GET_EVENT query
-import { QUERY_ME } from '../utils/queries';
+import { QUERY_ME, QUERY_SINGLE_USER } from '../utils/queries';
 import { useQuery } from '@apollo/client';
 
 const Dashboard = () => {
@@ -12,6 +12,7 @@ const Dashboard = () => {
 
     // using the GET_EVENT query
     const { loading, error, data } = useQuery(QUERY_ME);
+    console.log(data);
 
     return (
         <section id="content_dashboard_page">
@@ -36,14 +37,7 @@ const Dashboard = () => {
                     </h2>
                     <div id='board_elements'>
                         {data.user.map(() => (
-                        <div className='event_box'>
-                            <div id='event_header'>
-                                <h3>An Event</h3>
-                            </div>
-                            <div id="event_footer">
-                                <p>An event's description</p>
-                            </div>
-                        </div>                            
+                            <EventBoxes />
                         ))}
                     </div>
                 </div>
@@ -52,7 +46,17 @@ const Dashboard = () => {
     );
 };
 
-function EventBoxes({ event }) {
+function EventBoxes({ userInfo }) {
+    return (
+        <div>
+            {userInfo.events.map((events) => {
+                <EventBox key={events._id} />
+            })}
+        </div>
+    );
+};
+
+function EventBox() {
     return (
         <div className='event_box'>
             <div id='event_header'>
