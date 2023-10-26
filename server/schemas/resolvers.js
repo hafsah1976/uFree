@@ -70,8 +70,16 @@ const resolvers = {
                         }
                     },
                     { new: true }
-                    )
+                    );
 
+                await Event.findOneAndUpdate(
+                    { _id: event._id },
+                    {
+                        $addToSet: {
+                            attendees: context.user._id
+                        }
+                    }
+                );
                 return event;
             }
 
@@ -200,7 +208,7 @@ const resolvers = {
                 return 'Event deleted successfully';
             }
 
-            throw new AuthenticationError('You must be logged in to delete and event');
+            throw new AuthenticationError('You must be logged in to delete an event');
         },
         // for attendees, leave an event
         leaveEvent: async (parent, { eventId }, context) => {
