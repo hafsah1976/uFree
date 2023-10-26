@@ -7,12 +7,12 @@ const resolvers = {
         // finds a specific user depending on the username and shows
         // the user's events
         user: async (parent, { username }) => {
-            return User.findOne({ username }).populate('events');
+            return await User.findOne({ username }).populate('events').exec();
         },
 
         // finds an event by the eventId
         event: async (parent, { eventId }) => {
-            return Event.findOne({ _id: eventId});
+            return await Event.findOne({ _id: eventId});
 
         },
 
@@ -25,7 +25,7 @@ const resolvers = {
         // displays the current logged in user's info
         me: async (parent, args, context) => {
             if (context.user) {
-                return User.findOne({ _id: context.user._id }).populate('events');
+                return await User.findOne({ _id: context.user._id }).populate('events').exec();
             }
             throw new AuthenticationError('You need to be logged in!');
         },
@@ -58,9 +58,19 @@ const resolvers = {
         },
 
         // create a new event
-        createEvent: async (parent, { eventName }, context) => {
+        createEvent: async (parent, { name }, context) => {
             if (context.user) {
-                const event = await Event.create({ name: eventName, admin: context.user._id});
+                const event = await Event.create({ name: name, admin: context.user._id});
+
+                await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    {
+                        $addToSet: {
+                            events: event._id
+                        }
+                    },
+                    { new: true }
+                    )
 
                 return event;
             }
