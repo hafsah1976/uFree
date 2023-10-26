@@ -17,10 +17,10 @@ const resolvers = {
         },
 
         // finds the availabilities of an event
-        availabilities: async (parent, { eventId }) => {
-            const event = await Event.findOne({ _id: eventId }).populate('availabilities');
-            return event.availabilities;
-        },
+        // availabilities: async (parent, { eventId }) => {
+        //     const event = await Event.findOne({ _id: eventId }).populate('availabilities');
+        //     return event.availabilities;
+        // },
 
         // displays the current logged in user's info
         me: async (parent, args, context) => {
@@ -110,10 +110,10 @@ const resolvers = {
             throw new AuthenticationError('You must be logged in join an event');
         },
         // add your availability to an event
-        addAvailability: async (parent, { day, start, end, eventId }, context) => {
-        if (context.user) {
-            // create an availability object with day, start, and end
-            const availability = { day, start, end };
+        addAvailability: async (parent, { eventId, availabilities }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in to add your availability to an event');
+            }
 
             // find event by its id
             const event = await Event.findOne({ _id: eventId });
@@ -123,19 +123,16 @@ const resolvers = {
             }
 
             // add the availability object to the event's availabilities array
-            event.availabilities.push(availability);
+            event.availabilities.push(availabilities);
 
             // save the updated event
             const updatedEvent = await event.save();
 
             return updatedEvent;
-        }
-
-        throw new AuthenticationError('You must be logged in to add your availability to an event');
         },
 
         // edit your availability
-        editAvailability: async (parent, { day, start, end, eventId }, context) => {
+        editAvailability: async (parent, { eventId, availabilities }, context) => {
             if (context.user) {
                 // find event of availability you want to update
                 const eventAvailability = await Event.findOne({ _id: eventId });

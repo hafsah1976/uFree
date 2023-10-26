@@ -30,9 +30,12 @@ module.exports = {
         return req;
       }
 
+      console.log('-----------CONSOLEEEEEE_-------')
+      console.log(process.env.EXPIRATION_TIME);
+      console.log('-----------CONSOLEEEEEE_-------')
       // Verify the token and extract user data from it
       try {
-        const { data } = jwt.verify(token, process.env.SECRET_KEY, { maxAge: process.env.EXPIRATION_TIME });
+        const { data } = jwt.verify(token, process.env.SECRET_KEY);
         req.user = data; // Attach user data to the request object
       } catch (error) {
         console.log("Invalid token:", error); // Handle invalid tokens (for debugging)
