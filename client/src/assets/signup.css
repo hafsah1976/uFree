@@ -83,6 +83,18 @@
 	text-align: center;
 }
 
+.success_msg {
+	width: 370px;
+	padding: 15px;
+	margin: 5px 0;
+	font-size: 14px;
+	font-weight: bolder;
+	background-color: #3869bf;
+	color: white;
+	border-radius: 5px;
+	text-align: center;
+}
+
 .login_btn {
 	border: none;
 	outline: none;
