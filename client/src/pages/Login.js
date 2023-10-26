@@ -25,7 +25,7 @@ const Login = () => {
     { 
         const { name, value } = event.currentTarget;
     // Update the 'data' state when an input field value changes
-    userCredentials({ ...userCredentials, [name]: value });
+    setUserCredentials({ ...userCredentials, [name]: value });
     };
 
     // Define the event handler for form submission

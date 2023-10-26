@@ -80,7 +80,7 @@ const Signup = () => {
             </Link>
           </div>
           <div className="right">
-            <div className="form_container" onSubmit={handleSubmitEvent}>
+            <div className="form_container">
               <div className="signup-container">
                 <form className="form-container" onSubmit={handleSubmitEvent}>
                   <h1>Please Create an Account</h1>
