@@ -16,6 +16,7 @@ export default function DayWidget({ day, setDay, currentDay }) {
         <button className={`day_widget ${isSelected ? 'day_widget_selected' : ''}`} onClick={setDay} type="button">
             <p className="day_widget_abbr">{getDayAbbr(day)}</p>
             <p className="day_widget_char">{getDayChar(day)}</p>
+            <p></p>
 
             {isSelected && (
                 <div className='day_widget_select_icon'>
