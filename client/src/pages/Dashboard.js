@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import "../assets/dashboard.css";
 
 // import GET_EVENT query
-import { QUERY_ME, QUERY_SINGLE_USER } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
 import { useQuery } from '@apollo/client';
 
 const Dashboard = () => {
-
-    const eventBoxes = [1, 2, 3, 4, 5, 6];
 
     // using the GET_EVENT query
     const { loading, error, data } = useQuery(QUERY_ME);
