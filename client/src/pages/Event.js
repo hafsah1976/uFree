@@ -7,7 +7,6 @@ import { eventThumbnails } from '../images';
 import EventHeader from '../components/EventHeader';
 import EventDaySelector from '../components/EventDaySelector';
 
-console.log(eventThumbnails.dinner);
 const dataDummy = {
     id: '124374734ub3iu436436ui34',
     name: "Dinner with the Smiths",
@@ -48,7 +47,7 @@ const Event = () => {
 
     const { data, loading, error } = useQuery(GET_EVENT, {
         variables: {
-            eventId: '6534bd5eb8c95a4674d4da96'
+            eventId: '653b128d4ce385f197203c41'
         }
     });
 
@@ -56,11 +55,18 @@ const Event = () => {
     if (error) console.error('Event data error', error);
 
     return (
-        <section id="content_event_page">
-            <EventHeader event={data} />
+        <>
+            {loading
+                ? 
+                    <p>Loading...</p> 
+                : 
+                    <section id="content_event_page">
+                        <EventHeader event={data.event} />
 
-            <EventDaySelector avails={dataDummy.availabilities}/>
-        </section>
+                        <EventDaySelector avails={data.event.availabilities}/>
+                    </section>
+            }
+        </>
     );
 };
 
