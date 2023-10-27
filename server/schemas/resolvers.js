@@ -114,7 +114,7 @@ const resolvers = {
                     { _id: context.user._id },
                     {
                         $addToSet: {
-                            events: event._id
+                            events: updatedEvent._id
                         }
                     },
                     { new: true }
@@ -195,7 +195,10 @@ const resolvers = {
                 }
 
                 // check if user is admin
-                if (event.admin !== context.user._id) {
+                if (event.admin != context.user._id) {
+                    console.log('You are not an admin: ', event.admin);
+                    console.log(context.user._id);
+                    console.log(context.user._id === event.admin);
                     throw new Error('Only admins can delete this event');
                 }
 
