@@ -136,14 +136,17 @@ const resolvers = {
             }
 
             // find event by its id
-            const event = await Event.findOne({ _id: eventId });
+            const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
             if (!event) {
                 throw new Error('Event not found');
             }
 
             // add the availability object to the event's availabilities array
-            event.availabilities.push(availabilities);
+            event.availabilities.push({
+                userId: context.user._id ,
+                availabilities: availabilities
+            });
 
             // save the updated event
             const updatedEvent = await event.save();

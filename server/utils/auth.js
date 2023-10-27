@@ -30,6 +30,7 @@ module.exports = {
         return req;
       }
 
+      
       // Verify the token and extract user data from it
       try {
         const { data } = jwt.verify(token, process.env.SECRET_KEY);
