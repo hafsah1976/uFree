@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { monthAndDay } from '../utils/convertDate';
-
+import { useMutation } from "@apollo/client";
+import { ADD_AVAILABILITY } from "../utils/mutations";
 import DayOfWeekSelector from '../components/DayOfWeekSelector';
 
 const ALL_DAY = { start: 0, end: 24 };
@@ -18,23 +19,39 @@ const Availabilities = () => {
         sunday: {...ALL_DAY},
     });
 
-    const navigate = useNavigate();
+    const formattedAvails = Object.keys(avails).map(day => {
+        return {
+            day: day,
+            start: avails[day].start,
+            end: avails[day].end,
+        }
+    })
 
-    // TODO: handle mutation
+    const navigate = useNavigate();
+    const params = useParams();
+    const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
+    const [error, setError] = useState(""); // State for storing error messages
+    const [makeAvailibility] = useMutation(ADD_AVAILABILITY, {
+        variables: { 
+            ...formattedAvails,
+            eventId: params.eventId,
+        },
+    });
+    
     async function handleFormSubmit(event) {
         event.preventDefault();
+        // Perform user registration by calling the addUser mutation
+        const { data, error } = await makeAvailibility();
 
-        const formattedAvails = Object.keys(avails).map(day => {
-            return {
-                day: day,
-                start: avails[day].start,
-                end: avails[day].end,
-            }
-        })
+        if (error) {
+            console.error("Failed to make availablity");
+            setError(error.message);
+            setShowAlert("Failed to make availability. Please try again.");
+            return;
+        }
+        console.log(' avilabilty-Data:', data);
 
-        console.warn('TODO: HANDLE MUTATION', formattedAvails);
-
-        navigate('/eventPage');
+        // navigate('/eventPage');
     }
 
     const eventWeek = Date.now();
