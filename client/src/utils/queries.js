@@ -5,30 +5,22 @@ export const GET_EVENT = gql`
     event(eventId: $eventId) {
       _id
       name
+      location
+      description
+      thumbnail
+      week
+      code
+      availabilities {
+        userId
+        availabilities {
+          day
+          start
+          end
+        }
+      }
     }
   }
 `;
-// export const GET_EVENT = gql`
-//   query getEvent($eventId: ID!) {
-//     event(eventId: $eventId) {
-//       _id 
-//       name
-//       admin
-//       location
-//       description 
-//       thumbnail
-//       week
-//       attendees {
-//         _id
-//         username
-//       }
-//       availabilities {
-//       userId
-//       availabilities 
-//    }
-//     }
-//   }
-// `;
 
 export const QUERY_SINGLE_USER = gql`
   query getSingleUser($username: String!) {

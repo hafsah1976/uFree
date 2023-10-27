@@ -45,10 +45,9 @@ const dataDummy = {
 
 const Event = () => {
 
-    console.log(GET_EVENT);
-    const { data, error } = useQuery(GET_EVENT, {
+    const { data, loading, error } = useQuery(GET_EVENT, {
         variables: {
-            eventId: '6534bd5eb8c95a4674d4da96'
+            eventId: '653b128d4ce385f197203c41'
         }
     });
 
@@ -56,11 +55,18 @@ const Event = () => {
     if (error) console.error('Event data error', error);
 
     return (
-        <section id="content_event_page">
-            <EventHeader event={dataDummy} />
+        <>
+            {loading
+                ? 
+                    <p>Loading...</p> 
+                : 
+                    <section id="content_event_page">
+                        <EventHeader event={data.event} />
 
-            <EventDaySelector avails={dataDummy.availabilities}/>
-        </section>
+                        <EventDaySelector avails={data.event.availabilities}/>
+                    </section>
+            }
+        </>
     );
 };
 

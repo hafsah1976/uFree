@@ -8,6 +8,7 @@ const typeDefs = gql`
     location: String
     description: String
     thumbnail: String
+    code: String
     availabilities: [UserAvailibilities]
   }
 
@@ -38,7 +39,7 @@ const typeDefs = gql`
   }
 
   type Auth {
-    token: ID!
+    token: String!
     user: User
   }
 
