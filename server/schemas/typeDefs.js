@@ -48,7 +48,7 @@ const typeDefs = gql`
 
   type Query {
     user(username: String!): User
-    event(eventId: ID!): Event
+    event(eventId: String!): Event
     # availabilities(eventId: ID!): [UserAvailibilities] ###
     me: User
   }
@@ -58,7 +58,7 @@ const typeDefs = gql`
     signup(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     createEvent(name: String!, location: String, description: String, week: String, thumbnail: String): Event
-    joinEvent(eventId: ID!, code: String!): Event
+    joinEvent(code: String!): Event
     addAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
     editAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
     deleteEvent(eventId: ID!): Event

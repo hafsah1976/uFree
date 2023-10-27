@@ -12,6 +12,8 @@ const Signup = () => {
     password: "",
   });
 
+
+
   const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
   const [error, setError] = useState(""); // State for storing error messages
   // Use the signup mutation
@@ -49,14 +51,17 @@ const Signup = () => {
       return;
     }
 
-    console.log('Data:', data);
-    console.log('Data Signup:', data.signup);
-
-    // Check if the registration was successful
-    if (data.signup) {
-      Auth.login(data.signup.token); // Log in the user
-      navigate("/dashboard");
-      setShowAlert(true);
+    else {
+      console.log('Data:', data);
+      alert(data);
+   Auth.login(data.addUser.token); // Log in the user
+  
+   // Check if the registration was successful
+      if (data.addUser) {
+         Auth.login(data.addUser.token);
+        navigate("/dashboard");
+        setShowAlert(true);
+       }
     }
 
     // Clear the form inputs
@@ -69,20 +74,19 @@ const Signup = () => {
 
   return (
     <>
-      <div className={"signup_container"}>
-        <div className={"signup_form_container"}>
-          <div className={"left"}>
+      <div className='signup_container'>
+        <div className='signup_form_container'>
+          <div className='left'>
             <h1>Welcome Back</h1>
             <Link to="/login">
-              <button type="button" className={"login_btn"}>
+              <button type="button" className='login_btn'>
                 Log in
               </button>
             </Link>
           </div>
-          <div className="right">
+          <div className='right'>
             <div className="form_container">
               <div className="signup-container">
-                <form className="form-container" onSubmit={handleSubmitEvent}>
                   <h1>Please Create an Account</h1>
                   <input
                     type="text"
@@ -90,7 +94,7 @@ const Signup = () => {
                     name="username"
                     value={userCredentials.username}
                     required
-                    className="input"
+                    className='input'
                     onChange={(event) => {
                       setUserCredentials({ ...userCredentials, username: event.target.value });
                     }}
@@ -102,7 +106,7 @@ const Signup = () => {
                     onChange={handleInputChange}
                     value={userCredentials.email}
                     required
-                    className="input"
+                    className='input'
                   />
                   <input
                     type="password"
@@ -113,17 +117,16 @@ const Signup = () => {
                     onChange={(event) => {
                       setUserCredentials({ ...userCredentials, password: event.target.value });
                     }}
-                    className={"input"}
+                    className='input'
                   />
-                  {showAlert && <p className={"error_msg"}>Something went wrong with your signup!</p>}
-                  <button className="signup-btn" type="submit">
+                  {showAlert && <p className='error_msg'>Something went wrong with your signup!</p>}
+                  <button className='signup-btn' type="submit">
                     Sign Up
                   </button>
                   {showAlert && (
                       <p className={"success_msg"}>
                         Success! You may proceed and start creating your events! Don't Forget to Share! </p>
                         )}
-                </form>
                 <p>
                   Already have an account? <Link to="/login">Log In</Link>
                 </p>
