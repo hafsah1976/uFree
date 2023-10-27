@@ -1,5 +1,5 @@
 const User = require('./User');
 const Event = require('./Event');
-// const Availability = require('./Availability');
+// const Availabilities = require('./AvailabilitiesSchema');
 
 module.exports = { User, Event };

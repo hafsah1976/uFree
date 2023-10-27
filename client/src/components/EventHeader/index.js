@@ -58,7 +58,7 @@ export default function EventHeader({ event }) {
 
             <br/>
 
-            <Link to={`/events/${event.id}/availabilities`}>
+            <Link to={`/events/${event._id}/availabilities`}>
                 <button className='add_avail_btn btn_large btn_accent'>Add Your Availability</button>
             </Link>
             

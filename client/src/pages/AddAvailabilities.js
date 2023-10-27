@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { monthAndDay } from '../utils/convertDate';
-
+import { useMutation } from "@apollo/client";
+import {  ADD_AVAILABILITY } from "../utils/mutations";
 import DayOfWeekSelector from '../components/DayOfWeekSelector';
 
 const ALL_DAY = { start: 0, end: 24 };
@@ -19,12 +20,34 @@ const Availabilities = () => {
     });
 
     const navigate = useNavigate();
-
+    const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
+    const [error, setError] = useState(""); // State for storing error messages
+    const [makeAvailibility] = useMutation(ADD_AVAILABILITY, {
+        variables: { ...avails },
+      });
     // TODO: handle mutation
     async function handleFormSubmit(event) {
         event.preventDefault();
+     // Perform user registration by calling the addUser mutation
+      const { data, error } = await makeAvailibility();
 
-        console.warn('TODO: HANDLE MUTATION', avails);
+      if (error) {
+        console.error("Failed to make availablity");
+        setError(error.message);
+        setShowAlert("Failed to make availability. Please try again.");
+        return;
+      }
+      console.log(' avilabilty-Data:', data);
+
+        const formattedAvails = Object.keys(avails).map(day => {
+            return {
+                day: day,
+                start: avails[day].start,
+                end: avails[day].end,
+            }
+        })
+
+        console.warn('TODO: HANDLE MUTATION', formattedAvails);
 
         navigate('/eventPage');
     }
