@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_EVENT } from '../utils/queries';
+import { GET_EVENT, QUERY_SINGLE_USER } from '../utils/queries';
 
 import { eventThumbnails } from '../images';
 
@@ -45,13 +45,15 @@ const dataDummy = {
 
 const Event = () => {
 
-    const { data } = useQuery(GET_EVENT, {
+    console.log(GET_EVENT);
+    const { data, error } = useQuery(GET_EVENT, {
         variables: {
             eventId: '6534bd5eb8c95a4674d4da96'
         }
     });
 
-    console.log(data);
+    console.log('Event Data:', data);
+    if (error) console.error('Event data error', error);
 
     return (
         <section id="content_event_page">
