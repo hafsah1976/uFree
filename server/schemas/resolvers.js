@@ -136,7 +136,7 @@ const resolvers = {
             }
 
             // find event by its id
-            const event = await Event.findOne({ _id: eventId });
+            const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
             if (!event) {
                 throw new Error('Event not found');
