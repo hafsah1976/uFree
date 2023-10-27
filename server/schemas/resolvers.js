@@ -74,8 +74,16 @@ const resolvers = {
                         }
                     },
                     { new: true }
-                    )
+                    );
 
+                await Event.findOneAndUpdate(
+                    { _id: event._id },
+                    {
+                        $addToSet: {
+                            attendees: context.user._id
+                        }
+                    }
+                );
                 return event;
             }
 
@@ -110,7 +118,7 @@ const resolvers = {
                     { _id: context.user._id },
                     {
                         $addToSet: {
-                            events: event._id
+                            events: updatedEvent._id
                         }
                     },
                     { new: true }
@@ -194,12 +202,34 @@ const resolvers = {
                 }
 
                 // check if user is admin
-                if (event.admin !== context.user._id) {
+                if (event.admin != context.user._id) {
+                    console.log('You are not an admin: ', event.admin);
+                    console.log(context.user._id);
+                    console.log(context.user._id === event.admin);
                     throw new Error('Only admins can delete this event');
                 }
 
                 const deletedEvent = await Event.findOneAndDelete({ _id: eventId });
 
+                // remove event from all user's event's array
+                for (const userId of event.attendees) {
+
+
+                    console.log(userId);
+                    console.log(`Event to be removed: ${event}`);
+                    console.log(`attempting to remove event from  ${userId}'s events array`);
+
+                    await User.findOneAndUpdate(
+                        { _id: userId },
+                        {
+                            $pull: {
+                                events: eventId
+                            }
+                        },
+                        { new: true }
+                    )
+                    };
+                //
                 if (!deletedEvent) {
                     throw new Error('Error deleting the event');
                 }
@@ -207,7 +237,7 @@ const resolvers = {
                 return 'Event deleted successfully';
             }
 
-            throw new AuthenticationError('You must be logged in to delete and event');
+            throw new AuthenticationError('You must be logged in to delete an event');
         },
         // for attendees, leave an event
         leaveEvent: async (parent, { eventId }, context) => {
