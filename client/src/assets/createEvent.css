@@ -1,0 +1,15 @@
+#createEvent_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#createEvent_form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#createEvent_form form input, #createEvent_form form select {
+    margin: 10px;
+}

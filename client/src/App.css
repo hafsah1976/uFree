@@ -1,0 +1,178 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css");
+
+@font-face {
+  font-family: 'Doppio One';
+  src: url(./assets/DoppioOne.ttf);
+}
+
+:root {
+  --primary: #87ceeb;
+  --accent: #f1c233;
+  --light-gray: #eeeeee;
+  --light: #ffffff;
+  --dark: #000000;
+
+  --page-padding: 10%;
+  --common-border-radius: 5px;
+  --large-border-radius: 10px;
+  --common-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.302);
+
+  --padding-sm: 10px;
+  --padding-md: 20px;
+  --padding-lg: 40px;
+}
+
+* {
+  font-family: 'Doppio One', sans-serif;
+}
+
+
+.App {
+  /* display is set to show elements as a column*/
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  width: 100%;
+
+  background-color: var(--primary);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+/* styles the header elements */
+/* height value is a placeholder */
+#content_header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  height: 100px;
+}
+
+/* styles background for the page container */
+#page_container {
+  padding: 0 var(--page-padding);
+  padding-bottom: var(--page-padding);
+
+  position: relative;
+  /* border-radius: 10px;
+  border-style: groove;
+  box-shadow: 5px 5px 10px rgb(179, 153, 69), -5px 5px 10px rgb(179, 153, 69);
+
+  margin: 10px;
+
+  height: 900px; */
+}
+
+#header_nav_buttons {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+#header_nav_buttons a {
+  text-decoration: none;
+}
+
+.header_nav_button {
+  margin: 10px;
+  background-color: orange;
+  padding: 10px;
+
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+  text-decoration: none;
+}
+
+#content_home_page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  height: 700px;
+}
+
+#home_page_buttons {
+  display: flex;
+  justify-content: center;
+}
+
+#home_page_buttons div {
+  display: flex;
+  flex-direction: column;
+}
+
+.homepage_button {
+  margin: 10px;
+  background-color: orange;
+  padding: 10px;
+
+  width: 100px;
+
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px;
+  text-decoration: none;
+}
+
+.btn {
+  /* min-width: 150px; */
+  padding: 10px 15px;
+
+  /* font-size: 1.0rem; */
+  /* font-weight: bold; */
+
+  border: none;
+  border-radius: var(--common-border-radius);
+
+  box-shadow: var(--common-box-shadow);
+}
+
+.btn_large {
+  /* min-width: 150px; */
+  padding: 20px 30px;
+
+  font-size: 1.0rem;
+  font-weight: bold;
+
+  border: none;
+  border-radius: var(--large-border-radius);
+
+  box-shadow: var(--common-box-shadow);
+}
+
+.btn_accent {
+  background-color: var(--accent);
+}

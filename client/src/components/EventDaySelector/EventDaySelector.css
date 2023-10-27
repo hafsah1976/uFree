@@ -1,0 +1,14 @@
+#content_event_page .day_selector {
+    margin-top: calc(400px + min(var(--page-padding), 40px));
+    padding-top: min(var(--page-padding), 40px);
+}
+
+.horizontal_line {
+    /* width: 100%; */
+    /* height: 10px; */
+    border-bottom: 1px solid var(--dark);
+}
+
+.sweet_spot_time_span {
+    border-bottom: 3px solid var(--accent);
+}

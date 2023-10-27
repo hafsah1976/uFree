@@ -1,0 +1,49 @@
+#header_content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#header_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center
+}
+
+.dashboard_button {
+    margin: 10px;
+    background-color: orange;
+    padding: 10px;
+  
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px;
+    text-decoration: none;
+}
+
+#board_elements {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+    height: 500px;
+}
+
+.event_box {
+    height: 200px;
+    width: 200px;
+
+    background-color: gray;
+
+    margin: 20px;
+}
+
+#event_header {
+    height: 50%;
+    background-color: lightgray;
+}
+
+#event_footer {
+    height: 25%;
+    background-color: white;
+}
