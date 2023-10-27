@@ -1,31 +1,45 @@
+// Import necessary libraries and styles
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/login.css";
-import { login } from "../utils/mutations"; // Import the LOGIN_USER mutation
+import { LOG_IN } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
 import Auth from '../utils/auth';
 
-// contains the elements that will be present in the login page
-// element ids with DEBUG are dev only and should be removed in work ing product
+// Define the Login component
 const Login = () => {
-
-    // Initialize state for form data which containst user credentials 
+    // Initialize state to store user's email and password
     const [userCredentials, setUserCredentials] = useState({ email: "", password: "" });
-    const [validated] = useState(false); //validate form status
-    //const [error, setError] = useState(""); //for initializing error messages
-    const [showAlert, setShowAlert] = useState(false);// Alert display state
+        
+    // Initialize an error state for handling login errors
+    const [error, setError] = useState('');
 
-    // TODO: change these to useMutation when ready
-    const loginUser = () => console.warn('TODO: LOGIN_USER MUTATION');
-    const error = {};
-    // const [loginUser] = useMutation(LOGIN_USER);// Use useMutation to execute the LOGIN_USER mutation
+    // State to control whether to display an alert
+    const [showAlert, setShowAlert] = useState(false);
 
-    // function to handle changes in form input fields
-    const handleChange = (event) => 
-    { 
+    // Initialize a function to execute the login mutation
+    const loginUser = useMutation(LOG_IN,  {
+        variables: {...userCredentials},
+    });
+
+    // Initialize a state to control the disabled property of the login button
+    const [isLoginFormValid, setIsLoginFormValid] = useState(true)
+
+    // Use the useNavigate hook to handle page navigation
+    const navigate = useNavigate();
+
+    // Handle changes in the input fields
+    const handleChange = (event) => { 
         const { name, value } = event.currentTarget;
-    // Update the 'data' state when an input field value changes
-    setUserCredentials({ ...userCredentials, [name]: value });
+
+        // Update the userCredentials state with the changed input
+        setUserCredentials({ ...userCredentials, [name]: value });
+
+        // Check if both email and password are non-empty to determine form validity
+        const isFormValid = userCredentials.email.trim() !== '' && userCredentials.password.trim() !== '';
+
+        // Update the isLoginFormValid state based on the form's validity
+        setIsLoginFormValid(isFormValid);
     };
 
     // Define the event handler for form submission
@@ -40,13 +54,14 @@ const Login = () => {
         }
 
         try {
-            // Attempt to log in the user using the 'loginUser' function via the LOGIN_USER mutation
+            // Attempt to log in the user using the 'loginUser' function via the LOG_IN mutation
             const { data } = await loginUser({
                 variables: { ...userCredentials }
             });
 
-            // Extract the token and user data from the API response
+            // Store the user's token and navigate to the dashboard
             localStorage.setItem('token', Auth.login(data.login.token));
+            navigate("/dashboard");
 
         } catch (error) {
             if (
@@ -54,22 +69,28 @@ const Login = () => {
                 error.response.status >= 400 &&
                 error.response.status <= 500
             ) {
-                setShowAlert(true); // Display an alert for login failure
+                // Set the error state to display an error message
+                setError('Invalid username or password');
+                setShowAlert(true);
             }
+            
             // Clear the form data
-        setUserCredentials({
-            email: '',
-            password: '',
-        });
+            setUserCredentials({
+                email: '',
+                password: '',
+            });
         };
+    };
 
-        }
-          return (
-            <div className='login_container'>
-                <div className='login_form_container'>
-                    <div className='left'>
-                        <form className='form_container' onSubmit={handleOnSubmitEvent}>
-                            <h1>Login to Your Account</h1>
+    // Render the login form and related elements
+    return (
+        <div className='page-container'>
+            <div className='credentials_form_container'>
+                <div className='credentials_container'>
+                    <h1>Welcome Back!</h1>
+                    <div className='form_container'>
+                        <form onSubmit={handleOnSubmitEvent}>
+                            <h2>Login to Your Account</h2>
                             <input
                                 type="email"
                                 placeholder="Your E-mail"
@@ -80,31 +101,35 @@ const Login = () => {
                                 className='input'
                             />
                             <input
-							type="password"
-							placeholder="Your Password"
-							name="password"
-							onChange={handleChange}
-							value={userCredentials.password}
-							required
-							className='input'
-						/>
-						{error && <div className='error_msg'></div>}
-						<button type="submit" className='login_btn'>
-							Log In
-						</button>
-					</form>
-				</div>
-				<div className='right'>
-					<h1>New Here?</h1>
-					<Link to="/signup">
-						<button type="button" className='signup_btn' >
-							Sign Up Now
-						</button>
-					</Link>
-				</div>
-			</div>
-		</div>
-	);
+                                type="password"
+                                placeholder="Your Password"
+                                name="password"
+                                onChange={handleChange}
+                                value={userCredentials.password}
+                                required
+                                className='input'
+                            />
+                            {/* Display an error message if there is an error */}
+                            <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
+                            {/* Disable the button if the form is not valid */}
+                            <button type="submit" className='nav_btn' disabled={!isLoginFormValid}>
+                                Log In
+                            </button>
+                        </form>
+                        <div>
+                            <h3>Don't have an account?</h3>
+                            <Link to="/signup">
+                                <button className='nav_btn'>
+                                    Sign Up Now
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 };
 
+// Export the Login component
 export default Login;
