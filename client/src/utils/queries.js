@@ -1,23 +1,23 @@
 import { gql } from '@apollo/client';
 
 export const GET_EVENT = gql`
-  query getEvent($eventId: ID!) {
+  query getEvent($eventId: String!) {
     event(eventId: $eventId) {
-      _id 
+      _id
       name
-      admin
       location
-      description 
+      description
       thumbnail
       week
-      attendees {
-        _id
-        username
-      }
+      code
       availabilities {
-      userId
-      availabilities 
-   }
+        userId
+        availabilities {
+          day
+          start
+          end
+        }
+      }
     }
   }
 `;
@@ -43,3 +43,11 @@ export const QUERY_SINGLE_USER = gql`
     }
    }
 `;
+
+
+
+   
+    
+  
+
+ //,  dont need availabilities because we are getting it when returning single user, me

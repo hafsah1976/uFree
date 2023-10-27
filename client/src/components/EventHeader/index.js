@@ -21,17 +21,21 @@ export default function EventHeader({ event }) {
                 <p className='no-margin'>Week of {monthAndDay(event.week)}</p>
             </div>
 
-            <div className='event_header_info justify-content-start align-items-center'>
-                <i className="bi bi-geo-alt"></i>
-                <p className='no-margin'>{event.location}</p>
-            </div>
+            {event?.location && (
+                <div className='event_header_info justify-content-start align-items-center'>
+                    <i className="bi bi-geo-alt"></i>
+                    <p className='no-margin'>{event.location}</p>
+                </div>
+            )}
 
             <div className='justify-content-start align-items-center'>
                 <i className="bi bi-pass"></i>
                 <p>{event.code}</p>
             </div>
 
-            <p className='event_read_more' onClick={() => setDescriptionModal(true)}>Read more</p>
+            {event?.description && (
+                <p className='event_read_more' onClick={() => setDescriptionModal(true)}>Read more</p>
+            )}
 
             <ReactModal isOpen={descriptionModal} onRequestClose={() => setDescriptionModal(false)} appElement={document.querySelector('.App')} style={{
                     overlay: {
@@ -50,7 +54,7 @@ export default function EventHeader({ event }) {
                     }
                 }}>
                     <i className="modal_x bi bi-x" onClick={() => setDescriptionModal(false)}></i>
-                    <p>{event.description}</p>
+                    <p>{event?.description}</p>
 
                     <p className='modal_close' onClick={() => setDescriptionModal(false)}>Close</p>
 
@@ -58,7 +62,7 @@ export default function EventHeader({ event }) {
 
             <br/>
 
-            <Link to={`/events/${event.id}/availabilities`}>
+            <Link to={`/events/${event._id}/availabilities`}>
                 <button className='add_avail_btn btn_large btn_accent'>Add Your Availability</button>
             </Link>
             

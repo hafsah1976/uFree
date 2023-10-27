@@ -1,24 +1,33 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_EVENT = gql`
-  mutation CreateEvent($name: String!) {
-    createEvent(name: $name) {
-      name
+  mutation CreateEvent($name: String!, $location: String, $description: String, $week: String!, $thumbnail: String!) {
+    createEvent(name: $name, location: $location, description: $description, week: $week, thumbnail: $thumbnail) {
       _id
+      name
+      week
+      thumbnail
+      location
+      code
+      description
     }
   }
 `;
 
 export const ADD_AVAILABILITY = gql`
-  mutation addAvailability($eventId: ID, $availabilities: UserAvailibilities!) {
-    addAvailability(eventId: $eventId, availabilities: $availabilities) {
+mutation AddAvailability($eventId: String!, $availabilities: [DayAvailabilityInput]!) {
+  addAvailability(eventId: $eventId, availabilities: $availabilities) {
+    _id
+    availabilities {
+      userId
       availabilities {
         day
         start
         end
       }
     }
-  }
+  } 
+}
 `;
 
 export const SIGN_UP = gql`

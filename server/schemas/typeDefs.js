@@ -8,6 +8,7 @@ const typeDefs = gql`
     location: String
     description: String
     thumbnail: String
+    code: String
     availabilities: [UserAvailibilities]
   }
 
@@ -24,10 +25,6 @@ const typeDefs = gql`
     availabilities: [DayAvailability]
   }
 
-  input UserAvailibilitiesInput {
-    userId: ID
-    availabilities: [DayAvailabilityInput]
-  }
 
   type DayAvailability {
     day: String
@@ -48,7 +45,7 @@ const typeDefs = gql`
 
   type Query {
     user(username: String!): User
-    event(eventId: ID!): Event
+    event(eventId: String!): Event
     # availabilities(eventId: ID!): [UserAvailibilities] ###
     me: User
   }
@@ -59,8 +56,8 @@ const typeDefs = gql`
     login(email: String!, password: String!): Auth
     createEvent(name: String!, location: String, description: String, week: String, thumbnail: String): Event
     joinEvent(code: String!): Event
-    addAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
-    editAvailability(eventId: ID!, availabilities: UserAvailibilitiesInput!): UserAvailibilities
+    addAvailability(eventId: String!, availabilities: [DayAvailabilityInput]!): Event
+    editAvailability(eventId: String!, availabilities: [DayAvailabilityInput]!): Event
     deleteEvent(eventId: ID!): Event
     leaveEvent(eventId: ID!): Event
   }

@@ -1,11 +1,13 @@
 import React from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_EVENT, QUERY_SINGLE_USER } from '../utils/queries';
 
 import { eventThumbnails } from '../images';
 
 import EventHeader from '../components/EventHeader';
 import EventDaySelector from '../components/EventDaySelector';
 
-const data = {
+const dataDummy = {
     id: '124374734ub3iu436436ui34',
     name: "Dinner with the Smiths",
     week: Date.now(),
@@ -43,12 +45,28 @@ const data = {
 
 const Event = () => {
 
-    return (
-        <section id="content_event_page">
-            <EventHeader event={data} />
+    const { data, loading, error } = useQuery(GET_EVENT, {
+        variables: {
+            eventId: '653b128d4ce385f197203c41'
+        }
+    });
 
-            <EventDaySelector avails={data.availabilities}/>
-        </section>
+    console.log('Event Data:', data);
+    if (error) console.error('Event data error', error);
+
+    return (
+        <>
+            {loading
+                ? 
+                    <p>Loading...</p> 
+                : 
+                    <section id="content_event_page">
+                        <EventHeader event={data.event} />
+
+                        <EventDaySelector avails={data.event.availabilities}/>
+                    </section>
+            }
+        </>
     );
 };
 

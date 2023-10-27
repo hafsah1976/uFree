@@ -1,5 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Event, AvailabilitiesSchema } = require('../models');
+const { ObjectId } = require('mongoose').Types;
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -12,7 +13,11 @@ const resolvers = {
 
         // finds an event by the eventId
         event: async (parent, { eventId }) => {
-            return await Event.findOne({ _id: eventId});
+            const event = await Event.findOne({ _id: new ObjectId(eventId)});
+
+            console.log(event);
+            if (!event) throw new Error(`Could not find event with ID ${eventId}!`);
+            return event;
 
         },
 
@@ -58,24 +63,39 @@ const resolvers = {
         },
 
         // create a new event
-        createEvent: async (parent, { name }, context) => {
-            if (context.user) {
-                const event = await Event.create({ name: name, admin: context.user._id});
-
-                await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    {
-                        $addToSet: {
-                            events: event._id
-                        }
-                    },
-                    { new: true }
-                    )
-
-                return event;
+        createEvent: async (parent, { name, location, week, description, thumbnail }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in to create an event');
             }
 
-            throw new AuthenticationError('You must be logged in to create an event');
+            const event = await Event.create({
+                name: name,
+                admin: context.user._id,
+                location,
+                week,
+                description,
+                thumbnail,
+            });
+
+            await User.findOneAndUpdate(
+                { _id: context.user._id },
+                {
+                    $addToSet: {
+                        events: event._id
+                    }
+                },
+                { new: true }
+                );
+
+            await Event.findOneAndUpdate(
+                { _id: event._id },
+                {
+                    $addToSet: {
+                        attendees: context.user._id
+                    }
+                }
+            );
+            return event;
         },
 
         // join an event
@@ -106,7 +126,7 @@ const resolvers = {
                     { _id: context.user._id },
                     {
                         $addToSet: {
-                            events: event._id
+                            events: updatedEvent._id
                         }
                     },
                     { new: true }
@@ -132,14 +152,17 @@ const resolvers = {
             }
 
             // find event by its id
-            const event = await Event.findOne({ _id: eventId });
+            const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
             if (!event) {
                 throw new Error('Event not found');
             }
 
             // add the availability object to the event's availabilities array
-            event.availabilities.push(availabilities);
+            event.availabilities.push({
+                userId: context.user._id ,
+                availabilities: availabilities
+            });
 
             // save the updated event
             const updatedEvent = await event.save();
@@ -187,12 +210,34 @@ const resolvers = {
                 }
 
                 // check if user is admin
-                if (event.admin !== context.user._id) {
+                if (event.admin != context.user._id) {
+                    console.log('You are not an admin: ', event.admin);
+                    console.log(context.user._id);
+                    console.log(context.user._id === event.admin);
                     throw new Error('Only admins can delete this event');
                 }
 
                 const deletedEvent = await Event.findOneAndDelete({ _id: eventId });
 
+                // remove event from all user's event's array
+                for (const userId of event.attendees) {
+
+
+                    console.log(userId);
+                    console.log(`Event to be removed: ${event}`);
+                    console.log(`attempting to remove event from  ${userId}'s events array`);
+
+                    await User.findOneAndUpdate(
+                        { _id: userId },
+                        {
+                            $pull: {
+                                events: eventId
+                            }
+                        },
+                        { new: true }
+                    )
+                    };
+                //
                 if (!deletedEvent) {
                     throw new Error('Error deleting the event');
                 }
@@ -200,7 +245,7 @@ const resolvers = {
                 return 'Event deleted successfully';
             }
 
-            throw new AuthenticationError('You must be logged in to delete and event');
+            throw new AuthenticationError('You must be logged in to delete an event');
         },
         // for attendees, leave an event
         leaveEvent: async (parent, { eventId }, context) => {
