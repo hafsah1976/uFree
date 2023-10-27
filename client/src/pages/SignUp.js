@@ -47,7 +47,9 @@ const Signup = () => {
 
     try {
       // Attempt to sign up the user by calling the signUp mutation
-      const { data, error } = await signup();
+      const { data, error } = await signup({
+        variables:{...userCredentials}
+      });
 
       if (error) {
         // Handle the case where sign-up fails
@@ -60,7 +62,7 @@ const Signup = () => {
         console.log('Data:', data);
         alert(data);
         Auth.login(data.signup.token); // Log in the user
-
+        navigate("/dashboard");
         // Check if the registration was successful
         if (data.signup) {
           Auth.login(data.signup.token); // Log in the user
@@ -68,8 +70,8 @@ const Signup = () => {
           setShowAlert(true); // Display an alert
         }
       }
-    } catch (err) {
-      console.error("Failed to sign-up user", err);
+    } catch (error) {
+      console.error("Failed to sign-up user", error);
       // Handle additional errors if needed
     } 
       // Clear the form inputs
@@ -117,12 +119,12 @@ const Signup = () => {
               />
               {/* Display an error message if there is an error */}
               <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
-              <button className='nav_btn' type="submit">
+            <Link to='/dashboard'>  <button className='nav_btn' type="submit">
                 Sign Up
               </button>
                 <div className={`success_msg ${showAlert ? '' : 'invisible'}`}>
                   Success! You may proceed and start creating your events! Don't Forget to Share!
-                </div>
+                </div></Link>
             </form>
             <div>
               <h3>Already have an account?</h3>
