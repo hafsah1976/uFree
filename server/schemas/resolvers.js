@@ -13,9 +13,10 @@ const resolvers = {
 
         // finds an event by the eventId
         event: async (parent, { eventId }) => {
-            console.log('find event resolver executed!');
             const event = await Event.findOne({ _id: new ObjectId(eventId)});
+
             console.log(event);
+            if (!event) throw new Error(`Could not find event with ID ${eventId}!`);
             return event;
 
         },
@@ -62,32 +63,39 @@ const resolvers = {
         },
 
         // create a new event
-        createEvent: async (parent, { name }, context) => {
-            if (context.user) {
-                const event = await Event.create({ name: name, admin: context.user._id});
-
-                await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    {
-                        $addToSet: {
-                            events: event._id
-                        }
-                    },
-                    { new: true }
-                    );
-
-                await Event.findOneAndUpdate(
-                    { _id: event._id },
-                    {
-                        $addToSet: {
-                            attendees: context.user._id
-                        }
-                    }
-                );
-                return event;
+        createEvent: async (parent, { name, location, week, description, thumbnail }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in to create an event');
             }
 
-            throw new AuthenticationError('You must be logged in to create an event');
+            const event = await Event.create({
+                name: name,
+                admin: context.user._id,
+                location,
+                week,
+                description,
+                thumbnail,
+            });
+
+            await User.findOneAndUpdate(
+                { _id: context.user._id },
+                {
+                    $addToSet: {
+                        events: event._id
+                    }
+                },
+                { new: true }
+                );
+
+            await Event.findOneAndUpdate(
+                { _id: event._id },
+                {
+                    $addToSet: {
+                        attendees: context.user._id
+                    }
+                }
+            );
+            return event;
         },
 
         // join an event
