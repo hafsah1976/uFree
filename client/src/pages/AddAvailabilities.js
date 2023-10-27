@@ -19,29 +19,33 @@ const Availabilities = () => {
         sunday: {...ALL_DAY},
     });
 
-    const formattedAvails = Object.keys(avails).map(day => {
-        return {
-            day: day,
-            start: avails[day].start,
-            end: avails[day].end,
-        }
-    })
-
     const navigate = useNavigate();
-    const params = useParams();
+    const { eventId } = useParams();
     const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
     const [error, setError] = useState(""); // State for storing error messages
-    const [makeAvailibility] = useMutation(ADD_AVAILABILITY, {
-        variables: { 
-            ...formattedAvails,
-            eventId: params.eventId,
-        },
-    });
+    const [makeAvailibility] = useMutation(ADD_AVAILABILITY);
     
     async function handleFormSubmit(event) {
         event.preventDefault();
         // Perform user registration by calling the addUser mutation
-        const { data, error } = await makeAvailibility();
+        const formattedAvails = Object.keys(avails).map(day => {
+            return {
+                day: day,
+                start: avails[day].start,
+                end: avails[day].end,
+            }
+        })
+        
+        console.log('PAYLOAD:', { 
+            availabilities: formattedAvails,
+            eventId,
+        });
+        const { data, error } = await makeAvailibility({
+            variables: { 
+                availabilities: formattedAvails,
+                eventId,
+            },
+        });
 
         if (error) {
             console.error("Failed to make availablity");

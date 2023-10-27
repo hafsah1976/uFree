@@ -51,18 +51,14 @@ const Signup = () => {
       return;
     }
 
-    else {
-      console.log('Data:', data);
-      alert(data);
-   Auth.login(data.addUser.token); // Log in the user
-  
-   // Check if the registration was successful
-      if (data.addUser) {
-         Auth.login(data.addUser.token);
-        navigate("/dashboard");
-        setShowAlert(true);
-       }
-    }
+    console.log('Data:', data);
+
+    // Check if the registration was successful
+    if (data.signup) {
+      Auth.login(data.signup.token);
+      navigate("/dashboard");
+      setShowAlert(true);
+      }
 
     // Clear the form inputs
     setUserCredentials({
@@ -73,69 +69,67 @@ const Signup = () => {
   };
 
   return (
-    <>
-      <div className='signup_container'>
-        <div className='signup_form_container'>
-          <div className='left'>
-            <h1>Welcome Back</h1>
-            <Link to="/login">
-              <button type="button" className='login_btn'>
-                Log in
-              </button>
-            </Link>
-          </div>
-          <div className='right'>
-            <div className="form_container">
-              <div className="signup-container">
-                  <h1>Please Create an Account</h1>
-                  <input
-                    type="text"
-                    placeholder="Create your unique Username"
-                    name="username"
-                    value={userCredentials.username}
-                    required
-                    className='input'
-                    onChange={(event) => {
-                      setUserCredentials({ ...userCredentials, username: event.target.value });
-                    }}
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    name="email"
-                    onChange={handleInputChange}
-                    value={userCredentials.email}
-                    required
-                    className='input'
-                  />
-                  <input
-                    type="password"
-                    placeholder="Create Your Password"
-                    name="password"
-                    value={userCredentials.password}
-                    required
-                    onChange={(event) => {
-                      setUserCredentials({ ...userCredentials, password: event.target.value });
-                    }}
-                    className='input'
-                  />
-                  {showAlert && <p className='error_msg'>Something went wrong with your signup!</p>}
-                  <button className='signup-btn' type="submit">
-                    Sign Up
-                  </button>
-                  {showAlert && (
-                      <p className={"success_msg"}>
-                        Success! You may proceed and start creating your events! Don't Forget to Share! </p>
-                        )}
-                <p>
-                  Already have an account? <Link to="/login">Log In</Link>
-                </p>
-              </div>
+    <div className='signup_container'>
+      <div className='signup_form_container'>
+        <div className='left'>
+          <h1>Welcome Back</h1>
+          <Link to="/login">
+            <button type="button" className='login_btn'>
+              Log in
+            </button>
+          </Link>
+        </div>
+        <div className='right'>
+          <form className="form_container" onSubmit={handleSubmitEvent}>
+            <div className="signup-container">
+                <h1>Please Create an Account</h1>
+                <input
+                  type="text"
+                  placeholder="Create your unique Username"
+                  name="username"
+                  value={userCredentials.username}
+                  required
+                  className='input'
+                  onChange={(event) => {
+                    setUserCredentials({ ...userCredentials, username: event.target.value });
+                  }}
+                />
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  name="email"
+                  onChange={handleInputChange}
+                  value={userCredentials.email}
+                  required
+                  className='input'
+                />
+                <input
+                  type="password"
+                  placeholder="Create Your Password"
+                  name="password"
+                  value={userCredentials.password}
+                  required
+                  onChange={(event) => {
+                    setUserCredentials({ ...userCredentials, password: event.target.value });
+                  }}
+                  className='input'
+                />
+                {showAlert && <p className='error_msg'>Something went wrong with your signup!</p>}
+                <button className='signup-btn' type="submit">
+                  Sign Up
+                </button>
+                {showAlert && (
+                    <p className={"success_msg"}>
+                      Success! You may proceed and start creating your events! Don't Forget to Share! </p>
+                      )}
+              <p>
+                Already have an account? <Link to="/login">Log In</Link>
+              </p>
             </div>
-          </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
