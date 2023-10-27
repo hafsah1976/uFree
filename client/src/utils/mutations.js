@@ -10,15 +10,19 @@ export const CREATE_EVENT = gql`
 `;
 
 export const ADD_AVAILABILITY = gql`
-  mutation addAvailability($eventId: ID, $availabilities: UserAvailibilities!) {
-    addAvailability(eventId: $eventId, availabilities: $availabilities) {
+mutation AddAvailability($eventId: String!, $availabilities: [DayAvailabilityInput]!) {
+  addAvailability(eventId: $eventId, availabilities: $availabilities) {
+    _id
+    availabilities {
+      userId
       availabilities {
         day
         start
         end
       }
     }
-  }
+  } 
+}
 `;
 
 export const SIGN_UP = gql`

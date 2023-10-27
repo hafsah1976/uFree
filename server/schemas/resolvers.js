@@ -143,7 +143,10 @@ const resolvers = {
             }
 
             // add the availability object to the event's availabilities array
-            event.availabilities.push(availabilities);
+            event.availabilities.push({
+                userId: context.user._id ,
+                availabilities: availabilities
+            });
 
             // save the updated event
             const updatedEvent = await event.save();
