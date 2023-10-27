@@ -1,5 +1,6 @@
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Event, AvailabilitiesSchema } = require('../models');
+const { ObjectId } = require('mongoose').Types;
 const { signToken } = require('../utils/auth');
 
 const resolvers = {
@@ -12,7 +13,10 @@ const resolvers = {
 
         // finds an event by the eventId
         event: async (parent, { eventId }) => {
-            return await Event.findOne({ _id: eventId});
+            console.log('find event resolver executed!');
+            const event = await Event.findOne({ _id: new ObjectId(eventId)});
+            console.log(event);
+            return event;
 
         },
 

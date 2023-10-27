@@ -30,9 +30,6 @@ module.exports = {
         return req;
       }
 
-      console.log('-----------CONSOLEEEEEE_-------')
-      console.log(process.env.EXPIRATION_TIME);
-      console.log('-----------CONSOLEEEEEE_-------')
       // Verify the token and extract user data from it
       try {
         const { data } = jwt.verify(token, process.env.SECRET_KEY);
