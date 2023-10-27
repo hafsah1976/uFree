@@ -242,8 +242,11 @@ const resolvers = {
         // for attendees, leave an event
         leaveEvent: async (parent, { eventId }, context) => {
             if (context.user) {
+
+                const event = await Event.findOne({ _id: new ObjectId(eventId) });
+                console.log(event);
                 const updatedEvent = await Event.findOneAndUpdate(
-                    { _id: eventId },
+                    { _id: new ObjectId(eventId) },
                     {
                         $pull: {
                             attendees: { _id: context.user._id }
@@ -252,11 +255,23 @@ const resolvers = {
                     { new: true } // return the updated event
                 );
 
+                console.log('Removing event from user');
+
+                await User.findOneAndUpdate(
+                    { _id: context.user._id},
+                    {
+                        $pull: {
+                            events: eventId
+                        }
+                    },
+                    { new: true}
+                );
+
                 if (!updatedEvent) {
                     throw new Error('Event not found');
                 }
 
-                return 'you have left the event';
+                return updatedEvent;
             }
 
 
