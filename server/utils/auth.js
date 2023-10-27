@@ -7,6 +7,7 @@ const jwt = require("jsonwebtoken");
 // const SECRET_KEY = process.env.JWT_SECRETKEY;
 // const EXPIRATION_TIME = process.env.JWT_EXPIRATION;
 
+  // Function to validate an email address
 function isValidEmail (email) {
   const emailRegex = /.+@.+\..+/;
   return emailRegex.test(email);
@@ -22,7 +23,10 @@ module.exports = {
 
       // If the token is included in the 'Authorization' header, extract it
       if (req.headers.authorization) {
-        token = token.split(" ").pop().trim(); // Remove 'Bearer ' from the token string
+        token = token.split
+        (" ")
+        .pop()
+        .trim(); // Remove 'Bearer ' from the token string
       }
 
       // If there's no token, return the original request object
@@ -47,7 +51,6 @@ module.exports = {
     }
   },
 
-  // Function to validate an email address
 
 
   // Function for signing a JWT with user data
