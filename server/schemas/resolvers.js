@@ -202,11 +202,29 @@ const resolvers = {
                     throw new Error('Only admins can delete this event');
                 }
 
-                const deletedEvent = await Event.findOneAndDelete({ _id: eventId });
+                // const deletedEvent = await Event.findOneAndDelete({ _id: eventId });
 
-                if (!deletedEvent) {
-                    throw new Error('Error deleting the event');
-                }
+                // TODO: remove event from all user's event's array
+                for (const userId of event.attendees) {
+
+
+                    console.log(userId);
+
+                    await User.findOneAndUpdate(
+                        console.log(`attempting to remove event from , ${userId}'s events array`),
+                        { _id: userId },
+                        {
+                            $pull: {
+                                events: eventId
+                            }
+                        },
+                        { new: true }
+                    )
+                    };
+                //
+                // if (!deletedEvent) {
+                //     throw new Error('Error deleting the event');
+                // }
 
                 return 'Event deleted successfully';
             }
