@@ -62,24 +62,32 @@ const resolvers = {
         },
 
         // create a new event
-        createEvent: async (parent, { name }, context) => {
-            if (context.user) {
-                const event = await Event.create({ name: name, admin: context.user._id});
-
-                await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    {
-                        $addToSet: {
-                            events: event._id
-                        }
-                    },
-                    { new: true }
-                    )
-
-                return event;
+        createEvent: async (parent, { name, location, week, description, thumbnail }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in to create an event');
             }
 
-            throw new AuthenticationError('You must be logged in to create an event');
+            const event = await Event.create({
+                name: name,
+                admin: context.user._id,
+                location,
+                week,
+                description,
+                thumbnail,
+            });
+
+            await User.findOneAndUpdate(
+                { _id: context.user._id },
+                {
+                    $addToSet: {
+                        events: event._id
+                    }
+                },
+                { new: true }
+                )
+
+            return event;
+
         },
 
         // join an event

@@ -7,6 +7,7 @@ import { eventThumbnails } from '../images';
 import EventHeader from '../components/EventHeader';
 import EventDaySelector from '../components/EventDaySelector';
 
+console.log(eventThumbnails.dinner);
 const dataDummy = {
     id: '124374734ub3iu436436ui34',
     name: "Dinner with the Smiths",
@@ -45,8 +46,7 @@ const dataDummy = {
 
 const Event = () => {
 
-    console.log(GET_EVENT);
-    const { data, error } = useQuery(GET_EVENT, {
+    const { data, loading, error } = useQuery(GET_EVENT, {
         variables: {
             eventId: '6534bd5eb8c95a4674d4da96'
         }
@@ -57,7 +57,7 @@ const Event = () => {
 
     return (
         <section id="content_event_page">
-            <EventHeader event={dataDummy} />
+            <EventHeader event={data} />
 
             <EventDaySelector avails={dataDummy.availabilities}/>
         </section>
