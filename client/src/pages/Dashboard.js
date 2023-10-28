@@ -2,9 +2,16 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../assets/dashboard.css";
 
+// importing get single user, which is the user themselves
+import { QUERY_SINGLE_USER } from '../utils/queries';
+import { useQuery } from '@apollo/client';
+
 const Dashboard = () => {
 
     const eventBoxes = [1, 2, 3, 4, 5, 6];
+
+    // queries the database for a single user
+    const { loading, error, data } = useQuery(QUERY_SINGLE_USER);
 
     return (
         <section id="content_dashboard_page">
@@ -44,5 +51,28 @@ const Dashboard = () => {
         </section>
     );
 };
+
+function EventBoxes(events) {
+    return  (
+        <div>
+            {events.map(() => {
+                <EventBox />
+            })}
+        </div>
+    )
+};
+
+function EventBox() {
+    return (
+        <div className='event_box'>
+            <div id='event_header'>
+                <h3>An Event</h3>
+            </div>
+            <div id="event_footer">
+                <p>An event's description</p>
+            </div>
+        </div>    
+    )
+}
 
 export default Dashboard;
