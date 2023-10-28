@@ -63,3 +63,18 @@ export const LEAVE_EVENT = gql`
     }
   }
 `;
+
+export const DELETE_EVENT = gql`
+mutation DeleteEvent($eventId: String!) {
+  deleteEvent(eventId: $eventId) {
+    _id
+    name
+    admin
+    location
+    description
+    attendees
+    week
+    availabilities
+  }
+}
+`;

@@ -56,6 +56,8 @@ export const ME = gql`
         thumbnail
         week
         location
+        code
+        thumbnail
       }
     }
   }

@@ -42,7 +42,6 @@
   text-align: center;
 }
 
-
 .page_container {
   padding: 0 var(--page-padding);
   padding-bottom: var(--page-padding);}
@@ -64,5 +63,15 @@
   .homepage_button {
     width: 200px;
     font-size: 20px;
+  }
+}
+
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px); /* Adjust the float height */
   }
 }

@@ -30,7 +30,7 @@ const Home = () => {
           />
         </div>
       </section>
-    </div>
+      </div>
   );
 };
 

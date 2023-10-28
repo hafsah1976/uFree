@@ -5,6 +5,7 @@ import "../assets/login.css";
 import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "../utils/mutations";
 
+
 const Signup = () => {
   // State to hold user input and form validation
   const [userCredentials, setUserCredentials] = useState({
@@ -29,6 +30,12 @@ const Signup = () => {
     const name = target.name;
 
     setUserCredentials({ ...userCredentials, [name]: value });
+
+  // Check if username , email and password are non-empty to determine form validity
+  // const isFormValid = userCredentials.username.trim() !== '' && userCredentials.email.trim() !== '' && userCredentials.password.trim() !== '';
+        
+  // Update the iIsSignUpFormValid state based on the form's validity
+  // setIsSignUpFormValid(isFormValid);
   };
 
   // Use the navigate hook for page navigation
@@ -39,9 +46,9 @@ const Signup = () => {
     event.preventDefault();
 
     // Check if the form has all the required fields (as per react-bootstrap docs)
-    const signupForm = event.target;
-    if (signupForm.checkValidity() === false) {
-      event.preventDefault();    }
+    // const signupForm = event.target;
+    // if (signupForm.checkValidity() === false) {
+    //   event.preventDefault();    }
 
     try {
       // Attempt to sign up the user by calling the signUp mutation
@@ -116,24 +123,25 @@ const Signup = () => {
               />
               {/* Display an error message if there is an error */}
               <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
-              <button className='nav_btn' type="submit">Sign Up</button>
+              <button className='nav_btn' type="submit" >Sign Up</button>
+              <div>
+              <h3>Already have an account?</h3>
+              <Link to="/login">
+                <button className="nav_btn">Log In</button>
+              </Link>
+            </div>
+
               <div className={`success_msg ${showAlert ? '' : 'invisible'}`}>
                 Success! You may proceed and start creating your events! Don't Forget to Share!
               </div>
+
+
             </form>
-            <div>
-              <h3>Already have an account?</h3>
-              <Link to="/login">
-                <button className='nav_btn'>
-                  Log In
-                </button>
-              </Link>
-            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
-
-export default Signup;
+  </div>
+    );
+  };
+  
+  export default Signup;

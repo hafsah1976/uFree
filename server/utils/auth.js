@@ -23,8 +23,7 @@ module.exports = {
 
       // If the token is included in the 'Authorization' header, extract it
       if (req.headers.authorization) {
-        token = token
-        .split(" ")
+        token = token.split(" ")
         .pop()
         .trim(); // Remove 'Bearer ' from the token string
       }
