@@ -12,8 +12,8 @@ const HeaderNavBar = () => {
                 <Link to="/signup"><div id="button_login" className="header_nav_button">Sign Up</div></Link>
                 <Link to="/dashboard"><div id="DEBUG_button_dashboard" className="header_nav_button">Dashboard</div></Link>
                 <Link to="/events/create"><div id="button_createEvent"className="header_nav_button">Create Event</div></Link>
-                <Link to="/eventPage"><div id="DEBUG_button_eventPage" className="header_nav_button">Event Page</div></Link>
-                <Link to="/events/availabilities"><div id="DEBUG_button_availabilities" className="header_nav_button">Availabilities</div></Link>
+                <Link to="/events"><div id="DEBUG_button_eventPage" className="header_nav_button">Search Event</div></Link>
+                {/* <Link to="/events/availabilities"><div id="DEBUG_button_availabilities" className="header_nav_button">Availabilities</div></Link> */}
             </section>
         </section>
     )
