@@ -23,7 +23,7 @@ export default function DayOfWeekSelector({ avails, setAvails }) {
         <div className="day_selector">
             <div className="day_widget_container">
                 {daysOfWeek.map((day, key) => 
-                    <DayWidget key={key} day={day} currentDay={currentDay} setDay={() => setDay(day)} isOpen={(avails[day].start !== 0) && (avails[day].end !== 0)} />
+                    <DayWidget key={key} day={day} currentDay={currentDay} setDay={() => setDay(day)} avails={avails[day]} />
                 )}
             </div>
 

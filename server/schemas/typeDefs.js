@@ -9,6 +9,7 @@ const typeDefs = gql`
     description: String
     thumbnail: String
     code: String
+    attendees: [User]
     availabilities: [UserAvailibilities]
   }
 

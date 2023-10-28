@@ -54,6 +54,17 @@ export const LOG_IN = gql`
     }
   }
 `;
+export const LOG_OUT = gql`
+  mutation logout($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        email
+        username
+      }
+    }
+  }
+`;
 
 export const LEAVE_EVENT = gql`
   mutation leaveEvent($eventId: String!){
@@ -61,6 +72,22 @@ export const LEAVE_EVENT = gql`
       _id
       name
     }
+  }
+`;
+
+export const EDIT_AVAILABILITY = gql`
+  mutation editAvailability($eventId: String!, $availabilities: [DayAvailabilityInput]!) {
+    editAvailability(eventId: $eventId, availabilities: $availabilities) {
+      _id
+      availabilities {
+        userId
+        availabilities {
+          day
+          start
+          end
+          }
+        }
+      }
   }
 `;
 

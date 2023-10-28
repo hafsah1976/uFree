@@ -7,7 +7,7 @@ import { useMutation } from "@apollo/client";
 import Auth from '../utils/auth';
 
 // Define the Login component
-const Login = () => {
+const Login = ({ loginFunc }) => {
     // Initialize state to store user's email and password
     const [userCredentials, setUserCredentials] = useState({ email: "", password: "" });
         
@@ -71,6 +71,7 @@ const Login = () => {
 
             // Store the user's token and navigate to the dashboard
             Auth.login(data.login.token);
+            loginFunc();
             navigate("/dashboard");
 
         } catch (error) {

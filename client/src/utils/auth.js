@@ -46,9 +46,6 @@ class AuthService {
 login(idToken) {
     // Save the user token to local storage
     localStorage.setItem('id_token', idToken);
-  
-    // Redirect the user to the home page
-    // window.location.assign('/');
   }
 
 
@@ -56,9 +53,6 @@ login(idToken) {
  logout() {
     // Clear the user token and profile data from local storage
     localStorage.removeItem('id_token');
-  
-    // Reload the page to reset the application state
-    // window.location.reload();
   }
 } 
 

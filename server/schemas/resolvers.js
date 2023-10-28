@@ -13,9 +13,11 @@ const resolvers = {
 
         // finds an event by the eventId
         event: async (parent, { eventId }) => {
-            const event = await Event.findOne({ _id: new ObjectId(eventId)});
+            const event = await Event
+                .findOne({ _id: new ObjectId(eventId)})
+                .populate('attendees')
+                .exec();
 
-            console.log(event);
             if (!event) throw new Error(`Could not find event with ID ${eventId}!`);
             return event;
 
@@ -158,6 +160,23 @@ const resolvers = {
                 throw new Error('Event not found');
             }
 
+             // add logic to check if user is apart of event before adding availability
+            //  console.log(event.attendees.includes(context.user._id));
+             if (!(event.attendees.includes(context.user._id))) {
+                throw new Error('You must be in this event to add your availability');
+
+             }
+
+            // check if user already has an availability, if so, prevent user from creating
+            // another one
+            console.log(event.availabilities.length);
+            for (let i = 0; i < event.availabilities.length; i++) {
+                // console.log(event.availabilities[i].userId);
+                if (event.availabilities[i].userId == context.user._id) {
+                    throw new Error('You have already added your availability, please edit it instead');
+                }
+            }
+
             // add the availability object to the event's availabilities array
             event.availabilities.push({
                 userId: context.user._id ,
@@ -174,24 +193,19 @@ const resolvers = {
         editAvailability: async (parent, { eventId, availabilities }, context) => {
             if (context.user) {
                 // find event of availability you want to update
-                const eventAvailability = await Event.findOne({ _id: eventId });
+                const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
-                if (!eventAvailability) {
+                if (!event) {
                     throw new Error('Event not found');
                 }
 
-                // update the availability fields if new values are provided
-                if (day) {
-                    eventAvailability.day = day;
-                }
-                if (start) {
-                    eventAvailability.start = start;
-                }
-                if (end) {
-                    eventAvailability.end = end;
-                }
+                // find availability of user and update it
+                const userAvail = event.availabilities.find(a => a.userId == context.user._id);
+                console.log(userAvail);
+                userAvail.availabilities = availabilities;
+
                 // save the updated event
-                const updatedAvailability = await eventAvailability.save();
+                const updatedAvailability = await event.save();
 
                 return updatedAvailability;
             }

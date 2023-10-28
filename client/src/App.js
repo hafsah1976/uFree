@@ -1,5 +1,6 @@
-import React from 'react';
+import { React, useState } from 'react';
 import logo from './logo.svg';
+import Auth from './utils/auth';
 import './helpers.css';
 import './App.css';
 
@@ -54,24 +55,26 @@ const client = new ApolloClient({
 });
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
+
   return (
     <ApolloProvider client={client}>
       <div className="App">
         <Router>
           <header className="App-header">
             <section id="content_header">
-              <HeaderNavBar />
+              <HeaderNavBar logoutFunc={() => setLoggedIn(false)} loggedIn={loggedIn} />
             </section>
           </header>
           <section id="page_container">
             <Routes>
               <Route 
               path='/'
-              element={<Home />}
+              element={loggedIn ? <Dashboard /> : <Home />}
               />
               <Route 
               path='/login'
-              element={<Login />}
+              element={<Login loginFunc={() => setLoggedIn(true)} />}
               />
               <Route 
               path='/dashboard'
@@ -91,7 +94,7 @@ function App() {
               />
               <Route 
               path='/signup'
-              element={<SignUp />}
+              element={<SignUp loginFunc={() => setLoggedIn(true)} />}
               />
               <Route 
               path='events/:eventId?/availabilities'
