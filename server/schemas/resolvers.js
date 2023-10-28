@@ -252,12 +252,11 @@ const resolvers = {
             if (context.user) {
 
                 const event = await Event.findOne({ _id: new ObjectId(eventId) });
-                console.log(event);
                 const updatedEvent = await Event.findOneAndUpdate(
-                    { _id: new ObjectId(eventId) },
+                    { _id: event._id },
                     {
                         $pull: {
-                            attendees: { _id: context.user._id }
+                            attendees: context.user._id
                         }
                     },
                     { new: true } // return the updated event
@@ -274,6 +273,7 @@ const resolvers = {
                     },
                     { new: true}
                 );
+                console.log(updatedEvent);
 
                 if (!updatedEvent) {
                     throw new Error('Event not found');
