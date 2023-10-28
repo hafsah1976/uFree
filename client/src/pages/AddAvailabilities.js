@@ -55,7 +55,7 @@ const Availabilities = () => {
         }
         // console.log(' avilabilty-Data:', data);
 
-        navigate('/eventPage');
+        navigate(`/events/${eventId}`);
     }
 
     const eventWeek = Date.now();
