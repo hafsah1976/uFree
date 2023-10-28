@@ -165,13 +165,24 @@ const resolvers = {
 
              }
 
+            // check if user already has an availability, if so, prevent user from creating
+            // another one
+            console.log(event.availabilities.length);
+            for (let i = 0; i < event.availabilities.length; i++) {
+                // console.log(event.availabilities[i].userId);
+                if (event.availabilities[i].userId == context.user._id) {
+                    throw new Error('You have already added your availability, please edit it instead');
+                }
+            }
+            // console.log(userAvailability);
+
             // add the availability object to the event's availabilities array
             event.availabilities.push({
                 userId: context.user._id ,
                 availabilities: availabilities
             });
 
-            
+
 
             // save the updated event
             const updatedEvent = await event.save();
