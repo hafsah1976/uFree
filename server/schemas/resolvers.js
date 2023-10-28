@@ -15,6 +15,7 @@ const resolvers = {
         event: async (parent, { eventId }) => {
             const event = await Event
                 .findOne({ _id: new ObjectId(eventId)})
+                .populate('admin')
                 .populate('attendees')
                 .exec();
 
@@ -214,10 +215,10 @@ const resolvers = {
         },
 
         // for admins only, delete an event
-        deleteEvent: async (parent, { eventId, }, context) => {
+        deleteEvent: async (parent, { eventId }, context) => {
             if (context.user) {
                 // find event by its id and check if it exists
-                const event = await Event.findOne({ _id: eventId });
+                const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
                 if (!event) {
                     throw new Error('Event not found');
@@ -231,7 +232,7 @@ const resolvers = {
                     throw new Error('Only admins can delete this event');
                 }
 
-                const deletedEvent = await Event.findOneAndDelete({ _id: eventId });
+                const deletedEvent = await Event.findOneAndDelete({ _id: new ObjectId(eventId) });
 
                 // remove event from all user's event's array
                 for (const userId of event.attendees) {
@@ -251,12 +252,12 @@ const resolvers = {
                         { new: true }
                     )
                     };
-                //
+                
                 if (!deletedEvent) {
                     throw new Error('Error deleting the event');
                 }
 
-                return 'Event deleted successfully';
+                return deletedEvent;
             }
 
             throw new AuthenticationError('You must be logged in to delete an event');

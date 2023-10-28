@@ -75,19 +75,27 @@ export const LEAVE_EVENT = gql`
   }
 `;
 
-
 export const EDIT_AVAILABILITY = gql`
   mutation editAvailability($eventId: String!, $availabilities: [DayAvailabilityInput]!) {
     editAvailability(eventId: $eventId, availabilities: $availabilities) {
       _id
-    availabilities {
-      userId
       availabilities {
-        day
-        start
-        end
+        userId
+        availabilities {
+          day
+          start
+          end
+          }
         }
       }
-    }
   }
+`;
+
+export const DELETE_EVENT = gql`
+mutation DeleteEvent($eventId: String!) {
+  deleteEvent(eventId: $eventId) {
+    _id
+    name
+  }
+}
 `;

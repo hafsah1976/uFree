@@ -18,7 +18,7 @@ const Login = ({ loginFunc }) => {
     const [showAlert, setShowAlert] = useState(false);
 
     // Initialize a function to execute the login mutation
-    const [loginUser] = useMutation(LOG_IN);
+    const [loginuser] = useMutation(LOG_IN);
 
     // Initialize a state to control the disabled property of the login button
     // const [isLoginFormValid, setIsLoginFormValid] = useState(true)
@@ -53,7 +53,7 @@ const Login = ({ loginFunc }) => {
 
         try {
             // Attempt to log in the user using the 'loginUser' function via the LOG_IN mutation
-            const { data, error } = await loginUser({
+            const { data, error } = await loginuser({
                 variables: { ...userCredentials }
             });
 
@@ -93,7 +93,7 @@ const Login = ({ loginFunc }) => {
         };
     };
 
-    // Render the login form and related elements
+    // Render the sign-up form and related elements
     return (
         <div className='page-container'>
             <div className='credentials_form_container'>
@@ -123,8 +123,7 @@ const Login = ({ loginFunc }) => {
                             {/* Display an error message if there is an error */}
                             <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
                             {/* Disable the button if the form is not valid */}
-                            <button type="submit" className='nav_btn'>
-                            {/* <button type="submit" className='nav_btn' disabled={!isLoginFormValid}> */}
+                           <button type="submit" className='nav_btn'> 
                                 Log In
                             </button>
                         </form>
@@ -139,6 +138,15 @@ const Login = ({ loginFunc }) => {
                     </div>
                 </div>
             </div>
+            <div className="image-container">
+            {/* Add your image source and styling here */}
+            <img
+                src="./src/images/page-images/create-event.jpg"
+                alt=""
+                className="image"
+            />
+                    </div>
+
         </div>
     );
 };

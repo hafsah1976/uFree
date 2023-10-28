@@ -8,6 +8,10 @@ export const GET_EVENT = gql`
       location
       description
       thumbnail
+      admin {
+        _id
+        username
+      }
       week
       code
       attendees {
@@ -60,6 +64,8 @@ export const ME = gql`
         thumbnail
         week
         location
+        code
+        thumbnail
       }
     }
   }
