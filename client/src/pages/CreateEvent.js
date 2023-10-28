@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toBeginningOfWeek } from '../utils/convertDate';
 import "../assets/createEvent.css"
-import { eventThumbnails } from '../images';
+import { pageImages, eventThumbnails } from '../images';
 import Calendar from 'react-calendar';
 
 // <input type='text' id="event_week" placeholder='Week of your event...' />
@@ -80,6 +80,12 @@ const CreateEvent = () => {
                     <input type='submit' value="submit" />           
                 </form>
             </div>
+
+            <img 
+                className='availabilities_background_image'
+                src={pageImages.createEvent}
+                alt="Create Event"
+            />
         </section>
     );
 };

@@ -14,10 +14,10 @@ const Home = () => {
         <section className="home_page_buttons">
           <div>
             <Link to="/signup">
-              <button id="button_createEvent" className="homepage_button btn_light">Create Event</button>
+              <button id="button_createEvent" className="homepage_button btn_accent">Create an Event</button>
             </Link>
             <Link to="/login">
-              <button id="button_login" className="homepage_button btn_accent">Login</button>
+              <button id="button_login" className="homepage_button btn_light">Login</button>
             </Link>
           </div>
         </section>

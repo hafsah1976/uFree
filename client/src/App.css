@@ -8,6 +8,7 @@
 :root {
   --primary: #87ceeb;
   --accent: #f1c233;
+  --accent-dark: #e5b831;
   --light-gray: #eeeeee;
   --light: #ffffff;
   --dark: #000000;
@@ -150,6 +151,14 @@ button:hover {
   background-color: var(--accent);
 }
 
+.btn_accent:hover {
+  background-color: var(--accent-dark);
+}
+
 .btn_light {
   background-color: var(--light);
+}
+
+.btn_light:hover {
+  background-color: var(--light-gray);
 }
