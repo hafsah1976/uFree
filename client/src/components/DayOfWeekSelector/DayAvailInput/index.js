@@ -17,7 +17,7 @@ export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
     const [timeInput, setTimeInput] = useState(ALL_DAY);
     const [timePickerInput, setTimePickerInput] = useState({
         start: '00:00',
-        end: '24:00'
+        end: '23:59'
     });
 
     function handleTimeInputChange(value, type) {
