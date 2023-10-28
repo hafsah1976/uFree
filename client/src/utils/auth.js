@@ -48,7 +48,7 @@ login(idToken) {
     localStorage.setItem('id_token', idToken);
   
     // Redirect the user to the home page
-    // window.location.assign('/');
+    window.location.assign('/');
   }
 
 
@@ -56,7 +56,7 @@ login(idToken) {
  logout() {
     // Clear the user token and profile data from local storage
     localStorage.removeItem('id_token');
-  
+  console.log("you are now logged out")
     // Reload the page to reset the application state
     // window.location.reload();
   }
