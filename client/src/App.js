@@ -27,7 +27,7 @@ import HeaderNavBar from "./components/HeaderNavBar/index.js";
 //import Home from "./pages/Home.js"
 //import Login from './pages/Login.js';
 
-import { Login, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent } from "./pages/PageContainer.js";
+import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent } from "./pages/PageContainer.js";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -78,7 +78,11 @@ function App() {
               element={<Dashboard />}
               />
               <Route 
-              path='/eventPage'
+              path='/events'
+              element={<GoToEvent />}
+              />
+              <Route 
+              path='/events/:eventId'
               element={<Event />}
               />
               <Route 

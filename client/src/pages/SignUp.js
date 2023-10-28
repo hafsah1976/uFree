@@ -20,9 +20,7 @@ const Signup = () => {
   const [error, setError] = useState('');
 
   // Use the signUp mutation
-  const [signup] = useMutation(SIGN_UP, {
-    variables: { ...userCredentials },
-  });
+  const [signup] = useMutation(SIGN_UP);
 
   // Function to handle changes in form inputs
   const handleInputChange = (event) => {
@@ -48,7 +46,7 @@ const Signup = () => {
     try {
       // Attempt to sign up the user by calling the signUp mutation
       const { data, error } = await signup({
-        variables:{...userCredentials}
+        variables: { ...userCredentials },
       });
 
       if (error) {
@@ -60,9 +58,8 @@ const Signup = () => {
       } else {
         // Sign-up was successful, log in the user
         console.log('Data:', data);
-        alert(data);
-        Auth.login(data.signup.token); // Log in the user
-        navigate("/dashboard");
+        console.log('Data:', data.signup);
+        // alert(data);
         // Check if the registration was successful
         if (data.signup) {
           Auth.login(data.signup.token); // Log in the user
@@ -119,12 +116,10 @@ const Signup = () => {
               />
               {/* Display an error message if there is an error */}
               <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
-            <Link to='/dashboard'>  <button className='nav_btn' type="submit">
-                Sign Up
-              </button>
-                <div className={`success_msg ${showAlert ? '' : 'invisible'}`}>
-                  Success! You may proceed and start creating your events! Don't Forget to Share!
-                </div></Link>
+              <button className='nav_btn' type="submit">Sign Up</button>
+              <div className={`success_msg ${showAlert ? '' : 'invisible'}`}>
+                Success! You may proceed and start creating your events! Don't Forget to Share!
+              </div>
             </form>
             <div>
               <h3>Already have an account?</h3>

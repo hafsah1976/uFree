@@ -8,8 +8,19 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails })
     const navigate = useNavigate();
 
     function getTimeSpanText(times, className) {
+        let message = "";
+        if (times.start === 0 && times.end === 0) {
+            message = "Not available";
+        }
+        else if (times.start === 0 && times.end === 24) {
+            message = "All day"
+        }
+        else {
+            message = `${to12Hour(times.start)} - ${to12Hour(times.end)}`
+        }
+        
         return (
-            <span className={className}>{to12Hour(times.start)} - {to12Hour(times.end)}</span>
+            <span className={className}>{message}</span>
         );
     }
 
