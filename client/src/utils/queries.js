@@ -44,6 +44,23 @@ export const QUERY_SINGLE_USER = gql`
    }
 `;
 
+export const ME = gql`
+  query Me {
+    me {
+      _id
+      email
+      username
+      events {
+        _id
+        name
+        thumbnail
+        week
+        location
+      }
+    }
+  }
+`;
+
 
 
    
