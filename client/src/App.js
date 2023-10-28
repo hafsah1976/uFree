@@ -70,7 +70,7 @@ function App() {
             <Routes>
               <Route 
               path='/'
-              element={<Home />}
+              element={loggedIn ? <Dashboard /> : <Home />}
               />
               <Route 
               path='/login'

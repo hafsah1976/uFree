@@ -12,6 +12,8 @@
   --light: #ffffff;
   --dark: #000000;
 
+  --header-height: 100px;
+
   --page-padding: 10%;
   --common-border-radius: 5px;
   --large-border-radius: 10px;
@@ -79,7 +81,7 @@ button:hover {
   justify-content: space-around;
   align-items: center;
 
-  height: 100px;
+  height: var(--header-height);
 }
 
 /* styles background for the page container */
@@ -88,6 +90,7 @@ button:hover {
   padding-bottom: var(--page-padding);
 
   position: relative;
+  isolation: isolate;
   /* border-radius: 10px;
   border-style: groove;
   box-shadow: 5px 5px 10px rgb(179, 153, 69), -5px 5px 10px rgb(179, 153, 69);
@@ -111,37 +114,6 @@ button:hover {
   margin: 10px;
   background-color: orange;
   padding: 10px;
-
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px;
-  text-decoration: none;
-}
-
-#content_home_page {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-
-  height: 700px;
-}
-
-#home_page_buttons {
-  display: flex;
-  justify-content: center;
-}
-
-#home_page_buttons div {
-  display: flex;
-  flex-direction: column;
-align-content: center;
-}
-
-.homepage_button {
-  margin: 10px;
-  background-color: orange;
-  padding: 10px;
-
-  width: 100px;
 
   border-radius: 5px;
   box-shadow: 5px 5px 10px;
@@ -178,23 +150,6 @@ align-content: center;
   background-color: var(--accent);
 }
 
-/* Mobile-first design */
-.image-container {
-  display: -ms-flexbox;
-  justify-content: center;
-  background-image: url('../src/images/page-images/home-page.png');
-height: 100vh;
-background-repeat: no-repeat;
-background-blend-mode:inherit;
-  background-size: contain;
-  max-width: 100%;
-  height: 100vh;
-
-  /* Ensure the container takes the full viewport height */
-}
-
-.homepage-image {
-
-  background-image: url('../src/images/page-images/home-page.png');
-
+.btn_light {
+  background-color: var(--light);
 }
