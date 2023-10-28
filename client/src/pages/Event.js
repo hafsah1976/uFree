@@ -26,7 +26,7 @@ const Event = () => {
                     <section id="content_event_page">
                         <EventHeader event={data.event} />
 
-                        <EventDaySelector avails={data.event.availabilities}/>
+                        <EventDaySelector avails={data.event.availabilities} attendees={data.event.attendees} />
                     </section>
             }
         </>

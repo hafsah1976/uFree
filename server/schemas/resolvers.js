@@ -13,9 +13,11 @@ const resolvers = {
 
         // finds an event by the eventId
         event: async (parent, { eventId }) => {
-            const event = await Event.findOne({ _id: new ObjectId(eventId)});
+            const event = await Event
+                .findOne({ _id: new ObjectId(eventId)})
+                .populate('attendees')
+                .exec();
 
-            console.log(event);
             if (!event) throw new Error(`Could not find event with ID ${eventId}!`);
             return event;
 
