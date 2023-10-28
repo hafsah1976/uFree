@@ -8,9 +8,12 @@
 :root {
   --primary: #87ceeb;
   --accent: #f1c233;
+  --accent-dark: #e5b831;
   --light-gray: #eeeeee;
   --light: #ffffff;
   --dark: #000000;
+
+  --header-height: 100px;
 
   --page-padding: 10%;
   --common-border-radius: 5px;
@@ -79,7 +82,7 @@ button:hover {
   justify-content: space-around;
   align-items: center;
 
-  height: 100px;
+  height: var(--header-height);
 }
 
 /* styles background for the page container */
@@ -88,6 +91,7 @@ button:hover {
   padding-bottom: var(--page-padding);
 
   position: relative;
+  isolation: isolate;
   /* border-radius: 10px;
   border-style: groove;
   box-shadow: 5px 5px 10px rgb(179, 153, 69), -5px 5px 10px rgb(179, 153, 69);
@@ -100,6 +104,7 @@ button:hover {
 #header_nav_buttons {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -117,35 +122,18 @@ button:hover {
   text-decoration: none;
 }
 
-#content_home_page {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-
-  height: 700px;
+.nav_brand {
+  font-weight: bold;
+  font-size: 2rem;
+  color: var(--light);
 }
 
-#home_page_buttons {
-  display: flex;
-  justify-content: center;
-}
-
-#home_page_buttons div {
-  display: flex;
-  flex-direction: column;
-align-content: center;
-}
-
-.homepage_button {
-  margin: 10px;
-  background-color: orange;
-  padding: 10px;
-
-  width: 100px;
-
-  border-radius: 5px;
-  box-shadow: 5px 5px 10px;
-  text-decoration: none;
+.logout_button {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--light);
 }
 
 .btn {
@@ -178,23 +166,14 @@ align-content: center;
   background-color: var(--accent);
 }
 
-/* Mobile-first design */
-.image-container {
-  display: -ms-flexbox;
-  justify-content: center;
-  background-image: url('../src/images/page-images/home-page.png');
-height: 100vh;
-background-repeat: no-repeat;
-background-blend-mode:inherit;
-  background-size: contain;
-  max-width: 100%;
-  height: 100vh;
-
-  /* Ensure the container takes the full viewport height */
+.btn_accent:hover {
+  background-color: var(--accent-dark);
 }
 
-.homepage-image {
+.btn_light {
+  background-color: var(--light);
+}
 
-  background-image: url('../src/images/page-images/home-page.png');
-
+.btn_light:hover {
+  background-color: var(--light-gray);
 }

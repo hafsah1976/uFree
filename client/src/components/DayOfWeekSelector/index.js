@@ -19,8 +19,6 @@ export default function DayOfWeekSelector({ avails, setAvails }) {
         });
     }
 
-    console.log(avails);
-
     return (
         <div className="day_selector">
             <div className="day_widget_container">

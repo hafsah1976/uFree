@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { monthAndDay } from '../utils/convertDate';
 import { useMutation } from "@apollo/client";
+
+import { monthAndDay } from '../utils/convertDate';
 import { ADD_AVAILABILITY } from "../utils/mutations";
+import { pageImages } from '../images';
+
+import '../assets/addAvailabilities.css';
+
 import DayOfWeekSelector from '../components/DayOfWeekSelector';
 
 const ALL_DAY = { start: 0, end: 24 };
@@ -70,6 +75,14 @@ const Availabilities = () => {
 
                 <button type="submit" className='btn_large btn_accent'>Submit</button>
             </form>
+
+            <img 
+                className='availabilities_background_image'
+                src={pageImages.addAvailabilities}
+                alt="Add Availabilities"
+            />
+
+            
         </section>
     );
 };

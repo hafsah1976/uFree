@@ -16,4 +16,5 @@
     transform: translateX(-50%) scale(1);
 
     border-radius: 50%;
+    box-shadow: var(--common-box-shadow);
 }
