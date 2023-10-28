@@ -96,12 +96,6 @@ mutation DeleteEvent($eventId: String!) {
   deleteEvent(eventId: $eventId) {
     _id
     name
-    admin
-    location
-    description
-    attendees
-    week
-    availabilities
   }
 }
 `;
