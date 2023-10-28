@@ -58,7 +58,7 @@ login(idToken) {
     localStorage.removeItem('id_token');
   
     // Reload the page to reset the application state
-    window.location.reload();
+    // window.location.reload();
   }
 } 
 

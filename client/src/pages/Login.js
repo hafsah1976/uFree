@@ -18,12 +18,10 @@ const Login = () => {
     const [showAlert, setShowAlert] = useState(false);
 
     // Initialize a function to execute the login mutation
-    const loginUser = useMutation(LOG_IN,  {
-        variables: {...userCredentials},
-    });
+    const [loginUser] = useMutation(LOG_IN);
 
     // Initialize a state to control the disabled property of the login button
-    const [isLoginFormValid, setIsLoginFormValid] = useState(true)
+    // const [isLoginFormValid, setIsLoginFormValid] = useState(true)
 
     // Use the useNavigate hook to handle page navigation
     const navigate = useNavigate();
@@ -36,10 +34,10 @@ const Login = () => {
         setUserCredentials({ ...userCredentials, [name]: value });
 
         // Check if both email and password are non-empty to determine form validity
-        const isFormValid = userCredentials.email.trim() !== '' && userCredentials.password.trim() !== '';
+        // const isFormValid = userCredentials.email.trim() !== '' && userCredentials.password.trim() !== '';
 
         // Update the isLoginFormValid state based on the form's validity
-        setIsLoginFormValid(isFormValid);
+        // setIsLoginFormValid(isFormValid);
     };
 
     // Define the event handler for form submission
@@ -47,20 +45,32 @@ const Login = () => {
         event.preventDefault();
 
         // Check if the form has all the required fields (as per react-bootstrap docs)
-        const loginForm = event.currentTarget;
-        if (loginForm.checkValidity() === false) {
-            event.preventDefault();
-            event.stopPropagation();
-        }
+        // const loginForm = event.currentTarget;
+        // if (loginForm.checkValidity() === false) {
+        //     event.preventDefault();
+        //     event.stopPropagation();
+        // }
 
         try {
             // Attempt to log in the user using the 'loginUser' function via the LOG_IN mutation
-            const { data } = await loginUser({
+            const { data, error } = await loginUser({
                 variables: { ...userCredentials }
             });
 
+            if (error) {
+                console.error(error);
+                return;
+            }
+
+            console.log('Data:', data);
+
+            if (!data.login) {
+                console.warn('Could not find user!');
+                return;
+            }
+
             // Store the user's token and navigate to the dashboard
-            localStorage.setItem('token', Auth.login(data.login.token));
+            Auth.login(data.login.token);
             navigate("/dashboard");
 
         } catch (error) {
@@ -112,7 +122,8 @@ const Login = () => {
                             {/* Display an error message if there is an error */}
                             <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
                             {/* Disable the button if the form is not valid */}
-                            <button type="submit" className='nav_btn' disabled={!isLoginFormValid}>
+                            <button type="submit" className='nav_btn'>
+                            {/* <button type="submit" className='nav_btn' disabled={!isLoginFormValid}> */}
                                 Log In
                             </button>
                         </form>

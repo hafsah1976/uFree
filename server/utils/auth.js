@@ -23,8 +23,8 @@ module.exports = {
 
       // If the token is included in the 'Authorization' header, extract it
       if (req.headers.authorization) {
-        token = token.split
-        (" ")
+        token = token
+        .split(" ")
         .pop()
         .trim(); // Remove 'Bearer ' from the token string
       }
@@ -65,7 +65,7 @@ module.exports = {
       const payload = { username, email, _id };
 
       // Sign a JWT with the payload, secret key, and expiration time
-      return jwt.sign({ payload }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
+      return jwt.sign({ data: payload }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
     } catch (error) {
       console.error("Error in signToken:", error);
       return null; // Return null in case of an error

@@ -15,7 +15,7 @@ const Home = () => {
                 Login
               </div>
             </Link>
-            <Link to="/createEvent">
+            <Link to="/signup">
               <div id="button_createEvent" className="homepage_button">
                 Create Event
               </div>
