@@ -25,10 +25,10 @@ export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
         
         const newTimeInput = {
             ...timeInput,
-            [type]: hourNum, 
+            [type]: hourNum,
         };
         
-        console.log(newTimeInput);
+        // console.log(newTimeInput);
         
         if (newTimeInput.start >= newTimeInput.end) return;
         
