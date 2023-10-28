@@ -86,6 +86,7 @@ export const EDIT_AVAILABILITY = gql`
         day
         start
         end
+        }
       }
     }
   }
