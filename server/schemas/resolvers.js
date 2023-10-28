@@ -174,15 +174,12 @@ const resolvers = {
                     throw new Error('You have already added your availability, please edit it instead');
                 }
             }
-            // console.log(userAvailability);
 
             // add the availability object to the event's availabilities array
             event.availabilities.push({
                 userId: context.user._id ,
                 availabilities: availabilities
             });
-
-
 
             // save the updated event
             const updatedEvent = await event.save();
@@ -194,24 +191,19 @@ const resolvers = {
         editAvailability: async (parent, { eventId, availabilities }, context) => {
             if (context.user) {
                 // find event of availability you want to update
-                const eventAvailability = await Event.findOne({ _id: eventId });
+                const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
-                if (!eventAvailability) {
+                if (!event) {
                     throw new Error('Event not found');
                 }
 
-                // update the availability fields if new values are provided
-                if (day) {
-                    eventAvailability.day = day;
-                }
-                if (start) {
-                    eventAvailability.start = start;
-                }
-                if (end) {
-                    eventAvailability.end = end;
-                }
+                // find availability of user and update it
+                const userAvail = event.availabilities.find(a => a.userId == context.user._id);
+                console.log(userAvail);
+                userAvail.availabilities = availabilities;
+
                 // save the updated event
-                const updatedAvailability = await eventAvailability.save();
+                const updatedAvailability = await event.save();
 
                 return updatedAvailability;
             }
