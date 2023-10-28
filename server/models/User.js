@@ -43,6 +43,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
 };
 
 // Create the 'User' model using the schema
-const User = model('user', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User; // Export the 'User' model
