@@ -3,9 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 import './EventDayAvail.css';
 
-export default function EventDayAvail({ day, isSelected, timeSlot, userAvails }) {
+export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, attendees }) {
 
     const navigate = useNavigate();
+
+    function getAttendeeUsername(_id) {
+        const attendee = attendees.find(a => a._id === _id);
+        return attendee.username;
+    }
 
     function getTimeSpanText(times, className) {
         let message = "";
@@ -47,7 +52,7 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails })
                 <tbody>
                     {userAvails.map(user =>
                         <tr key={user.userId}>
-                            <td>{user.userId}</td>
+                            <td>{getAttendeeUsername(user.userId)}</td>
                             <td>{getTimeSpanText(user, "")}</td>
                         </tr>
                     )}

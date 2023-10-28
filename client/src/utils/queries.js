@@ -10,6 +10,10 @@ export const GET_EVENT = gql`
       thumbnail
       week
       code
+      attendees {
+        _id
+        username
+      }
       availabilities {
         userId
         availabilities {
