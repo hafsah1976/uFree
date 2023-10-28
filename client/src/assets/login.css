@@ -81,9 +81,10 @@
 	width: 220px;
   }
   .image-container{
-	background-image: url("../images/page-images/create-event.jpg");
+	background-image: url("../images/page-images/create-event.png");
 	background-size:contain;
 	position: relative;
+	background-repeat: no-repeat;
 	/* background-blend-mode:overlay; */
   }
   
