@@ -1,6 +1,6 @@
 // Use this to decode a token and get the user's information out of it
 import decode from 'jwt-decode';
-import { useState , useContext } from 'react';
+
 // Create a new class to instantiate for a user
 class AuthService {
   // Get user data from the decoded token
@@ -46,11 +46,6 @@ class AuthService {
 login(idToken) {
     // Save the user token to local storage
     localStorage.setItem('id_token', idToken);
-  
-    // Redirect the user to the home page
-
-    // window.location.reload();
-    // window.location.assign("/dashboard")
   }
 
 
@@ -58,9 +53,6 @@ login(idToken) {
  logout() {
     // Clear the user token and profile data from local storage
     localStorage.removeItem('id_token');
-  console.log("you are now logged out")
-    // Reload the page to reset the application state
-    // window.location.reload();
   }
 } 
 
