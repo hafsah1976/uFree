@@ -104,6 +104,7 @@ button:hover {
 #header_nav_buttons {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
   flex-wrap: wrap;
 }
 
@@ -119,6 +120,20 @@ button:hover {
   border-radius: 5px;
   box-shadow: 5px 5px 10px;
   text-decoration: none;
+}
+
+.nav_brand {
+  font-weight: bold;
+  font-size: 2rem;
+  color: var(--light);
+}
+
+.logout_button {
+  background-color: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--light);
 }
 
 .btn {
