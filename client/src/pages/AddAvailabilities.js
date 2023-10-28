@@ -36,11 +36,11 @@ const Availabilities = () => {
             }
         })
         
-        console.log('PAYLOAD:', { 
-            availabilities: formattedAvails,
-            eventId,
-        });
-        const { data, error } = await makeAvailibility({
+        // console.log('PAYLOAD:', { 
+        //     availabilities: formattedAvails,
+        //     eventId,
+        // });
+        const { error } = await makeAvailibility({
             variables: { 
                 availabilities: formattedAvails,
                 eventId,
@@ -53,9 +53,9 @@ const Availabilities = () => {
             setShowAlert("Failed to make availability. Please try again.");
             return;
         }
-        console.log(' avilabilty-Data:', data);
+        // console.log(' avilabilty-Data:', data);
 
-        // navigate('/eventPage');
+        navigate('/eventPage');
     }
 
     const eventWeek = Date.now();

@@ -60,7 +60,7 @@ const Login = () => {
             });
 
             // Store the user's token and navigate to the dashboard
-            localStorage.setItem('token', Auth.login(data.login.token));
+            Auth.login(data.loginuser.token);
             navigate("/dashboard");
 
         } catch (error) {
