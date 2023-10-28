@@ -1,0 +1,21 @@
+.availabilities_background_image {
+    height: max(350px, 30vw);
+
+    position: absolute;
+    overflow: hidden;
+    right: 0;
+    bottom: var(--page-padding);
+
+    z-index: -1;
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    visibility: hidden;
+}
+
+@media screen and (min-width: 850px) {
+    .availabilities_background_image {
+        visibility: inherit;
+    }
+}

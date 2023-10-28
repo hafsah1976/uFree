@@ -19,18 +19,24 @@
     background-color: transparent;
     border: none;
     border-radius: var(--common-border-radius);
+    
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.day_widget:hover {
+    background-color: var(--light-gray);
 }
 
 .day_widget:nth-child(1) {
     margin-left: 0;
 }
 
-/* .day_widget:hover {
-    cursor: pointer;
-} */
-
 .day_widget_selected {
-    background-color: var(--light-gray)
+    background-color: var(--light-gray);
+    box-shadow: var(--common-box-shadow);
+    transform: scale(1.05);
+    transition: transform 0.2s;
 }
 
 .day_widget_abbr {
