@@ -158,11 +158,20 @@ const resolvers = {
                 throw new Error('Event not found');
             }
 
+             // add logic to check if user is apart of event before adding availability
+            //  console.log(event.attendees.includes(context.user._id));
+             if (!(event.attendees.includes(context.user._id))) {
+                throw new Error('You must be in this event to add your availability');
+
+             }
+
             // add the availability object to the event's availabilities array
             event.availabilities.push({
                 userId: context.user._id ,
                 availabilities: availabilities
             });
+
+            
 
             // save the updated event
             const updatedEvent = await event.save();
