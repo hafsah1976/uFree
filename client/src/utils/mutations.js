@@ -54,6 +54,17 @@ export const LOG_IN = gql`
     }
   }
 `;
+export const LOG_OUT = gql`
+  mutation logout($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+      user {
+        email
+        username
+      }
+    }
+  }
+`;
 
 export const LEAVE_EVENT = gql`
   mutation leaveEvent($eventId: String!){
