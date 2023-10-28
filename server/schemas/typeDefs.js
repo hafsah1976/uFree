@@ -59,7 +59,7 @@ const typeDefs = gql`
     addAvailability(eventId: String!, availabilities: [DayAvailabilityInput]!): Event
     editAvailability(eventId: String!, availabilities: [DayAvailabilityInput]!): Event
     deleteEvent(eventId: ID!): Event
-    leaveEvent(eventId: ID!): Event
+    leaveEvent(eventId: String!): Event
   }
 `;
 
