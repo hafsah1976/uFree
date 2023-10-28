@@ -26,7 +26,7 @@ mutation AddAvailability($eventId: String!, $availabilities: [DayAvailabilityInp
         end
       }
     }
-  } 
+  }
 }
 `;
 
@@ -55,3 +55,11 @@ export const LOG_IN = gql`
   }
 `;
 
+export const LEAVE_EVENT = gql`
+  mutation leaveEvent($eventId: String!){
+    leaveEvent(eventId: $eventId){
+      _id
+      name
+    }
+  }
+`;
