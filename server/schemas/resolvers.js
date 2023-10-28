@@ -13,9 +13,13 @@ const resolvers = {
 
         // finds an event by the eventId
         event: async (parent, { eventId }) => {
-            console.log('find event resolver executed!');
-            const event = await Event.findOne({ _id: new ObjectId(eventId)});
-            console.log(event);
+            const event = await Event
+                .findOne({ _id: new ObjectId(eventId)})
+                .populate('admin')
+                .populate('attendees')
+                .exec();
+
+            if (!event) throw new Error(`Could not find event with ID ${eventId}!`);
             return event;
 
         },
@@ -62,32 +66,39 @@ const resolvers = {
         },
 
         // create a new event
-        createEvent: async (parent, { name }, context) => {
-            if (context.user) {
-                const event = await Event.create({ name: name, admin: context.user._id});
-
-                await User.findOneAndUpdate(
-                    { _id: context.user._id },
-                    {
-                        $addToSet: {
-                            events: event._id
-                        }
-                    },
-                    { new: true }
-                    );
-
-                await Event.findOneAndUpdate(
-                    { _id: event._id },
-                    {
-                        $addToSet: {
-                            attendees: context.user._id
-                        }
-                    }
-                );
-                return event;
+        createEvent: async (parent, { name, location, week, description, thumbnail }, context) => {
+            if (!context.user) {
+                throw new AuthenticationError('You must be logged in to create an event');
             }
 
-            throw new AuthenticationError('You must be logged in to create an event');
+            const event = await Event.create({
+                name: name,
+                admin: context.user._id,
+                location,
+                week,
+                description,
+                thumbnail,
+            });
+
+            await User.findOneAndUpdate(
+                { _id: context.user._id },
+                {
+                    $addToSet: {
+                        events: event._id
+                    }
+                },
+                { new: true }
+                );
+
+            await Event.findOneAndUpdate(
+                { _id: event._id },
+                {
+                    $addToSet: {
+                        attendees: context.user._id
+                    }
+                }
+            );
+            return event;
         },
 
         // join an event
@@ -150,6 +161,23 @@ const resolvers = {
                 throw new Error('Event not found');
             }
 
+             // add logic to check if user is apart of event before adding availability
+            //  console.log(event.attendees.includes(context.user._id));
+             if (!(event.attendees.includes(context.user._id))) {
+                throw new Error('You must be in this event to add your availability');
+
+             }
+
+            // check if user already has an availability, if so, prevent user from creating
+            // another one
+            console.log(event.availabilities.length);
+            for (let i = 0; i < event.availabilities.length; i++) {
+                // console.log(event.availabilities[i].userId);
+                if (event.availabilities[i].userId == context.user._id) {
+                    throw new Error('You have already added your availability, please edit it instead');
+                }
+            }
+
             // add the availability object to the event's availabilities array
             event.availabilities.push({
                 userId: context.user._id ,
@@ -166,24 +194,19 @@ const resolvers = {
         editAvailability: async (parent, { eventId, availabilities }, context) => {
             if (context.user) {
                 // find event of availability you want to update
-                const eventAvailability = await Event.findOne({ _id: eventId });
+                const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
-                if (!eventAvailability) {
+                if (!event) {
                     throw new Error('Event not found');
                 }
 
-                // update the availability fields if new values are provided
-                if (day) {
-                    eventAvailability.day = day;
-                }
-                if (start) {
-                    eventAvailability.start = start;
-                }
-                if (end) {
-                    eventAvailability.end = end;
-                }
+                // find availability of user and update it
+                const userAvail = event.availabilities.find(a => a.userId == context.user._id);
+                console.log(userAvail);
+                userAvail.availabilities = availabilities;
+
                 // save the updated event
-                const updatedAvailability = await eventAvailability.save();
+                const updatedAvailability = await event.save();
 
                 return updatedAvailability;
             }
@@ -192,10 +215,10 @@ const resolvers = {
         },
 
         // for admins only, delete an event
-        deleteEvent: async (parent, { eventId, }, context) => {
+        deleteEvent: async (parent, { eventId }, context) => {
             if (context.user) {
                 // find event by its id and check if it exists
-                const event = await Event.findOne({ _id: eventId });
+                const event = await Event.findOne({ _id: new ObjectId(eventId) });
 
                 if (!event) {
                     throw new Error('Event not found');
@@ -209,7 +232,7 @@ const resolvers = {
                     throw new Error('Only admins can delete this event');
                 }
 
-                const deletedEvent = await Event.findOneAndDelete({ _id: eventId });
+                const deletedEvent = await Event.findOneAndDelete({ _id: new ObjectId(eventId) });
 
                 // remove event from all user's event's array
                 for (const userId of event.attendees) {
@@ -229,12 +252,12 @@ const resolvers = {
                         { new: true }
                     )
                     };
-                //
+                
                 if (!deletedEvent) {
                     throw new Error('Error deleting the event');
                 }
 
-                return 'Event deleted successfully';
+                return deletedEvent;
             }
 
             throw new AuthenticationError('You must be logged in to delete an event');
@@ -242,21 +265,36 @@ const resolvers = {
         // for attendees, leave an event
         leaveEvent: async (parent, { eventId }, context) => {
             if (context.user) {
+
+                const event = await Event.findOne({ _id: new ObjectId(eventId) });
                 const updatedEvent = await Event.findOneAndUpdate(
-                    { _id: eventId },
+                    { _id: event._id },
                     {
                         $pull: {
-                            attendees: { _id: context.user._id }
+                            attendees: context.user._id
                         }
                     },
                     { new: true } // return the updated event
                 );
 
+                console.log('Removing event from user');
+
+                await User.findOneAndUpdate(
+                    { _id: context.user._id},
+                    {
+                        $pull: {
+                            events: eventId
+                        }
+                    },
+                    { new: true}
+                );
+                console.log(updatedEvent);
+
                 if (!updatedEvent) {
                     throw new Error('Event not found');
                 }
 
-                return 'you have left the event';
+                return updatedEvent;
             }
 
 

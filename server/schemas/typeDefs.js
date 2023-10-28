@@ -8,6 +8,9 @@ const typeDefs = gql`
     location: String
     description: String
     thumbnail: String
+    code: String
+    admin: User
+    attendees: [User]
     availabilities: [UserAvailibilities]
   }
 
@@ -38,7 +41,7 @@ const typeDefs = gql`
   }
 
   type Auth {
-    token: ID!
+    token: String!
     user: User
   }
 
@@ -57,8 +60,8 @@ const typeDefs = gql`
     joinEvent(code: String!): Event
     addAvailability(eventId: String!, availabilities: [DayAvailabilityInput]!): Event
     editAvailability(eventId: String!, availabilities: [DayAvailabilityInput]!): Event
-    deleteEvent(eventId: ID!): Event
-    leaveEvent(eventId: ID!): Event
+    deleteEvent(eventId: String!): Event
+    leaveEvent(eventId: String!): Event
   }
 `;
 

@@ -8,8 +8,7 @@ import EventDayAvail from './EventDayAvail';
 
 const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
-export default function EventDaySelector({ avails }) {
-
+export default function EventDaySelector({ avails, attendees }) {
     const userAvails = getUserWeekAvails(avails);
     const eventTimeSlots = getDayAvailabilities(userAvails);
 
@@ -26,17 +25,26 @@ export default function EventDaySelector({ avails }) {
 
     return (
         <div className="day_selector">
-            <div className="day_widget_container">
-                {daysOfWeek.map((day, key) => 
-                    <DayWidget key={key} day={day} currentDay={currentDay} isOpen={eventTimeSlots[day] != null} setDay={() => setDay(day)}/>
-                )}
-            </div>
+            {(avails.length === 0)
+            ?
+                <>
+                    <p>Add your availabilities to begin!</p>
+                </>
+            :
+                <>
+                    <div className="day_widget_container">
+                        {daysOfWeek.map((day, key) => 
+                            <DayWidget key={key} day={day} currentDay={currentDay} isOpen={eventTimeSlots[day] != null} setDay={() => setDay(day)}/>
+                        )}
+                    </div>
 
-            <div className='event_day_container'>
-                {daysOfWeek.map((day, key) =>
-                    <EventDayAvail key={key} day={day} isSelected={day === currentDay} timeSlot={eventTimeSlots[day]} userAvails={userAvails[day]} />
-                )}
-            </div>
+                    <div className='event_day_container'>
+                        {daysOfWeek.map((day, key) =>
+                            <EventDayAvail key={key} day={day} isSelected={day === currentDay} timeSlot={eventTimeSlots[day]} userAvails={userAvails[day]} attendees={attendees} />
+                        )}
+                    </div>
+                </>
+            }
         </div>
     )
 }

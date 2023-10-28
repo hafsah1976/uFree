@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Auth from "../utils/auth";
-import "../assets/signup.css";
+import "../assets/login.css";
 import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "../utils/mutations";
 
+
 const Signup = () => {
+  // State to hold user input and form validation
   const [userCredentials, setUserCredentials] = useState({
     username: "",
     email: "",
     password: "",
   });
 
+  // State for displaying alerts
+  const [showAlert, setShowAlert] = useState(false);
 
+  // Initialize an error state for handling sign-up errors
+  const [error, setError] = useState('');
 
-  const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
-  const [error, setError] = useState(""); // State for storing error messages
-  // Use the signup mutation
-  const [signUp] = useMutation(SIGN_UP, {
-    variables: { ...userCredentials },
-  });
+  // Use the signUp mutation
+  const [signup] = useMutation(SIGN_UP);
 
   // Function to handle changes in form inputs
   const handleInputChange = (event) => {
@@ -28,115 +30,118 @@ const Signup = () => {
     const name = target.name;
 
     setUserCredentials({ ...userCredentials, [name]: value });
+
+  // Check if username , email and password are non-empty to determine form validity
+  // const isFormValid = userCredentials.username.trim() !== '' && userCredentials.email.trim() !== '' && userCredentials.password.trim() !== '';
+        
+  // Update the iIsSignUpFormValid state based on the form's validity
+  // setIsSignUpFormValid(isFormValid);
   };
 
+  // Use the navigate hook for page navigation
   const navigate = useNavigate();
 
+  // Function to handle form submission
   const handleSubmitEvent = async (event) => {
     event.preventDefault();
 
-    // const signupForm = event.currentTarget;
+    // Check if the form has all the required fields (as per react-bootstrap docs)
+    // const signupForm = event.target;
     // if (signupForm.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+    //   event.preventDefault();    }
 
-    // Perform user registration by calling the addUser mutation
-    const { data, error } = await signUp();
+    try {
+      // Attempt to sign up the user by calling the signUp mutation
+      const { data, error } = await signup({
+        variables: { ...userCredentials },
+      });
 
-    if (error) {
-      console.error("Failed to sign-up user");
-      setError(error.message);
-      setShowAlert("Failed to sign up. Please try again.");
-      return;
-    }
-
-    else {
-      console.log('Data:', data);
-      alert(data);
-   Auth.login(data.addUser.token); // Log in the user
-  
-   // Check if the registration was successful
-      if (data.addUser) {
-         Auth.login(data.addUser.token);
-        navigate("/dashboard");
-        setShowAlert(true);
-       }
-    }
-
-    // Clear the form inputs
-    setUserCredentials({
-      username: "",
-      email: "",
-      password: "",
-    });
+      if (error) {
+        // Handle the case where sign-up fails
+        console.error("Failed to sign-up user");
+        setError("Failed to sign up. Please try again."); // Set an error message
+        setShowAlert("Please enter a valid email to sign up"); // Display an alert
+        return;
+      } else {
+        // Sign-up was successful, log in the user
+        console.log('Data:', data);
+        console.log('Data:', data.signup);
+        // alert(data);
+        // Check if the registration was successful
+        if (data.signup) {
+          Auth.login(data.signup.token); // Log in the user
+          navigate("/dashboard"); // Navigate to the dashboard
+          setShowAlert(true); // Display an alert
+        }
+      }
+    } catch (error) {
+      console.error("Failed to sign-up user", error);
+      // Handle additional errors if needed
+    } 
+      // Clear the form inputs
+      setUserCredentials({
+        username: "",
+        email: "",
+        password: "",
+      });
+    
   };
 
   return (
-    <>
-      <div className='signup_container'>
-        <div className='signup_form_container'>
-          <div className='left'>
-            <h1>Welcome Back</h1>
-            <Link to="/login">
-              <button type="button" className='login_btn'>
-                Log in
-              </button>
-            </Link>
-          </div>
-          <div className='right'>
-            <div className="form_container">
-              <div className="signup-container">
-                  <h1>Please Create an Account</h1>
-                  <input
-                    type="text"
-                    placeholder="Create your unique Username"
-                    name="username"
-                    value={userCredentials.username}
-                    required
-                    className='input'
-                    onChange={(event) => {
-                      setUserCredentials({ ...userCredentials, username: event.target.value });
-                    }}
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    name="email"
-                    onChange={handleInputChange}
-                    value={userCredentials.email}
-                    required
-                    className='input'
-                  />
-                  <input
-                    type="password"
-                    placeholder="Create Your Password"
-                    name="password"
-                    value={userCredentials.password}
-                    required
-                    onChange={(event) => {
-                      setUserCredentials({ ...userCredentials, password: event.target.value });
-                    }}
-                    className='input'
-                  />
-                  {showAlert && <p className='error_msg'>Something went wrong with your signup!</p>}
-                  <button className='signup-btn' type="submit">
-                    Sign Up
-                  </button>
-                  {showAlert && (
-                      <p className={"success_msg"}>
-                        Success! You may proceed and start creating your events! Don't Forget to Share! </p>
-                        )}
-                <p>
-                  Already have an account? <Link to="/login">Log In</Link>
-                </p>
-              </div>
+    <div className='page-container'>
+      <div className='credentials_form_container'>
+        <div className='credentials_container'>
+          <div className="form_container">
+            <form onSubmit={handleSubmitEvent}>
+              <h1>Please Create an Account</h1>
+              <input
+                type="text"
+                placeholder="Create your unique Username"
+                name="username"
+                value={userCredentials.username}
+                required
+                className='input'
+                onChange={handleInputChange}
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                name="email"
+                onChange={handleInputChange}
+                value={userCredentials.email}
+                required
+                className='input'
+              />
+              <input
+                type="password"
+                placeholder="Create Your Password"
+                name="password"
+                value={userCredentials.password}
+                required
+                onChange={handleInputChange}
+                className='input'
+              />
+              {/* Display an error message if there is an error */}
+              <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
+              <button className='nav_btn' type="submit" >Sign Up</button>
+              <div>
+              <h3>Already have an account?</h3>
+              <Link to="/login">
+                <button className="nav_btn">Log In</button>
+              </Link>
             </div>
+
+              <div className={`success_msg ${showAlert ? '' : 'invisible'}`}>
+                Success! You may proceed and start creating your events! Don't Forget to Share!
+              </div>
+
+
+            </form>
           </div>
         </div>
       </div>
-    </>
-  );
-};
-
-export default Signup;
+  </div>
+    );
+  };
+  
+  export default Signup;

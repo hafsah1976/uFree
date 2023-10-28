@@ -5,30 +5,30 @@ export const GET_EVENT = gql`
     event(eventId: $eventId) {
       _id
       name
+      location
+      description
+      thumbnail
+      admin {
+        _id
+        username
+      }
+      week
+      code
+      attendees {
+        _id
+        username
+      }
+      availabilities {
+        userId
+        availabilities {
+          day
+          start
+          end
+        }
+      }
     }
   }
 `;
-// export const GET_EVENT = gql`
-//   query getEvent($eventId: ID!) {
-//     event(eventId: $eventId) {
-//       _id 
-//       name
-//       admin
-//       location
-//       description 
-//       thumbnail
-//       week
-//       attendees {
-//         _id
-//         username
-//       }
-//       availabilities {
-//       userId
-//       availabilities 
-//    }
-//     }
-//   }
-// `;
 
 export const QUERY_SINGLE_USER = gql`
   query getSingleUser($username: String!) {
@@ -50,6 +50,25 @@ export const QUERY_SINGLE_USER = gql`
       }
     }
    }
+`;
+
+export const ME = gql`
+  query Me {
+    me {
+      _id
+      email
+      username
+      events {
+        _id
+        name
+        thumbnail
+        week
+        location
+        code
+        thumbnail
+      }
+    }
+  }
 `;
 
 
