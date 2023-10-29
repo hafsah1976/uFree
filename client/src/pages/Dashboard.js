@@ -34,9 +34,11 @@ const Dashboard = () => {
                         Events
                     </h2>
                     <div id='board_elements'>
-                        {data.user.map(() => (
-                            <EventBoxes />
-                        ))}
+                        <div key={data._id}>
+                            {data.events.map((event) => {
+                                <EventBox prop={event} />
+                            })}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -44,14 +46,15 @@ const Dashboard = () => {
     );
 };
 
-function EventBoxes() {
-
-};
-
-function EventBox() {
+function EventBox(event_data) {
     return (
-        <div>
-            
+        <div className='event_box'>
+            <div id='event_header'>
+
+            </div>
+            <div id='event_footer'>
+
+            </div>
         </div>
     );
 };
