@@ -29,12 +29,6 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, a
         );
     }
 
-    // TODO: Make leave event mutation
-    function handleLeaveEvent() {
-        console.warn('TODO: Leave event mutation');
-        navigate('/dashboard');
-    }
-
     return (
         <div className={`${!isSelected ? "hidden" : ""}`}>
             <p className="event_day">{dayMonthDate(getDateFromWeekday(day))}</p>
@@ -58,8 +52,6 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, a
                     )}
                 </tbody>
             </table>
-
-            <button className="drop_event_btn btn btn_accent" onClick={handleLeaveEvent}>Leave Event</button>
         </div>
     )
 }
