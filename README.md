@@ -38,6 +38,8 @@ To get started with **uFree**, follow these steps:
   
 ## Credits
 
+Images from [Storyset](https://storyset.com/).
+
 The following packages were used in the development of uFree:
 
 - day.js

@@ -2,7 +2,7 @@ import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 import { GET_EVENT, ME } from '../utils/queries';
-import { DELETE_EVENT } from '../utils/mutations';
+import { DELETE_EVENT, LEAVE_EVENT } from '../utils/mutations';
 // import Auth from '../utils/auth';
 import EventHeader from '../components/EventHeader';
 import EventDaySelector from '../components/EventDaySelector';
@@ -21,8 +21,9 @@ const Event = () => {
   const user = userData?.me;
 
   const [deleteEvent] = useMutation(DELETE_EVENT);
+  const [leaveEvent] = useMutation(LEAVE_EVENT);
 
-  const handleDeleteEvent = async (eventId) => {
+  const handleDeleteEvent = async () => {
     // const token = Auth.loggedIn() ? Auth.getToken() : null;
     // if (!token) {
     //   // User is not logged in, handle this scenario as needed
@@ -42,17 +43,33 @@ const Event = () => {
     // }
 
     try {
-      console.log(eventId);
       await deleteEvent({
         variables: { eventId },
       });
 
       // After successful deletion, navigate to a different page (e.g., event list)
-      navigate('/dashboard');
+      // navigate('/dashboard');
+      window.location.assign('/dashboard');
+      
     } catch (err) {
       console.error(err);
     }
   };
+  
+  const handleLeaveEvent = async () => {
+    try {
+      await leaveEvent({
+        variables: { eventId },
+      });
+      
+      window.location.assign('/dashboard');
+      // navigate('/dashboard');
+      // window.location.reload();
+    }
+    catch(err) {
+      console.error(err);
+    }
+  }
 
   if (loading) {
     return <p>Loading...</p>;
@@ -75,13 +92,11 @@ const Event = () => {
             <EventDaySelector avails={event.availabilities} attendees={event.attendees} />
 
             <div>
-                <h2>{event.name}</h2>
-                <p>{event.description}</p>
                 {isAdmin 
                   ? (
-                    <button onClick={() => handleDeleteEvent(eventId)}>Delete Event</button>
+                    <button className="drop_event_btn btn btn_accent" onClick={handleDeleteEvent}>Delete Event</button>
                   ) : (
-                    <button onClick={() => console.warn('TODO: Handle leave event mutation')}>Leave Event</button>
+                    <button className="drop_event_btn btn btn_accent" onClick={handleLeaveEvent}>Leave Event</button>
                 )}
             </div>
           </section>

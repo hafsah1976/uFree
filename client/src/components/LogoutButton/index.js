@@ -1,14 +1,15 @@
 import Auth from "../../utils/auth";
 import React from "react";
- import { useNavigate } from "react-router-dom";
+//  import { useNavigate } from "react-router-dom";
 
 export default function LogoutButton({ logoutFunc }) {
-     const navigate = useNavigate();
+     // const navigate = useNavigate();
 
      function handleClick() {
           Auth.logout();
           logoutFunc();
-          navigate("/");
+          // navigate("/");
+          window.location.assign('/')
      }
 
      return (
