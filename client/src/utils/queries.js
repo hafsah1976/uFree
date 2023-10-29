@@ -38,43 +38,38 @@ export const QUERY_SINGLE_USER = gql`
       email
       events {
         _id 
-      name
-      admin
-      location
-      description 
-      week
-      availabilities {
-        userId
-        availabilities  
-     }
-      }
-    }
-   }
-`;
-
-export const ME = gql`
-  query Me {
-    me {
-      _id
-      email
-      username
-      events {
-        _id
         name
-        thumbnail
-        week
+        admin
         location
-        code
-        thumbnail
+        description 
+        week
+        availabilities {
+          userId
+          availabilities  
+        }
       }
     }
   }
 `;
 
-
-
-   
-    
-  
-
- //,  dont need availabilities because we are getting it when returning single user, me
+export const QUERY_ME = gql`
+  query me {
+    user {
+      _id  
+      username
+      email
+      events {
+        _id 
+        name
+        admin
+        location
+        description 
+        week
+        availabilities {
+          userId
+          availabilities  
+        }
+      }
+    }
+  }
+`;
