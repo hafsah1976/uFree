@@ -6,7 +6,7 @@ import { pageImages } from '../images';
 
 const Home = () => {
   return (
-    <div className='App page-container'>
+    <div className='App page-container blue_page_background no_navbar'>
       <section className="content_home_page">
         <section className="home_page_title">uFree</section>
         <section className="home_page_intro">Get-Togethers,</section>

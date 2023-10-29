@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import Auth from "../utils/auth";
-import "../assets/login.css";
 import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "../utils/mutations";
-
+import { pageImages } from "../images";
 
 const Signup = () => {
   // State to hold user input and form validation
@@ -88,7 +88,7 @@ const Signup = () => {
   };
 
   return (
-    <div className='page-container'>
+    <div className='page-container blue_page_background no_navbar'>
       <div className='credentials_form_container'>
         <div className='credentials_container'>
           <div className="form_container">
@@ -131,15 +131,20 @@ const Signup = () => {
               </Link>
             </div>
 
-              <div className={`success_msg ${showAlert ? '' : 'invisible'}`}>
-                Success! You may proceed and start creating your events! Don't Forget to Share!
-              </div>
-
+            <div className={`success_msg ${showAlert ? '' : 'invisible'}`}>
+              Success! You may proceed and start creating your events! Don't Forget to Share!
+            </div>
 
             </form>
           </div>
         </div>
       </div>
+
+      <img 
+          className='login_background_image'
+          src={pageImages.signup}
+          alt="Login background"
+      />
   </div>
     );
   };
