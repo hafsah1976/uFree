@@ -10,6 +10,8 @@ const Dashboard = () => {
 
     const eventBoxes = [1, 2, 3, 4, 5, 6];
 
+    const { loading, error, data } = useQuery(QUERY_ME);
+
     return (
         <section id="content_dashboard_page">
             <p id="DEBUG_dashboard_page_text" className='DEBUG_text'>
@@ -39,6 +41,18 @@ const Dashboard = () => {
                 </div>
             </section>
         </section>
+    );
+};
+
+function EventBoxes() {
+
+};
+
+function EventBox() {
+    return (
+        <div>
+            
+        </div>
     );
 };
 
