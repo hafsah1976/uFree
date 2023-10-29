@@ -12,9 +12,12 @@ const resolvers = {
         },
 
         // finds an event by the eventId
-        event: async (parent, { eventId }) => {
+        event: async (parent, { eventId }, context) => {
             const event = await Event
-                .findOne({ _id: new ObjectId(eventId)})
+                .findOne({
+                    _id: new ObjectId(eventId),
+                    attendees: new ObjectId(context.user._id)
+                })
                 .populate('admin')
                 .populate('attendees')
                 .exec();
@@ -272,6 +275,9 @@ const resolvers = {
                     {
                         $pull: {
                             attendees: context.user._id
+                        },
+                        $pull: {
+                            availabilities: { userId: context.user._id }
                         }
                     },
                     { new: true } // return the updated event
