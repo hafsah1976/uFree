@@ -28,7 +28,7 @@ import HeaderNavBar from "./components/HeaderNavBar/index.js";
 //import Home from "./pages/Home.js"
 //import Login from './pages/Login.js';
 
-import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
+import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -68,42 +68,46 @@ function App() {
           </header>
           <section id="page_container">
             <Routes>
-              <Route 
+              <Route
               path='/'
               element={loggedIn ? <Dashboard /> : <Home />}
               />
-              <Route 
+              <Route
               path='/login'
               element={<Login loginFunc={() => setLoggedIn(true)} />}
               />
-              <Route 
+              <Route
               path='/dashboard'
               element={<Dashboard />}
               />
-              <Route 
+              <Route
               path='/events'
               element={<GoToEvent />}
               />
-              <Route 
+              <Route
               path='/events/:eventId'
               element={<Event />}
               />
-              <Route 
+              <Route
               path='/events/create'
               element={<CreateEvent />}
               />
-              <Route 
+              <Route
               path='/signup'
               element={<SignUp loginFunc={() => setLoggedIn(true)} />}
               />
-              <Route 
+              <Route
               path='events/:eventId?/availabilities'
               element={<Availabilities />}
-              />       
-              <Route 
-              path='/join-event'
+              />
+              <Route
+              path='events/:eventId?/availabilities/edit'
+              element={<EditAvails />}
+              />
+              <Route
+              path='/events/join'
               element={<JoinEvent />}
-              />              
+              />
             </Routes>
           </section>
         </Router>

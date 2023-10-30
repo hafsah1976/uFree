@@ -16,7 +16,7 @@ const Event = () => {
   });
   const event = data?.event;
 
-  const { data: userData } = useQuery(QUERY_ME);
+  const { data: userData, queryMeError } = useQuery(QUERY_ME);
 
   const user = userData?.me;
 
@@ -75,7 +75,7 @@ const Event = () => {
     return <p>Loading...</p>;
   }
 
-  if (error) {
+  if (error || queryMeError) {
     return <p>Error loading data</p>;
   }
 
@@ -89,7 +89,7 @@ const Event = () => {
         ) : (
           <section id="content_event_page">
             <EventHeader event={event} />
-            <EventDaySelector avails={event.availabilities} attendees={event.attendees} />
+            <EventDaySelector event={event} user={user} avails={event.availabilities} attendees={event.attendees} />
 
             <div>
                 {isAdmin 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import './EventDayAvail.css';
 
-export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, attendees }) {
+export default function EventDayAvail({ user, event, day, isSelected, timeSlot, userAvails, attendees }) {
 
     const navigate = useNavigate();
 
@@ -11,6 +11,18 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, a
         const attendee = attendees.find(a => a._id === _id);
         return attendee.username;
     }
+
+    let userAvailsFormatted = userAvails;
+    // Put current user at top of list
+    if (user) {
+        userAvailsFormatted = [userAvails.find(u => u.userId === user._id)].concat(userAvails.filter(u => u.userId !== user._id));
+    }
+    
+    let myAvails;
+    if (!userAvailsFormatted[0]) userAvailsFormatted.shift();
+    else myAvails = userAvailsFormatted[0];
+
+    console.log(userAvailsFormatted);
 
     function getTimeSpanText(times, className) {
         let message = "";
@@ -31,23 +43,29 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, a
 
     return (
         <div className={`${!isSelected ? "hidden" : ""}`}>
-            <p className="event_day">{dayMonthDate(getDateFromWeekday(day))}</p>
+            <p className="event_day">{dayMonthDate(getDateFromWeekday(day, event.week))}</p>
 
             {timeSlot 
             ? 
-                <p>{getTimeSpanText(timeSlot, "sweet_spot_time_span")} is the sweet spot!</p>
+                <p className="event_time_slot">{getTimeSpanText(timeSlot, "sweet_spot_time_span")} is the sweet spot!</p>
             : 
-                <p>Oops, the schedules didn't sync up.</p>
+                <p className="event_time_slot">Oops, the schedules didn't sync up.</p>
             }
 
             <div className="horizontal_line"></div>
 
             <table className="avails_table">
                 <tbody>
-                    {userAvails.map(user =>
-                        <tr key={user.userId}>
-                            <td>{getAttendeeUsername(user.userId)}</td>
-                            <td>{getTimeSpanText(user, "")}</td>
+                    {myAvails && (
+                        <tr className="you_avails_row" key={myAvails.userId}>
+                            <td>You</td>
+                            <td>{getTimeSpanText(myAvails, "")}</td>
+                        </tr>
+                    )}
+                    {userAvailsFormatted.slice(1).map(avail =>
+                        <tr key={avail.userId}>
+                            <td>{getAttendeeUsername(avail.userId)}</td>
+                            <td>{getTimeSpanText(avail, "")}</td>
                         </tr>
                     )}
                 </tbody>

@@ -1,10 +1,12 @@
 import * as dayjs from 'dayjs';
 
 export function monthAndDay(date) {
+    date = Number(date);
     return dayjs(date).format('MMM D');
 }
 
 export function dayMonthDate(date) {
+    date = Number(date);
     return dayjs(date).format('dddd, MMM D');
 }
 
@@ -17,18 +19,19 @@ export function to12Hour(time) {
 }
 
 export function getDateFromWeekday(dayOfWeek, weekStartDate) {
+    weekStartDate = Number(weekStartDate);
     const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
     return dayjs(weekStartDate).add(daysOfWeek.indexOf(dayOfWeek), 'day');
 }
 
 export function toBeginningOfWeek(date) {
-    let myDate = dayjs(date);
+    date = dayjs(Number(date));
 
     // if it's Sunday, subtract one day
-    if (myDate.day() === 0) myDate = myDate.subtract(1, 'day');
+    if (date.day() === 0) date = date.subtract(1, 'day');
 
-    return myDate.day(1).toDate();
+    return date.day(1).toDate();
 }
 
 export function hourToNumber(time) {
