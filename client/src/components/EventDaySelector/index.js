@@ -8,7 +8,7 @@ import EventDayAvail from './EventDayAvail';
 
 const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
-export default function EventDaySelector({ event, avails, attendees }) {
+export default function EventDaySelector({ event, user, avails, attendees }) {
     const userAvails = getUserWeekAvails(avails);
     const eventTimeSlots = getDayAvailabilities(userAvails);
 
@@ -40,7 +40,7 @@ export default function EventDaySelector({ event, avails, attendees }) {
 
                     <div className='event_day_container'>
                         {daysOfWeek.map((day, key) =>
-                            <EventDayAvail key={key} event={event} day={day} isSelected={day === currentDay} timeSlot={eventTimeSlots[day]} userAvails={userAvails[day]} attendees={attendees} />
+                            <EventDayAvail key={key} user={user} event={event} day={day} isSelected={day === currentDay} timeSlot={eventTimeSlots[day]} userAvails={userAvails[day]} attendees={attendees} />
                         )}
                     </div>
                 </>
