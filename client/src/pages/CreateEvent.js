@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { toBeginningOfWeek } from '../utils/convertDate';
-import "../assets/createEvent.css"
 import { pageImages, eventThumbnails } from '../images';
-import Calendar from 'react-calendar';
-
-// importing CREATE_EVENT mutation
 import { CREATE_EVENT } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
-// <input type='text' id="event_week" placeholder='Week of your event...' />
+import "../assets/createEvent.css";
+
+import Calendar from 'react-calendar';
 
 const CreateEvent = () => {
-    const [eventInputs, setEventInputs] = useState({});
+    // const navigate = useNavigate();
+
+    const [eventInputs, setEventInputs] = useState({
+        event_name: '',
+        event_location: '',
+        event_description: '',
+        event_thumbnail: eventThumbnails.home,
+    });
     const [eventDate, setEventDate] = useState(new Date());
 
     // gqp query to add event to database
@@ -20,20 +26,43 @@ const CreateEvent = () => {
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
-        setEventInputs(values => ({...values, [name]: value }))
+
+        setEventInputs(values => ({
+            ...values,
+            [name]: value
+        }))
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(eventInputs.event_name);
-        console.log(toBeginningOfWeek(eventDate));
+
+        console.log('PAYLOAD:', {
+            name: eventInputs.event_name,
+            thumbnail: eventInputs.event_thumbnail,
+            location: eventInputs.event_location,
+            description: eventInputs.event_description,
+            week: toBeginningOfWeek(eventDate),
+        });
 
         // gql queries addEvent when form is submitted
-        createEvent({
+        const { data, error } = await createEvent({
             variables: {
                 name: eventInputs.event_name,
+                thumbnail: eventInputs.event_thumbnail,
+                location: eventInputs.event_location,
+                description: eventInputs.event_description,
+                week: toBeginningOfWeek(eventDate),
             }
-        })
+        });
+
+        if (error) {
+            console.error(error);
+        }
+
+        if (data.createEvent) {
+            window.location.assign(`/events/${data.createEvent._id}`);
+            // navigate(`/events/${data.createEvent._id}`);
+        }
     }
 
     return (
@@ -48,41 +77,43 @@ const CreateEvent = () => {
             <div id="createEvent_form">
                 <form onSubmit={handleSubmit}>
                     <input 
-                    type='text' 
-                    id="event_name"
-                    name='event_name' 
-                    placeholder='Name your event...'
-                    value={eventInputs.eventName} 
-                    onChange={handleChange} />
+                        type='text' 
+                        id="event_name"
+                        name='event_name' 
+                        placeholder='Name your event...'
+                        value={eventInputs.event_name} 
+                        onChange={handleChange}
+                    />
                     <Calendar 
-                    id="event_date"
-                    name='event_date'
-                    value={eventDate}
-                    onChange={setEventDate} 
+                        id="event_date"
+                        name='event_date'
+                        value={eventDate}
+                        onChange={setEventDate} 
                     />
                     <p id='selected_event_date'>Your event is scheduled in: {eventDate.toDateString()}</p>
                     <input 
-                    type='text' 
-                    id="event_location" 
-                    name='event_location'
-                    placeholder='Location of your event...' 
-                    value={eventInputs.eventLocation} 
-                    onChange={handleChange}
+                        type='text' 
+                        id="event_location" 
+                        name='event_location'
+                        placeholder='Location of your event...' 
+                        value={eventInputs.event_location} 
+                        onChange={handleChange}
                     />
                     <input 
-                    type='text' 
-                    id="event_description" 
-                    name='event_description'
-                    placeholder='Description of your event...'
-                    value={eventInputs.eventDescription} 
-                    onChange={handleChange}
+                        type='text' 
+                        id="event_description" 
+                        name='event_description'
+                        placeholder='Description of your event...'
+                        value={eventInputs.event_description} 
+                        onChange={handleChange}
                     />         
 
                     <select 
-                    id='event_thumbnail' 
-                    name='event_thumbnail' 
-                    value={eventInputs.eventThumbnail}
-                    onChange={handleChange}>
+                        id='event_thumbnail' 
+                        name='event_thumbnail' 
+                        value={eventInputs.event_thumbnail}
+                        onChange={handleChange}
+                    >
                         <option value={eventThumbnails.home}>Home</option>
                         <option value={eventThumbnails.dinner}>Dinner</option>
                         <option value={eventThumbnails.game}>Game</option>

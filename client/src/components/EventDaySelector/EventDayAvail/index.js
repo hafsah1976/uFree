@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import './EventDayAvail.css';
 
-export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, attendees }) {
+export default function EventDayAvail({ event, day, isSelected, timeSlot, userAvails, attendees }) {
 
     const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ export default function EventDayAvail({ day, isSelected, timeSlot, userAvails, a
 
     return (
         <div className={`${!isSelected ? "hidden" : ""}`}>
-            <p className="event_day">{dayMonthDate(getDateFromWeekday(day))}</p>
+            <p className="event_day">{dayMonthDate(getDateFromWeekday(day, event.week))}</p>
 
             {timeSlot 
             ? 
