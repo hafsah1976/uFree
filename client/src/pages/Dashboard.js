@@ -35,7 +35,7 @@ const Dashboard = () => {
                         <Link to="/createEventPage">
                             <div id="dashboard_createEvent_button" className='dashboard_button'>Create Event</div>
                         </Link>
-                        <Link to="/joinEventPage">
+                        <Link to="/joinEvent">
                             <div id="dashboard_joinEvent_button" className='dashboard_button'>Join Event</div>
                         </Link>
                     </div>
