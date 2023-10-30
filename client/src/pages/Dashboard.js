@@ -29,10 +29,10 @@ const Dashboard = () => {
                 <div id="header_content">
                     <h1 id='header_title'>Dashboard</h1>
                     <div id="header_buttons">
-                        <Link to="/createEventPage">
+                        <Link to="/events/create">
                             <div id="dashboard_createEvent_button" className='dashboard_button'>Create Event</div>
                         </Link>
-                        <Link to="/joinEvent">
+                        <Link to="/events/join">
                             <div id="dashboard_joinEvent_button" className='dashboard_button'>Join Event</div>
                         </Link>
                     </div>
