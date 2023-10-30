@@ -25,9 +25,6 @@ const Dashboard = () => {
     return (
       
         <section id="content_dashboard_page">
-            <p id="DEBUG_dashboard_page_text" className='DEBUG_text'>
-                PLACEHOLDER DASHBOARD TEXT
-            </p>
             <section id="dashboard_content">
                 <div id="header_content">
                     <h1 id='header_title'>Dashboard</h1>
@@ -62,19 +59,19 @@ const Dashboard = () => {
 
 function EventBox({ event }) {
     return (
-        <Link to={`/events/${event._id}`}>
-            <div className='event_box'>
+        <div className='event_box'>
+                <Link to={`/events/${event._id}`}>
                 <div className='event_header' style={{
                     backgroundImage: `url("${event.thumbnail}")`,
                     backgroundSize: 'cover',
-                }}>
-                    {event.name}
+                }} />
+
+                <div className='event_content'>
+                    <p className='event_content_name'>{event.name}</p>
+                    <p className='event_content_week'>Week of {monthAndDay(event.week)}</p>
                 </div>
-                <div className='event_footer'>
-                    {monthAndDay(event.week)}
-                </div>
-            </div>
         </Link>
+            </div>
     );
 };
 
