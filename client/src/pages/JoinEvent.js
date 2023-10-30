@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
+
+import { JOIN_EVENT } from '../utils/mutations';
 
 
 const JoinEvent = () => {
+    const [joinEventInput, setJoinEventInputs] = useState({
+        event_joincode: '',
+    });
 
-    const [joinEventInput, setJoinEventInputs] = useState({});
+    const [joinEvent] = useMutation(JOIN_EVENT);
+    const navigate = useNavigate();
 
     const handleChange = (event) => {
         const name = event.target.name;
@@ -11,9 +19,23 @@ const JoinEvent = () => {
         setJoinEventInputs(values => ({...values, [name]: event_code}))
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log(joinEventInput);
+        // console.log(joinEventInput);
+        const { data, error } = await joinEvent({
+            variables: {
+                code: joinEventInput.event_joincode
+            }
+        });
+
+        if (error) {
+            console.error(error);
+            return;
+        }
+
+        if (data.joinEvent) {
+            navigate(`/events/${data.joinEvent._id}`);
+        }
     };
 
     return(

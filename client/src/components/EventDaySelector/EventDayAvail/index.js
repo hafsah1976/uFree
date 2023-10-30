@@ -12,17 +12,17 @@ export default function EventDayAvail({ user, event, day, isSelected, timeSlot, 
         return attendee.username;
     }
 
-    let userAvailsFormatted = userAvails;
-    // Put current user at top of list
-    if (user) {
-        userAvailsFormatted = [userAvails.find(u => u.userId === user._id)].concat(userAvails.filter(u => u.userId !== user._id));
-    }
-    
+    // find current user's avails
     let myAvails;
-    if (!userAvailsFormatted[0]) userAvailsFormatted.shift();
-    else myAvails = userAvailsFormatted[0];
+    if (user) {
+        myAvails = userAvails.find(u => u.userId === user._id);
+    }
 
-    console.log(userAvailsFormatted);
+    // Put current user at top of list if it exists
+    let userAvailsFormatted = userAvails;
+    if (myAvails) {
+        userAvailsFormatted = [myAvails].concat(userAvails.filter(u => u.userId !== user._id));
+    }
 
     function getTimeSpanText(times, className) {
         let message = "";
@@ -62,7 +62,7 @@ export default function EventDayAvail({ user, event, day, isSelected, timeSlot, 
                             <td>{getTimeSpanText(myAvails, "")}</td>
                         </tr>
                     )}
-                    {userAvailsFormatted.slice(1).map(avail =>
+                    {(myAvails ? userAvailsFormatted.slice(1) : userAvailsFormatted).map(avail =>
                         <tr key={avail.userId}>
                             <td>{getAttendeeUsername(avail.userId)}</td>
                             <td>{getTimeSpanText(avail, "")}</td>

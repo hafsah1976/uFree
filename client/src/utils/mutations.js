@@ -94,3 +94,12 @@ mutation DeleteEvent($eventId: String!) {
   }
 }
 `;
+
+export const JOIN_EVENT = gql`
+  mutation JoinEvent($code: String!) {
+    joinEvent(code: $code) {
+      _id
+      name
+    }
+  }
+`;

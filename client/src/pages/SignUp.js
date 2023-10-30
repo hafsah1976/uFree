@@ -64,8 +64,8 @@ const Signup = () => {
         return;
       } else {
         // Sign-up was successful, log in the user
-        console.log('Data:', data);
-        console.log('Data:', data.signup);
+        // console.log('Data:', data);
+        // console.log('Data:', data.signup);
         // alert(data);
         // Check if the registration was successful
         if (data.signup) {
