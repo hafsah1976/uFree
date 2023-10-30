@@ -4,35 +4,49 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { monthAndDay } from '../utils/convertDate';
 import { EDIT_AVAILABILITY } from "../utils/mutations";
-import { QUERY_ME } from "../utils/queries";
+import { QUERY_USER_AVAILABILITY } from "../utils/queries";
 import { pageImages } from '../images';
 
 import '../assets/addAvailabilities.css';
 
 import DayOfWeekSelector from '../components/DayOfWeekSelector';
 
-const ALL_DAY = { start: 0, end: 24 };
+// const ALL_DAY = { start: 0, end: 24 };
 
 const Availabilities = () => {
-    const { loading, data } = useQuery(QUERY_ME);
-
-    // get current user availability
-    const userAvail = 0;
-    const [avails, setAvails] = useState({
-        monday: {...ALL_DAY},
-        tuesday: {...ALL_DAY},
-        wednesday: {...ALL_DAY},
-        thursday: {...ALL_DAY},
-        friday: {...ALL_DAY},
-        saturday: {...ALL_DAY},
-        sunday: {...ALL_DAY},
-    });
 
     const navigate = useNavigate();
     const { eventId } = useParams();
     const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
     const [error, setError] = useState(""); // State for storing error messages
     const [editAvailibility] = useMutation(EDIT_AVAILABILITY);
+
+    const { loading, data } = useQuery(QUERY_USER_AVAILABILITY, {
+        variables: { eventId },
+    });
+
+    // console.log(`eventId: ${eventId}`);
+    // console.log(data?.availabilities);
+
+    const avail = data?.availabilities;
+    console.log(avail);
+
+    //!
+    const dayArray = [];
+    for (let i = 0; i < avail.length; i++) {
+        dayArray.push({ start: avail[i].start, end: avail[i].end });
+    }
+
+    //!
+    const [avails, setAvails] = useState({
+        monday: dayArray[0],
+        tuesday: dayArray[1],
+        wednesday: dayArray[2],
+        thursday: dayArray[3],
+        friday: dayArray[4],
+        saturday: dayArray[5],
+        sunday: dayArray[6],
+    });
 
     async function handleFormSubmit(event) {
         event.preventDefault();
@@ -55,6 +69,10 @@ const Availabilities = () => {
                 eventId,
             },
         });
+
+        if (loading) return (
+            <p>Loading...</p>
+            )
 
         if (error) {
             console.error("Failed to make availablity");
@@ -83,7 +101,7 @@ const Availabilities = () => {
             <img
                 className='availabilities_background_image'
                 src={pageImages.addAvailabilities}
-                alt="Add Availabilities"
+                alt="Edit Availabilities"
             />
 
 
