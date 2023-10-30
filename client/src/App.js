@@ -101,7 +101,7 @@ function App() {
               element={<Availabilities />}
               />       
               <Route 
-              path='/join-event'
+              path='/events/join'
               element={<JoinEvent />}
               />              
             </Routes>
