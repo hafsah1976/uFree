@@ -8,6 +8,10 @@
     font-weight: bold;
 }
 
+.event_time_slot {
+    font-size: 1.2rem;
+}
+
 .avails_table {
     width: min(100%, 300px);
     margin-top: 1rem;

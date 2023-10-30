@@ -12,8 +12,12 @@ export default function EventDayAvail({ user, event, day, isSelected, timeSlot, 
         return attendee.username;
     }
 
+    let userAvailsFormatted = userAvails;
     // Put current user at top of list
-    const userAvailsFormatted = [userAvails.find(u => u.userId === user._id)].concat(userAvails.filter(u => u.userId !== user._id));
+    if (user) {
+        userAvailsFormatted = [userAvails.find(u => u.userId === user._id)].concat(userAvails.filter(u => u.userId !== user._id));
+    }
+    
     let myAvails;
     if (!userAvailsFormatted[0]) userAvailsFormatted.shift();
     else myAvails = userAvailsFormatted[0];
@@ -43,9 +47,9 @@ export default function EventDayAvail({ user, event, day, isSelected, timeSlot, 
 
             {timeSlot 
             ? 
-                <p>{getTimeSpanText(timeSlot, "sweet_spot_time_span")} is the sweet spot!</p>
+                <p className="event_time_slot">{getTimeSpanText(timeSlot, "sweet_spot_time_span")} is the sweet spot!</p>
             : 
-                <p>Oops, the schedules didn't sync up.</p>
+                <p className="event_time_slot">Oops, the schedules didn't sync up.</p>
             }
 
             <div className="horizontal_line"></div>
