@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { monthAndDay } from '../../utils/convertDate';
-
+import { QUERY_ME } from '../../utils/queries';
+import { useQuery } from '@apollo/client';
 import './EventHeader.css';
 
 import { Link } from "react-router-dom";
@@ -8,7 +9,22 @@ import ReactModal from 'react-modal';
 
 export default function EventHeader({ event }) {
 
+    const { loading, error, data } = useQuery(QUERY_ME);
+
+
     const [descriptionModal, setDescriptionModal] = useState(false);
+    // check if user already has an availability added
+    if (loading) return (
+        <p>Loading...</p>
+    )
+
+    if (error)  return (
+            <p>An error has occured, please try again</p>
+        )
+
+    const hasAvails = event.availabilities.some(availability => availability.userId === data.me._id);
+    console.log(hasAvails);
+
 
     return (
         <div className='event_header_container' style={{
@@ -61,11 +77,19 @@ export default function EventHeader({ event }) {
             </ReactModal>
 
             <br/>
+            {(hasAvails === false)
+                        ?
+                            // display add availability if user does not have an availability
+                            <Link to={`/events/${event._id}/availabilities`}>
+                                <button className='add_avail_btn btn_large btn_accent'>Add Your Availability</button>
+                            </Link>
+                        :
+                            <Link to={`/events/${event._id}/availabilities/edit`}>
+                                <button className='add_avail_btn btn_large btn_accent'>Edit Your Availability</button>
+                            </Link>
+                         
+                    }
 
-            <Link to={`/events/${event._id}/availabilities`}>
-                <button className='add_avail_btn btn_large btn_accent'>Add Your Availability</button>
-            </Link>
-            
         </div>
     )
 }

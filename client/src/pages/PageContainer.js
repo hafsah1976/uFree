@@ -4,8 +4,9 @@ import Dashboard from './Dashboard';
 import SignUp from './SignUp';
 import Home from './Home';
 import Availabilities from './AddAvailabilities';
+import EditAvails from './EditAvailabilities';
 import CreateEvent from './CreateEvent';
 import GoToEvent from './GoToEvent';
 import JoinEvent from './JoinEvent';
 
-export { Login, Event, Dashboard, SignUp, Home, Availabilities, CreateEvent, GoToEvent, JoinEvent };
+export { Login, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, GoToEvent, JoinEvent };
