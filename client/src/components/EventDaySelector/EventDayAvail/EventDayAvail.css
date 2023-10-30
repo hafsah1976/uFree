@@ -57,3 +57,7 @@
 .drop_event_btn {
     margin-top: var(--padding-lg);
 }
+
+.drop_event_btn:hover {
+    background-color: var(--danger);
+}

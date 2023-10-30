@@ -17,6 +17,7 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.17.0",
     "react-scripts": "5.0.1",
+    "react-select": "^5.7.7",
     "react-time-picker": "^6.5.2",
     "web-vitals": "^2.1.4",
     "workbox-background-sync": "^6.6.0",

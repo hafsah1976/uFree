@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 // import { useNavigate } from 'react-router-dom';
-import { toBeginningOfWeek } from '../utils/convertDate';
+import { toBeginningOfWeek, monthAndDay } from '../utils/convertDate';
 import { pageImages, eventThumbnails } from '../images';
 import { CREATE_EVENT } from '../utils/mutations';
 import { useMutation } from '@apollo/client';
 
+import 'react-calendar/dist/Calendar.css';
 import "../assets/createEvent.css";
 
 import Calendar from 'react-calendar';
+import Select from 'react-select';
 
 const CreateEvent = () => {
     // const navigate = useNavigate();
@@ -33,22 +35,23 @@ const CreateEvent = () => {
         }))
     }
 
+    const thumbnailOptions = Object.keys(eventThumbnails).map(thumb => {
+        return {
+            value: eventThumbnails[thumb],
+            label: thumb.charAt(0).toUpperCase() + thumb.slice(1),
+        }
+    });
+
+    const [eventThumbnail, setEventThumbnail] = useState(thumbnailOptions[0]);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        console.log('PAYLOAD:', {
-            name: eventInputs.event_name,
-            thumbnail: eventInputs.event_thumbnail,
-            location: eventInputs.event_location,
-            description: eventInputs.event_description,
-            week: toBeginningOfWeek(eventDate),
-        });
 
         // gql queries addEvent when form is submitted
         const { data, error } = await createEvent({
             variables: {
                 name: eventInputs.event_name,
-                thumbnail: eventInputs.event_thumbnail,
+                thumbnail: eventThumbnail.value,
                 location: eventInputs.event_location,
                 description: eventInputs.event_description,
                 week: toBeginningOfWeek(eventDate),
@@ -67,10 +70,6 @@ const CreateEvent = () => {
 
     return (
         <section id="content_createEvent_page">
-            <p id="DEBUG_createEvent_page_text" className='DEBUG_text'>
-                PLACEHOLDER CREATE EVENT PAGE TEXT
-            </p>
-
             <div id='createEvent_page_title'>
                 <h1>Create an Event</h1>
             </div>
@@ -83,14 +82,12 @@ const CreateEvent = () => {
                         placeholder='Name your event...'
                         value={eventInputs.event_name} 
                         onChange={handleChange}
+                        className='input'
+                        style={{
+                            margin: 'var(--padding-md) 0'
+                        }}
                     />
-                    <Calendar 
-                        id="event_date"
-                        name='event_date'
-                        value={eventDate}
-                        onChange={setEventDate} 
-                    />
-                    <p id='selected_event_date'>Your event is scheduled in: {eventDate.toDateString()}</p>
+
                     <input 
                         type='text' 
                         id="event_location" 
@@ -98,7 +95,9 @@ const CreateEvent = () => {
                         placeholder='Location of your event...' 
                         value={eventInputs.event_location} 
                         onChange={handleChange}
+                        className='input'
                     />
+
                     <input 
                         type='text' 
                         id="event_description" 
@@ -106,23 +105,40 @@ const CreateEvent = () => {
                         placeholder='Description of your event...'
                         value={eventInputs.event_description} 
                         onChange={handleChange}
+                        className='input'
+                        style={{
+                            marginBottom: 'var(--padding-md)'
+                        }}
                     />         
 
-                    <select 
-                        id='event_thumbnail' 
-                        name='event_thumbnail' 
-                        value={eventInputs.event_thumbnail}
-                        onChange={handleChange}
-                    >
-                        <option value={eventThumbnails.home}>Home</option>
-                        <option value={eventThumbnails.dinner}>Dinner</option>
-                        <option value={eventThumbnails.game}>Game</option>
-                        <option value={eventThumbnails.friends}>Friends</option>
-                        <option value={eventThumbnails.park}>Park</option>
-                        <option value={eventThumbnails.concert}>Concert</option>
-                    </select>
+                    <p id='selected_event_date'>Scheduled for the week of <span className='bold'>{monthAndDay(eventDate)}</span>.</p>
+                    <Calendar 
+                        id="event_date"
+                        name='event_date'
+                        value={eventDate}
+                        onChange={setEventDate} 
+                    />
+
+                    <div style={{
+                        margin: 'var(--padding-lg) 0',
+                    }}>
+                        <p>Choose a thumbnail:</p>
+                        <Select
+                            defaultValue={eventThumbnail}
+                            onChange={setEventThumbnail}
+                            options={thumbnailOptions}
+                        />
+                        <div 
+                            className='event_thumbnail_preview' 
+                            style={{
+                                marginTop: 'var(--padding-sm)',
+                                backgroundImage: `url("${eventThumbnail.value}")`
+                            }}
+                        />
+                        {/* <img  alt="Thumbnail Preview" src={eventThumbnail.value} /> */}
+                    </div>
                 
-                    <input type='submit' value="submit" />           
+                    <button type='submit' className='btn btn_accent'>Create</button>         
                 </form>
             </div>
 

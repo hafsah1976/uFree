@@ -4,13 +4,13 @@
     flex-direction: column;
 }
 
-#header_buttons {
+/* #header_buttons {
     display: flex;
     flex-direction: row;
     justify-content: center
-}
+} */
 
-.dashboard_button {
+/* .dashboard_button {
     margin: 10px;
     background-color: orange;
     padding: 10px;
@@ -18,26 +18,41 @@
     border-radius: 5px;
     box-shadow: 5px 5px 10px;
     text-decoration: none;
+} */
+
+.dashboard_btn {
+    margin-right: var(--padding-lg);
+    margin-bottom: var(--padding-lg);
+}
+
+#board_title {
+    margin-top: 0;
 }
 
 #board_elements {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    display: grid;
+    --dash-event-columns: 1;
+    grid-template-columns: repeat(var(--dash-event-columns), 1fr);
+    gap: 20px;
 }
 
 .event_box {
-    box-sizing: border-box;
-    --event-box-width: min(200px, 80vw);
+    --event-box-width: 100%;
     height: 200px;
-    width: var(--event-box-width);
-
-    margin: 20px;
+    /* width: var(--event-box-width); */
+    max-width: 470px;
 
     background-color: var(--primary);
     box-shadow: var(--common-box-shadow);
     border-radius: var(--large-border-radius);
+    
+    transition: 0.15s;
+}
+
+.event_box:hover {
+    transform: scale(1.05);
+    box-shadow: var(--strong-box-shadow);
+    transition: 0.15s;
 }
 
 .event_box * {
@@ -51,6 +66,7 @@
 }
 
 .event_content {
+    overflow: hidden;
     height: 45%;
     padding: 10px;
     border-radius: 0 0 var(--large-border-radius) var(--large-border-radius);
@@ -58,6 +74,7 @@
 
 .event_content_name,
 .event_content_week {
+    max-width: 470px;
     margin: 0;
 }
 
@@ -66,10 +83,25 @@
 
     font-size: 2rem;
     font-weight: bold;
+
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }
 
-@media screen and (min-width: 768px) {
-    .event_box {
-        --event-box-width: 300px;
+@media screen and (min-width: 740px) {
+    #board_elements {
+        --dash-event-columns: 2;
+    }
+}
+
+@media screen and (min-width: 1150px) {
+    #board_elements {
+        --dash-event-columns: 3;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    #board_elements {
+        --dash-event-columns: 4;
     }
 }
