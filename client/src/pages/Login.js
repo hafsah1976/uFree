@@ -65,7 +65,7 @@ const Login = ({ loginFunc }) => {
                 return;
             }
 
-            console.log('Data:', data);
+            // console.log('Data:', data);
 
             if (!data.login) {
                 console.warn('Could not find user!');

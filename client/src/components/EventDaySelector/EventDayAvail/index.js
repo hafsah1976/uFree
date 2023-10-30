@@ -22,7 +22,7 @@ export default function EventDayAvail({ user, event, day, isSelected, timeSlot, 
     if (!userAvailsFormatted[0]) userAvailsFormatted.shift();
     else myAvails = userAvailsFormatted[0];
 
-    console.log(userAvailsFormatted);
+    // console.log(userAvailsFormatted);
 
     function getTimeSpanText(times, className) {
         let message = "";
