@@ -8,9 +8,6 @@ import { useQuery } from '@apollo/client';
 import { monthAndDay } from '../utils/convertDate';
 
 const Dashboard = () => {
-
-    const eventBoxes = [1, 2, 3, 4, 5, 6];
-
     const { loading, error, data } = useQuery(QUERY_ME);
     const events = data?.me.events;
 
@@ -30,10 +27,16 @@ const Dashboard = () => {
                     <h1 id='header_title'>Dashboard</h1>
                     <div id="header_buttons">
                         <Link to="/events/create">
-                            <div id="dashboard_createEvent_button" className='dashboard_button'>Create Event</div>
+                            <button className='btn_large btn_accent dashboard_btn'>
+                                <i className="bi bi-plus-lg" style={{marginRight: 'var(--padding-sm)'}}></i>
+                                Create Event
+                            </button>
                         </Link>
                         <Link to="/events/join">
-                            <div id="dashboard_joinEvent_button" className='dashboard_button'>Join Event</div>
+                            <button className='btn_large btn_accent dashboard_btn'>
+                                <i className="bi bi-door-open" style={{marginRight: 'var(--padding-sm)'}}></i>
+                                Join Event
+                            </button>
                         </Link>
                     </div>
                 </div>

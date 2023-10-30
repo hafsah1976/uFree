@@ -8,10 +8,11 @@
 :root {
   --primary: #87ceeb;
   --accent: #f1c233;
-  --accent-dark: #e5b831;
+  --accent-light: #ffd451;
   --light-gray: #eeeeee;
   --light: #ffffff;
   --dark: #000000;
+  --danger: #ff1654;
 
   --header-height: 100px;
 
@@ -19,6 +20,7 @@
   --common-border-radius: 5px;
   --large-border-radius: 10px;
   --common-box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.302);
+  --strong-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.53);
 
   --padding-sm: 10px;
   --padding-md: 20px;
@@ -162,6 +164,8 @@ button:hover {
   border-radius: var(--common-border-radius);
 
   box-shadow: var(--common-box-shadow);
+
+  transition: 0.1s;
 }
 
 .btn_large {
@@ -175,6 +179,15 @@ button:hover {
   border-radius: var(--large-border-radius);
 
   box-shadow: var(--common-box-shadow);
+  
+  transition: 0.1s;
+}
+
+.btn:hover,
+.btn_large:hover {
+  transform: scale(1.05);
+  box-shadow: var(--strong-box-shadow);
+  transition: 0.1s;
 }
 
 .btn_accent {
@@ -182,7 +195,7 @@ button:hover {
 }
 
 .btn_accent:hover {
-  background-color: var(--accent-dark);
+  background-color: var(--accent-light);
 }
 
 .btn_light {
