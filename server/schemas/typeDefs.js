@@ -11,7 +11,7 @@ const typeDefs = gql`
     code: String
     admin: User
     attendees: [User]
-    availabilities: [UserAvailibilities]
+    availabilities: [UserAvailabilities]
   }
 
   type User {
@@ -22,7 +22,7 @@ const typeDefs = gql`
 
   }
 
-  type UserAvailibilities {
+  type UserAvailabilities {
     userId: ID
     availabilities: [DayAvailability]
   }
@@ -50,6 +50,7 @@ const typeDefs = gql`
     event(eventId: String!): Event
     # availabilities(eventId: ID!): [UserAvailibilities] ###
     me: User
+    availability(eventId: String!): UserAvailabilities
   }
 
 

@@ -33,19 +33,19 @@ export const GET_EVENT = gql`
 export const QUERY_SINGLE_USER = gql`
   query getSingleUser($username: String!) {
     user(username: $username) {
-      _id  
+      _id
       username
       email
       events {
-        _id 
+        _id
         name
         admin
         location
-        description 
+        description
         week
         availabilities {
           userId
-          availabilities  
+          availabilities
         }
       }
     }
@@ -64,6 +64,19 @@ export const QUERY_ME = gql`
       thumbnail
       week
       location
+    }
+  }
+}
+`;
+
+export const QUERY_USER_AVAILABILITY = gql`
+query availability($eventId: String!) {
+  availability(eventId: $eventId) {
+    userId
+    availabilities {
+      day
+      start
+      end
     }
   }
 }
