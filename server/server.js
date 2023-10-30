@@ -1,8 +1,8 @@
-
 require('dotenv').config({ path: '../.env' });
 const path = require('path');
 
 const db = require('./config/connection');
+const { setEventCodes } = require('./utils/generateCode');
 
 const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
@@ -37,6 +37,15 @@ const startApolloServer = async () => {
   server.applyMiddleware({ app });
 
   db.once('open', () => {
+
+    // get all event codes from DB
+    const eventsCursor = db.collection('events').find({});
+    eventsCursor.toArray()
+      .then(events => {
+        const codes = events.map(e => e.code);
+        setEventCodes(new Set(codes));
+      });
+
     app.listen(PORT, async () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
