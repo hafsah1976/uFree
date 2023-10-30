@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import './EventDayAvail.css';
 
-export default function EventDayAvail({ event, day, isSelected, timeSlot, userAvails, attendees }) {
+export default function EventDayAvail({ user, event, day, isSelected, timeSlot, userAvails, attendees }) {
 
     const navigate = useNavigate();
 
@@ -11,6 +11,14 @@ export default function EventDayAvail({ event, day, isSelected, timeSlot, userAv
         const attendee = attendees.find(a => a._id === _id);
         return attendee.username;
     }
+
+    // Put current user at top of list
+    const userAvailsFormatted = [userAvails.find(u => u.userId === user._id)].concat(userAvails.filter(u => u.userId !== user._id));
+    let myAvails;
+    if (!userAvailsFormatted[0]) userAvailsFormatted.shift();
+    else myAvails = userAvailsFormatted[0];
+
+    console.log(userAvailsFormatted);
 
     function getTimeSpanText(times, className) {
         let message = "";
@@ -44,10 +52,16 @@ export default function EventDayAvail({ event, day, isSelected, timeSlot, userAv
 
             <table className="avails_table">
                 <tbody>
-                    {userAvails.map(user =>
-                        <tr key={user.userId}>
-                            <td>{getAttendeeUsername(user.userId)}</td>
-                            <td>{getTimeSpanText(user, "")}</td>
+                    {myAvails && (
+                        <tr className="you_avails_row" key={myAvails.userId}>
+                            <td>You</td>
+                            <td>{getTimeSpanText(myAvails, "")}</td>
+                        </tr>
+                    )}
+                    {userAvailsFormatted.slice(1).map(avail =>
+                        <tr key={avail.userId}>
+                            <td>{getAttendeeUsername(avail.userId)}</td>
+                            <td>{getTimeSpanText(avail, "")}</td>
                         </tr>
                     )}
                 </tbody>
