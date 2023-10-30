@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { monthAndDay } from '../utils/convertDate';
 import { EDIT_AVAILABILITY } from "../utils/mutations";
+import { QUERY_ME } from "../utils/queries";
 import { pageImages } from '../images';
 
 import '../assets/addAvailabilities.css';
@@ -13,7 +14,10 @@ import DayOfWeekSelector from '../components/DayOfWeekSelector';
 const ALL_DAY = { start: 0, end: 24 };
 
 const Availabilities = () => {
+    const { loading, data } = useQuery(QUERY_ME);
 
+    // get current user availability
+    const userAvail = 0;
     const [avails, setAvails] = useState({
         monday: {...ALL_DAY},
         tuesday: {...ALL_DAY},
