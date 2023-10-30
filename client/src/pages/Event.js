@@ -89,7 +89,7 @@ const Event = () => {
         ) : (
           <section id="content_event_page">
             <EventHeader event={event} />
-            <EventDaySelector avails={event.availabilities} attendees={event.attendees} />
+            <EventDaySelector event={event} avails={event.availabilities} attendees={event.attendees} />
 
             <div>
                 {isAdmin 

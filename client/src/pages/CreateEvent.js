@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { toBeginningOfWeek } from '../utils/convertDate';
 import { pageImages, eventThumbnails } from '../images';
 import { CREATE_EVENT } from '../utils/mutations';
@@ -9,10 +9,8 @@ import "../assets/createEvent.css";
 
 import Calendar from 'react-calendar';
 
-// <input type='text' id="event_week" placeholder='Week of your event...' />
-
 const CreateEvent = () => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const [eventInputs, setEventInputs] = useState({
         event_name: '',
@@ -62,7 +60,8 @@ const CreateEvent = () => {
         }
 
         if (data.createEvent) {
-            navigate(`/events/${data.createEvent._id}`);
+            window.location.assign(`/events/${data.createEvent._id}`);
+            // navigate(`/events/${data.createEvent._id}`);
         }
     }
 
