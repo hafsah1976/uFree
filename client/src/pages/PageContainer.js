@@ -7,5 +7,6 @@ import Availabilities from './AddAvailabilities';
 import EditAvails from './EditAvailabilities';
 import CreateEvent from './CreateEvent';
 import GoToEvent from './GoToEvent';
+import JoinEvent from './JoinEvent';
 
-export { Login, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, GoToEvent };
+export { Login, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, GoToEvent, JoinEvent };

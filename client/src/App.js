@@ -28,7 +28,7 @@ import HeaderNavBar from "./components/HeaderNavBar/index.js";
 //import Home from "./pages/Home.js"
 //import Login from './pages/Login.js';
 
-import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent,  } from "./pages/PageContainer.js";
+import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -103,6 +103,10 @@ function App() {
               <Route
               path='events/:eventId?/availabilities/edit'
               element={<EditAvails />}
+              />
+              <Route
+              path='/events/join'
+              element={<JoinEvent />}
               />
             </Routes>
           </section>

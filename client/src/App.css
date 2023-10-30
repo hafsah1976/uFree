@@ -49,9 +49,9 @@
 }
 
 .App-header {
-  display: flex;
+  /* display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: center; */
 
   width: 100%;
 
@@ -76,36 +76,12 @@ button:hover {
 }
 
 /* styles the header elements */
-/* height value is a placeholder */
 #content_header {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  /* display: flex;
+  width: 100%;
+  align-items: center; */
 
   height: var(--header-height);
-}
-
-/* styles background for the page container */
-#page_container {
-  padding: 0 var(--page-padding);
-  padding-bottom: var(--page-padding);
-
-  position: relative;
-  isolation: isolate;
-  /* border-radius: 10px;
-  border-style: groove;
-  box-shadow: 5px 5px 10px rgb(179, 153, 69), -5px 5px 10px rgb(179, 153, 69);
-
-  margin: 10px;
-
-  height: 900px; */
-}
-
-#page_container:has(.blue_page_background) {
-  height: 100vh;
-  padding-bottom: 0;
-  overflow: hidden;
-  background-color: var(--primary);
 }
 
 /* Hide navbar on home page */
@@ -113,14 +89,18 @@ button:hover {
   display: none;
 }
 
-#header_nav_buttons {
+#content_header_nav {
+  height: 100%;
+
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+
+  padding: 0 16px;
 }
 
-#header_nav_buttons a {
+#content_header_nav a {
   text-decoration: none;
 }
 
@@ -146,6 +126,29 @@ button:hover {
   font-weight: bold;
   font-size: 1.2rem;
   color: var(--light);
+}
+
+/* styles background for the page container */
+#page_container {
+  padding: 0 var(--page-padding);
+  padding-bottom: var(--page-padding);
+
+  position: relative;
+  isolation: isolate;
+  /* border-radius: 10px;
+  border-style: groove;
+  box-shadow: 5px 5px 10px rgb(179, 153, 69), -5px 5px 10px rgb(179, 153, 69);
+
+  margin: 10px;
+
+  height: 900px; */
+}
+
+#page_container:has(.blue_page_background) {
+  height: 100vh;
+  padding-bottom: 0;
+  overflow: hidden;
+  background-color: var(--primary);
 }
 
 .btn {
