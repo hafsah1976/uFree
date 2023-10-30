@@ -67,6 +67,7 @@ function EventBox({ event }) {
                 <div className='event_header' style={{
                     backgroundImage: `url("${event.thumbnail}")`,
                     backgroundSize: 'cover',
+                    backgroundPosition: '50%',
                 }} />
 
                 <div className='event_content'>

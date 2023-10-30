@@ -39,7 +39,8 @@
 .event_box {
     --event-box-width: 100%;
     height: 200px;
-    width: var(--event-box-width);
+    /* width: var(--event-box-width); */
+    max-width: 470px;
 
     background-color: var(--primary);
     box-shadow: var(--common-box-shadow);
@@ -65,6 +66,7 @@
 }
 
 .event_content {
+    overflow: hidden;
     height: 45%;
     padding: 10px;
     border-radius: 0 0 var(--large-border-radius) var(--large-border-radius);
@@ -72,6 +74,7 @@
 
 .event_content_name,
 .event_content_week {
+    max-width: 470px;
     margin: 0;
 }
 
@@ -80,16 +83,25 @@
 
     font-size: 2rem;
     font-weight: bold;
+
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }
 
-@media screen and (min-width: 500px) {
+@media screen and (min-width: 740px) {
     #board_elements {
         --dash-event-columns: 2;
     }
 }
 
-@media screen and (min-width: 950px) {
+@media screen and (min-width: 1150px) {
     #board_elements {
         --dash-event-columns: 3;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    #board_elements {
+        --dash-event-columns: 4;
     }
 }
