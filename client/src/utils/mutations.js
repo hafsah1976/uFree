@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export const CREATE_EVENT = gql`
-  mutation CreateEvent($name: String!, $location: String, $description: String, $week: String, $thumbnail: String) {
+  mutation CreateEvent($name: String!, $location: String, $description: String, $week: String!, $thumbnail: String!) {
     createEvent(name: $name, location: $location, description: $description, week: $week, thumbnail: $thumbnail) {
       _id
       name

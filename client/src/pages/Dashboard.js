@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import "../assets/dashboard.css";
 
 // import GET_EVENT query
-import { QUERY_ME, QUERY_SINGLE_USER } from '../utils/queries';
+import { QUERY_ME } from '../utils/queries';
 import { useQuery } from '@apollo/client';
+import { monthAndDay } from '../utils/convertDate';
 
 const Dashboard = () => {
 
     const eventBoxes = [1, 2, 3, 4, 5, 6];
 
     const { loading, error, data } = useQuery(QUERY_ME);
+    const events = data?.me.events;
+
+    if (loading) return (
+        <p>Loading...</p>
+    )
+
+    if (error) return (
+        <p>Oops! An error occurred.</p>
+    )
 
     return (
+      
         <section id="content_dashboard_page">
             <p id="DEBUG_dashboard_page_text" className='DEBUG_text'>
                 PLACEHOLDER DASHBOARD TEXT
@@ -33,29 +44,37 @@ const Dashboard = () => {
                     <h2 id='board_title'>
                         Events
                     </h2>
-                    <div id='board_elements'>
-                        <div key={data._id}>
-                            {data.events.map((event) => {
-                                <EventBox prop={event} />
-                            })}
-                        </div>
-                    </div>
+                    {(events.length === 0)
+                        ?
+                            <p>You have no events.</p>
+                        :
+                            <div id='board_elements'>
+                                {events.map((event) => 
+                                    <EventBox key={event._id} event={event} />
+                                )}
+                            </div>
+                    }
                 </div>
             </section>
         </section>
     );
 };
 
-function EventBox(event_data) {
+function EventBox({ event }) {
     return (
-        <div className='event_box'>
-            <div id='event_header'>
-
+        <Link to={`/events/${event._id}`}>
+            <div className='event_box'>
+                <div className='event_header' style={{
+                    backgroundImage: `url("${event.thumbnail}")`,
+                    backgroundSize: 'cover',
+                }}>
+                    {event.name}
+                </div>
+                <div className='event_footer'>
+                    {monthAndDay(event.week)}
+                </div>
             </div>
-            <div id='event_footer'>
-
-            </div>
-        </div>
+        </Link>
     );
 };
 

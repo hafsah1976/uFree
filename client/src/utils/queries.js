@@ -53,23 +53,18 @@ export const QUERY_SINGLE_USER = gql`
 `;
 
 export const QUERY_ME = gql`
-  query me {
-    user {
-      _id  
-      username
-      email
-      events {
-        _id 
-        name
-        admin
-        location
-        description 
-        week
-        availabilities {
-          userId
-          availabilities  
-        }
-      }
+  query Me {
+  me {
+    _id
+    email
+    username
+    events {
+      _id
+      name
+      thumbnail
+      week
+      location
     }
   }
+}
 `;

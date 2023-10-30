@@ -38,12 +38,12 @@
     margin: 20px;
 }
 
-#event_header {
+.event_header {
     height: 50%;
     background-color: lightgray;
 }
 
-#event_footer {
+.event_footer {
     height: 25%;
     background-color: white;
 }
