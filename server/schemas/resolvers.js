@@ -35,6 +35,7 @@ const resolvers = {
 
         // displays the current logged in user's info
         me: async (parent, args, context) => {
+            console.log('ME RESOLVER EXECUTED.');
             if (context.user) {
                 return await User.findOne({ _id: context.user._id }).populate('events');
             }

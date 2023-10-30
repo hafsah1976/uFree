@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GET_EVENT, ME } from '../utils/queries';
+import { GET_EVENT, QUERY_ME } from '../utils/queries';
 import { DELETE_EVENT, LEAVE_EVENT } from '../utils/mutations';
 // import Auth from '../utils/auth';
 import EventHeader from '../components/EventHeader';
@@ -16,7 +16,7 @@ const Event = () => {
   });
   const event = data?.event;
 
-  const { data: userData } = useQuery(ME);
+  const { data: userData } = useQuery(QUERY_ME);
 
   const user = userData?.me;
 

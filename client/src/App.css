@@ -101,6 +101,18 @@ button:hover {
   height: 900px; */
 }
 
+#page_container:has(.blue_page_background) {
+  height: 100vh;
+  padding-bottom: 0;
+  overflow: hidden;
+  background-color: var(--primary);
+}
+
+/* Hide navbar on home page */
+.App:has(.no_navbar) .App-header {
+  display: none;
+}
+
 #header_nav_buttons {
   display: flex;
   justify-content: flex-end;

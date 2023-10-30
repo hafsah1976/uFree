@@ -1,10 +1,13 @@
 // Import necessary libraries and styles
 import React, { useState } from 'react';
-import { Link, useNavigate } from "react-router-dom";
-import "../assets/login.css";
-import { LOG_IN } from "../utils/mutations";
 import { useMutation } from "@apollo/client";
+import { Link, useNavigate } from "react-router-dom";
+
+import { LOG_IN } from "../utils/mutations";
 import Auth from '../utils/auth';
+import { pageImages } from '../images';
+
+import "../assets/login.css";
 
 // Define the Login component
 const Login = ({ loginFunc }) => {
@@ -95,10 +98,10 @@ const Login = ({ loginFunc }) => {
 
     // Render the sign-up form and related elements
     return (
-        <div className='page-container'>
+        <div className='page-container blue_page_background no_navbar'>
             <div className='credentials_form_container'>
                 <div className='credentials_container'>
-                    <h1>Welcome Back!</h1>
+                    <h1 className='text-light'>Welcome Back!</h1>
                     <div className='form_container'>
                         <form onSubmit={handleOnSubmitEvent}>
                             <h2>Login to Your Account</h2>
@@ -138,15 +141,12 @@ const Login = ({ loginFunc }) => {
                     </div>
                 </div>
             </div>
-            <div className="image-container">
-            {/* Add your image source and styling here */}
-            <img
-                src="./src/images/page-images/create-event.jpg"
-                alt=""
-                className="image"
-            />
-                    </div>
 
+            <img 
+                className='login_background_image'
+                src={pageImages.login}
+                alt="Login background"
+            />
         </div>
     );
 };
