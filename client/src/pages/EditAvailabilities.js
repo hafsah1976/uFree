@@ -67,7 +67,7 @@ const Availabilities = () => {
 
     return (
         <section id="content_availabilities_page">
-            <h1 className='text-align-start'>Add Your Availabilities</h1>
+            <h1 className='text-align-start'>Edit Your Availability</h1>
             <p className='text-align-start'>Week of {monthAndDay(eventWeek)}</p>
 
             <form onSubmit={handleFormSubmit}>
