@@ -22,8 +22,15 @@ const JoinEvent = () => {
                 PLACEHOLDER JOIN EVENT TEXT
             </p>
             <section id="joinEvent_form">
-                <form>
-
+                <form onSubmit={handleSubmit}>
+                    <input
+                    type='text'
+                    name='event_joincode'
+                    placeholder='Event code here...'
+                    value={joinEventInput.event_joincode}
+                    onChange={handleChange}>
+                    </input>
+                    <input type='submit' value="submit" />
                 </form>
             </section>
         </section>
