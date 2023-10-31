@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { hourToNumber } from '../../../utils/convertDate';
+import { hourToNumber, numberToHour } from '../../../utils/convertDate';
 
 import './DayAvailInput.css';
 import 'react-time-picker/dist/TimePicker.css';
@@ -11,7 +11,21 @@ import TimePicker from 'react-time-picker';
 const NOT_AVAILABLE = { start: 0, end: 0 };
 const ALL_DAY = { start: 0, end: 24 };
 
-export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
+export default function DayAvailInput({ day, currentDay, handleAvailsChange, avails }) {
+
+    // let startingOption = 2;
+    // if (avails.start === ALL_DAY.start && avails.end === ALL_DAY.end) startingOption = 1;
+    // else if (avails.start === NOT_AVAILABLE.start && avails.end === NOT_AVAILABLE.end) startingOption = 3;
+    
+    // console.log(day, ':', avails);
+    // console.log(avails.start, numberToHour(avails.start))
+    // console.log(avails.end, numberToHour(avails.end))
+
+    // function numberToInputHour(num) {
+    //     if (num === 0) return '00:00';
+    //     if (num === 24) return '23:59';
+    //     return numberToHour(num);
+    // }
 
     const [currentOption, setCurrentOption] = useState(1);
     const [timeInput, setTimeInput] = useState(ALL_DAY);
@@ -22,22 +36,22 @@ export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
 
     function handleTimeInputChange(value, type) {
         const hourNum = hourToNumber(value);
-        
+
         const newTimeInput = {
             ...timeInput,
             [type]: hourNum,
         };
-        
+
         // console.log(newTimeInput);
-        
+
         if (newTimeInput.start >= newTimeInput.end) return;
-        
+
         setTimePickerInput({
             ...timePickerInput,
             [type]: value
         });
         setTimeInput(newTimeInput);
-        
+
         handleAvailsChange({
             [day]: newTimeInput,
         });
@@ -45,9 +59,10 @@ export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
 
     return (
         <div className={`day_avail_input_container ${day === currentDay ? "" : "hidden"}`}>
+            {/* {day}: {avails.start}, {avails.end} */}
             <div className='dav_avail_input_options'>
                 <RadioOption
-                    setOption={() => { 
+                    setOption={() => {
                         setCurrentOption(1);
                         setTimeInput(ALL_DAY);
                         handleAvailsChange({

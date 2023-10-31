@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 
 import { monthAndDay } from '../utils/convertDate';
 import { EDIT_AVAILABILITY } from "../utils/mutations";
-import { QUERY_USER_AVAILABILITY } from "../utils/queries";
+// import { QUERY_USER_AVAILABILITY } from "../utils/queries";
 import { pageImages } from '../images';
 
 import '../assets/addAvailabilities.css';
@@ -21,46 +21,38 @@ const Availabilities = () => {
     const [error, setError] = useState(""); // State for storing error messages
     const [editAvailibility] = useMutation(EDIT_AVAILABILITY);
 
-    const { loading, data } = useQuery(QUERY_USER_AVAILABILITY, {
-        variables: { eventId },
-    });
+    // const { loading, data, error: queryError } = useQuery(QUERY_USER_AVAILABILITY, {
+    //     variables: { eventId },
+    // });
 
-    // if (error) {
-    //     console.log(error);
+    // if (queryError) {
+    //     console.log(queryError);
     // }
 
-    console.log(`eventId: ${eventId}`);
-    // console.log(data?.availabilities);
-    // console.log(data?.availability);
-    // console.log(data);
-//    if (data) {
-    const avail = data?.availability.availabilities;
-    console.log(avail);
-    console.log(`data: ${data}`);
+    // const avail = data?.availability.availabilities;
+
+    // console.log('Avails:', avail);
+
     const [avails, setAvails] = useState({
-
-        monday: avail ? { ...avail.find(a => a.day === 'monday') } : {...ALL_DAY},
-        tuesday: avail ? { ...avail.find(a => a.day === 'tuesday') } : {...ALL_DAY},
-        wednesday: avail ? { ...avail.find(a => a.day === 'wednesday') } : {...ALL_DAY},
-        thursday: avail ? { ...avail.find(a => a.day === 'thursday') } : {...ALL_DAY},
-        friday: avail ? { ...avail.find(a => a.day === 'friday') } : {...ALL_DAY},
-        saturday: avail ? { ...avail.find(a => a.day === 'saturday') } : {...ALL_DAY},
-        sunday: avail ? { ...avail.find(a => a.day === 'sunday') } : {...ALL_DAY},
-
+        monday: {...ALL_DAY},
+        tuesday: {...ALL_DAY},
+        wednesday: {...ALL_DAY},
+        thursday: {...ALL_DAY},
+        friday: {...ALL_DAY},
+        saturday: {...ALL_DAY},
+        sunday: {...ALL_DAY},
     });
 
-    useEffect( () => {setAvails(
-    {monday: avail ? { ...avail.find(a => a.day === 'monday') } : {...ALL_DAY},
-    tuesday: avail ? { ...avail.find(a => a.day === 'tuesday') } : {...ALL_DAY},
-    wednesday: avail ? { ...avail.find(a => a.day === 'wednesday') } : {...ALL_DAY},
-    thursday: avail ? { ...avail.find(a => a.day === 'thursday') } : {...ALL_DAY},
-    friday: avail ? { ...avail.find(a => a.day === 'friday') } : {...ALL_DAY},
-    saturday: avail ? { ...avail.find(a => a.day === 'saturday') } : {...ALL_DAY},
-    sunday: avail ? { ...avail.find(a => a.day === 'sunday') } : {...ALL_DAY},})}, []);
-
-    // if (avail) {
-    //     console.log(avail.find(a => a.day === 'thursday'));
-    // }
+    // useEffect(() => {
+    //     setAvails({
+    //         monday: avail ? { ...avail.find(a => a.day === 'monday') } : {...ALL_DAY},
+    //         tuesday: avail ? { ...avail.find(a => a.day === 'tuesday') } : {...ALL_DAY},
+    //         wednesday: avail ? { ...avail.find(a => a.day === 'wednesday') } : {...ALL_DAY},
+    //         thursday: avail ? { ...avail.find(a => a.day === 'thursday') } : {...ALL_DAY},
+    //         friday: avail ? { ...avail.find(a => a.day === 'friday') } : {...ALL_DAY},
+    //         saturday: avail ? { ...avail.find(a => a.day === 'saturday') } : {...ALL_DAY},
+    //         sunday: avail ? { ...avail.find(a => a.day === 'sunday') } : {...ALL_DAY},})
+    // }, []);
 
     async function handleFormSubmit(event) {
         event.preventDefault();
@@ -84,17 +76,12 @@ const Availabilities = () => {
             },
         });
 
-        if (loading) return (
-            <p>Loading...</p>
-            )
-
         if (error) {
             console.error("Failed to make availablity");
             setError(error.message);
             setShowAlert("Failed to make availability. Please try again.");
             return;
         }
-        // console.log(' avilabilty-Data:', data);
 
         navigate(`/events/${eventId}`);
     }
@@ -103,7 +90,7 @@ const Availabilities = () => {
 
     return (
         <section id="content_availabilities_page">
-            <h1 className='text-align-start'>Edit Your Availability</h1>
+            <h1 className='text-align-start'>Add Your New Availabilities</h1>
             <p className='text-align-start'>Week of {monthAndDay(eventWeek)}</p>
 
             <form onSubmit={handleFormSubmit}>
