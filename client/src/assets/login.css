@@ -1,17 +1,22 @@
   .credentials_container {
 	display: flex;
 	flex-direction: column;
-	margin: 0 auto;
+	/* margin: 0 auto; */
 	justify-content: center; /* Center vertically in the viewport */
 	align-items: center;
 	border-radius: 10px;
 	/* background-color: var(--primary); */
 	width: 550px;
 	justify-content: space-evenly;
+	text-align: center;
+	margin: 0 auto;
+	/* border: solid yellow; */
+
   }
-  
+
   .credentials_form_container {
 	display: flex;
+	/* border: solid black; */
 	border-radius: 10px;
 	/* background-color: var(--primary); */
 	align-items: center;
@@ -22,8 +27,10 @@
 	justify-content: center;
 	align-items: center;
 	align-content: center;
+	text-align: center;
+	margin: 0 auto;
   }
-  
+
   .form_container {
 	align-items: center;
 	align-self: center;
@@ -35,10 +42,13 @@
 	border-bottom-right-radius: 10px;
 	border-color: #000000;
 	border-width: 5px;
-	width: 550px;
+	max-width: 550px;
 	height: 400px;
 	text-align: center;
 	color:var(	--light);
+	margin: 0 auto;
+	/* border: solid white; */
+
   }
   .input {
 	border-radius: 10px;
@@ -49,8 +59,9 @@
 	border: none;
 	width: min(370px, 100%);
 	padding: 10px;
+	align-items: center;
   }
-  
+
   .nav_btn {
 	border: none;
 	outline: none;
@@ -63,7 +74,7 @@
 	font-size: 14px;
 	cursor: pointer;
   }
-  
+
   .error_msg {
 	font-size: 14px;
 	text-align: center;
@@ -87,10 +98,15 @@
 	background-repeat: no-repeat;
   } */
 
-  
+
   /* #page_container {
 	padding-top: 100px;
   } */
+
+#signup-form {
+	align-items: center;
+	text-align: center;
+}
 
 .login_background_image {
     height: max(250px, 20vw);
@@ -98,30 +114,65 @@
     position: absolute;
     right: 0;
     bottom: -5px;
-	
+
     z-index: -1;
 	/* transform: translateX(-50%); */
 }
-  
+
+.signup_background_image {
+    height: max(400px, 20vw);
+
+    position: absolute;
+    right: 0;
+    bottom: -5px;
+
+    z-index: -1;
+	/* transform: translateX(-50%); */
+}
+
   /* Media Query for Tablets */
   @media (max-width: 768px) {
 	.credentials_container {
+		max-width: 100%;
+
 	  padding: 0 10px;
 	}
-  
+
+	.input {
+		width: 300px;
+	}
+
+	.form_container {
+		max-width: 100%;
+	}
+
 	.credentials_form_container {
 	  max-width: 100%;
 	}
   }
-  
+
   /* Media Query for Mobile Devices */
   @media (max-width: 480px) {
 	.nav_btn {
 	  font-size: 16px;
 	}
-  
+
+	.input {
+		width: 175px;
+	}
+
 	.error_msg {
 	  font-size: 16px;
 	}
+
+	.login_background_image {
+		display: none;
+	}
   }
-  
+
+  @media (max-width: 400px) {
+	.signup_background_image {
+		display: none;
+	}
+
+  }
