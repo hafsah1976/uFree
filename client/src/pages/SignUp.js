@@ -33,7 +33,7 @@ const Signup = () => {
 
   // Check if username , email and password are non-empty to determine form validity
   // const isFormValid = userCredentials.username.trim() !== '' && userCredentials.email.trim() !== '' && userCredentials.password.trim() !== '';
-        
+
   // Update the iIsSignUpFormValid state based on the form's validity
   // setIsSignUpFormValid(isFormValid);
   };
@@ -77,14 +77,14 @@ const Signup = () => {
     } catch (error) {
       console.error("Failed to sign-up user", error);
       // Handle additional errors if needed
-    } 
+    }
       // Clear the form inputs
       setUserCredentials({
         username: "",
         email: "",
         password: "",
       });
-    
+
   };
 
   return (
@@ -92,11 +92,11 @@ const Signup = () => {
       <div className='credentials_form_container'>
         <div className='credentials_container'>
           <div className="form_container">
-            <form onSubmit={handleSubmitEvent}>
+            <form id= 'signup-form' onSubmit={handleSubmitEvent}>
               <h1>Please Create an Account</h1>
               <input
                 type="text"
-                placeholder="Create your unique Username"
+                placeholder="Unique Username"
                 name="username"
                 value={userCredentials.username}
                 required
@@ -123,11 +123,11 @@ const Signup = () => {
               />
               {/* Display an error message if there is an error */}
               <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
-              <button className='nav_btn' type="submit" >Sign Up</button>
+              <button className='nav_btn btn_accent btn' type="submit" >Sign Up</button>
               <div>
               <h3>Already have an account?</h3>
               <Link to="/login">
-                <button className="nav_btn">Log In</button>
+                <button className="nav_btn btn_accent btn">Log In</button>
               </Link>
             </div>
 
@@ -140,13 +140,13 @@ const Signup = () => {
         </div>
       </div>
 
-      <img 
-          className='login_background_image'
+      <img
+          className='signup_background_image'
           src={pageImages.signup}
           alt="Login background"
       />
-  </div>
+    </div>
     );
   };
-  
+
   export default Signup;
