@@ -88,6 +88,11 @@
     text-overflow: ellipsis;
 }
 
+.event_content_info {
+    display: flex;
+    justify-content: space-between;
+}
+
 @media screen and (min-width: 740px) {
     #board_elements {
         --dash-event-columns: 2;
