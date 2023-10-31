@@ -17,7 +17,7 @@ import { setContext } from '@apollo/client/link/context';
 import './normalize.css'
 
 // imports Route as page router through URLs
-import { createBrowserRouter, createRoutesFromElements, Outlet, BrowserRouter, Routes, Route, redirect, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Outlet, BrowserRouter, Routes, Route, redirect, RouterProvider, Navigate } from 'react-router-dom';
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
@@ -121,6 +121,8 @@ const authLoader = (loggedIn) => {
 function App() {
   const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
 
+  console.log(loggedIn);
+
   const router = createBrowserRouter([
     { path: "/", Component: () => <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />, children: [
       { path: "/", Component: Home, loader: () => loggedIn ? redirect('/dashboard') : null },
@@ -133,7 +135,7 @@ function App() {
       { path: 'events/:eventId/availabilities', Component: Availabilities, loader: () => authLoader(loggedIn) },
       { path: 'events/:eventId/availabilities/edit', Component: EditAvails, loader: () => authLoader(loggedIn) },
     ] },
-    // { path: '*', Component: Root, }
+    { path: '*', Component: () => <Navigate to="/" />, }
   ])
 
   return (
