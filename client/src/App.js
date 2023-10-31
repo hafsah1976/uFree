@@ -121,8 +121,6 @@ const authLoader = (loggedIn) => {
 function App() {
   const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
 
-  console.log(loggedIn);
-
   const router = createBrowserRouter([
     { path: "/", Component: () => <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />, children: [
       { path: "/", Component: Home, loader: () => loggedIn ? redirect('/dashboard') : null },
