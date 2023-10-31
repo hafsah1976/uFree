@@ -3,7 +3,7 @@
 ## Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
-- [Getting Started](#getting-started)
+- [Installation](#Installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [Credits](#credits)
@@ -29,13 +29,15 @@ With uFree, you can effortlessly schedule events, see your friends' availability
 
 - **User-Friendly Interface**: uFree's intuitive design makes it easy to navigate and use.
 
-## Getting Started
+## Installation
 
-To get started with **uFree**, follow these steps:
+You may use this project on your local environment via these steps:
+- Clone this repository onto your machine.
+- Using a terminal from the root directory, run the commands "npm run install" then "npm run develop."
 
-1. **Installation**: Clone the uFree repository from GitHub:
+## Usage
+You can use the uFree application to coordinate with other logged in users on event availabilities to synchronize personal schedules. After logging in, you can access your dashboard to see your events, join an event directly via "Join Events," or create you own event via "Create Events." Clicking on an event will bring you to the availability page and you will find the date and times in which you and others are available for said event.
 
-  
 ## Credits
 
 Images from [Storyset](https://storyset.com/).
@@ -46,3 +48,6 @@ The following packages were used in the development of uFree:
 - react-modal
 - react-calendar
 - react-select
+
+## License
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
