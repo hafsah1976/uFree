@@ -40,12 +40,13 @@ const JoinEvent = () => {
 
     return(
         <section id='content_joinEvent_page' className='blue_page_background'>
-            <p id="DEBUG_joinEvent_page_text" className='DEBUG_text'>
-                <div> <p className='joinT'> Join an Event</p>
-            <p className='joinTT'>Type your event code below</p></div>
-            <hr></hr>
+            {/* <p id="DEBUG_joinEvent_page_text" className='DEBUG_text'> */}
+            <div>
+                <p className='joinT'> Join an Event</p>
+                <p className='joinTT'>Type your event code below</p>
+            </div>
 
-            </p>
+            {/* </p> */}
             <section id="joinEvent_form">
                 <form onSubmit={handleSubmit} className='forme'>
                     <input
@@ -53,13 +54,13 @@ const JoinEvent = () => {
                     name='event_joincode'
                     placeholder='Event code'
                     value={joinEventInput.event_joincode}
-                    onChange={handleChange} className='inputp'>
+                    onChange={handleChange} className='input'>
                     </input>
                     <br></br>
-                    <input type='submit' value="submit"  className='buttonJE'/>
+                    <input type='submit' value="Submit"  className='nav_btn btn btn_accent' id="join_event_submit"/>
                 </form>
             </section>
-          
+
             <div
         className='homepage_image_container'
         style={{
