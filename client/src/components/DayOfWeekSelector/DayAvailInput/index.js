@@ -11,33 +11,35 @@ import TimePicker from 'react-time-picker';
 const NOT_AVAILABLE = { start: 0, end: 0 };
 const ALL_DAY = { start: 0, end: 24 };
 
-export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
+export default function DayAvailInput({ day, currentDay, handleAvailsChange, avails }) {
+
+    console.log('avails variable: ', avails);
 
     const [currentOption, setCurrentOption] = useState(1);
     const [timeInput, setTimeInput] = useState(ALL_DAY);
     const [timePickerInput, setTimePickerInput] = useState({
-        start: '00:00',
-        end: '23:59'
+        start: avails.start,
+        end: avails.end
     });
 
     function handleTimeInputChange(value, type) {
         const hourNum = hourToNumber(value);
-        
+
         const newTimeInput = {
             ...timeInput,
             [type]: hourNum,
         };
-        
+
         // console.log(newTimeInput);
-        
+
         if (newTimeInput.start >= newTimeInput.end) return;
-        
+
         setTimePickerInput({
             ...timePickerInput,
             [type]: value
         });
         setTimeInput(newTimeInput);
-        
+
         handleAvailsChange({
             [day]: newTimeInput,
         });
@@ -47,7 +49,7 @@ export default function DayAvailInput({ day, currentDay, handleAvailsChange }) {
         <div className={`day_avail_input_container ${day === currentDay ? "" : "hidden"}`}>
             <div className='dav_avail_input_options'>
                 <RadioOption
-                    setOption={() => { 
+                    setOption={() => {
                         setCurrentOption(1);
                         setTimeInput(ALL_DAY);
                         handleAvailsChange({
