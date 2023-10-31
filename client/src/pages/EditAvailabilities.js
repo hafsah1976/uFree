@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 
@@ -11,7 +11,7 @@ import '../assets/addAvailabilities.css';
 
 import DayOfWeekSelector from '../components/DayOfWeekSelector';
 
-// const ALL_DAY = { start: 0, end: 24 };
+const ALL_DAY = { start: 0, end: 24 };
 
 const Availabilities = () => {
 
@@ -25,28 +25,42 @@ const Availabilities = () => {
         variables: { eventId },
     });
 
-    // console.log(`eventId: ${eventId}`);
+    // if (error) {
+    //     console.log(error);
+    // }
+
+    console.log(`eventId: ${eventId}`);
     // console.log(data?.availabilities);
-
-    const avail = data?.availabilities;
+    // console.log(data?.availability);
+    // console.log(data);
+//    if (data) {
+    const avail = data?.availability.availabilities;
     console.log(avail);
-
-    //!
-    const dayArray = [];
-    for (let i = 0; i < avail.length; i++) {
-        dayArray.push({ start: avail[i].start, end: avail[i].end });
-    }
-
-    //!
+    console.log(`data: ${data}`);
     const [avails, setAvails] = useState({
-        monday: dayArray[0],
-        tuesday: dayArray[1],
-        wednesday: dayArray[2],
-        thursday: dayArray[3],
-        friday: dayArray[4],
-        saturday: dayArray[5],
-        sunday: dayArray[6],
+
+        monday: avail ? { ...avail.find(a => a.day === 'monday') } : {...ALL_DAY},
+        tuesday: avail ? { ...avail.find(a => a.day === 'tuesday') } : {...ALL_DAY},
+        wednesday: avail ? { ...avail.find(a => a.day === 'wednesday') } : {...ALL_DAY},
+        thursday: avail ? { ...avail.find(a => a.day === 'thursday') } : {...ALL_DAY},
+        friday: avail ? { ...avail.find(a => a.day === 'friday') } : {...ALL_DAY},
+        saturday: avail ? { ...avail.find(a => a.day === 'saturday') } : {...ALL_DAY},
+        sunday: avail ? { ...avail.find(a => a.day === 'sunday') } : {...ALL_DAY},
+
     });
+
+    useEffect( () => {setAvails(
+    {monday: avail ? { ...avail.find(a => a.day === 'monday') } : {...ALL_DAY},
+    tuesday: avail ? { ...avail.find(a => a.day === 'tuesday') } : {...ALL_DAY},
+    wednesday: avail ? { ...avail.find(a => a.day === 'wednesday') } : {...ALL_DAY},
+    thursday: avail ? { ...avail.find(a => a.day === 'thursday') } : {...ALL_DAY},
+    friday: avail ? { ...avail.find(a => a.day === 'friday') } : {...ALL_DAY},
+    saturday: avail ? { ...avail.find(a => a.day === 'saturday') } : {...ALL_DAY},
+    sunday: avail ? { ...avail.find(a => a.day === 'sunday') } : {...ALL_DAY},})}, []);
+
+    // if (avail) {
+    //     console.log(avail.find(a => a.day === 'thursday'));
+    // }
 
     async function handleFormSubmit(event) {
         event.preventDefault();
