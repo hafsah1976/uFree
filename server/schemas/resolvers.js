@@ -27,11 +27,15 @@ const resolvers = {
 
         },
 
-        // finds the availabilities of an event
-        // availabilities: async (parent, { eventId }) => {
-        //     const event = await Event.findOne({ _id: eventId }).populate('availabilities');
-        //     return event.availabilities;
-        // },
+        // finds the availabilities of a user
+        availability: async (parent, { eventId }, context) => {
+            const event = await Event.findOne({ _id: new ObjectId(eventId) }).populate('availabilities');
+            console.log(`event: ${event}`);
+            // const userAvail = event.availabilities.filter(availability => availability.userId == context.user._id);
+            const userAvail = event.availabilities.find(a => a.userId == context.user._id);
+            console.log(userAvail);
+            return userAvail;
+        },
 
         // displays the current logged in user's info
         me: async (parent, args, context) => {
@@ -253,7 +257,7 @@ const resolvers = {
                         { new: true }
                     )
                     };
-                
+
                 if (!deletedEvent) {
                     throw new Error('Error deleting the event');
                 }

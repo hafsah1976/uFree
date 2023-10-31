@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from "react-router-dom";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 
 import { monthAndDay } from '../utils/convertDate';
 import { EDIT_AVAILABILITY } from "../utils/mutations";
+import { QUERY_USER_AVAILABILITY } from "../utils/queries";
 import { pageImages } from '../images';
 
 import '../assets/addAvailabilities.css';
@@ -14,21 +15,52 @@ const ALL_DAY = { start: 0, end: 24 };
 
 const Availabilities = () => {
 
-    const [avails, setAvails] = useState({
-        monday: {...ALL_DAY},
-        tuesday: {...ALL_DAY},
-        wednesday: {...ALL_DAY},
-        thursday: {...ALL_DAY},
-        friday: {...ALL_DAY},
-        saturday: {...ALL_DAY},
-        sunday: {...ALL_DAY},
-    });
-
     const navigate = useNavigate();
     const { eventId } = useParams();
     const [showAlert, setShowAlert] = useState(false); // State for displaying alerts
     const [error, setError] = useState(""); // State for storing error messages
     const [editAvailibility] = useMutation(EDIT_AVAILABILITY);
+
+    const { loading, data } = useQuery(QUERY_USER_AVAILABILITY, {
+        variables: { eventId },
+    });
+
+    // if (error) {
+    //     console.log(error);
+    // }
+
+    console.log(`eventId: ${eventId}`);
+    // console.log(data?.availabilities);
+    // console.log(data?.availability);
+    // console.log(data);
+//    if (data) {
+    const avail = data?.availability.availabilities;
+    console.log(avail);
+    console.log(`data: ${data}`);
+    const [avails, setAvails] = useState({
+
+        monday: avail ? { ...avail.find(a => a.day === 'monday') } : {...ALL_DAY},
+        tuesday: avail ? { ...avail.find(a => a.day === 'tuesday') } : {...ALL_DAY},
+        wednesday: avail ? { ...avail.find(a => a.day === 'wednesday') } : {...ALL_DAY},
+        thursday: avail ? { ...avail.find(a => a.day === 'thursday') } : {...ALL_DAY},
+        friday: avail ? { ...avail.find(a => a.day === 'friday') } : {...ALL_DAY},
+        saturday: avail ? { ...avail.find(a => a.day === 'saturday') } : {...ALL_DAY},
+        sunday: avail ? { ...avail.find(a => a.day === 'sunday') } : {...ALL_DAY},
+
+    });
+
+    useEffect( () => {setAvails(
+    {monday: avail ? { ...avail.find(a => a.day === 'monday') } : {...ALL_DAY},
+    tuesday: avail ? { ...avail.find(a => a.day === 'tuesday') } : {...ALL_DAY},
+    wednesday: avail ? { ...avail.find(a => a.day === 'wednesday') } : {...ALL_DAY},
+    thursday: avail ? { ...avail.find(a => a.day === 'thursday') } : {...ALL_DAY},
+    friday: avail ? { ...avail.find(a => a.day === 'friday') } : {...ALL_DAY},
+    saturday: avail ? { ...avail.find(a => a.day === 'saturday') } : {...ALL_DAY},
+    sunday: avail ? { ...avail.find(a => a.day === 'sunday') } : {...ALL_DAY},})}, []);
+
+    // if (avail) {
+    //     console.log(avail.find(a => a.day === 'thursday'));
+    // }
 
     async function handleFormSubmit(event) {
         event.preventDefault();
@@ -51,6 +83,10 @@ const Availabilities = () => {
                 eventId,
             },
         });
+
+        if (loading) return (
+            <p>Loading...</p>
+            )
 
         if (error) {
             console.error("Failed to make availablity");
@@ -79,7 +115,7 @@ const Availabilities = () => {
             <img
                 className='availabilities_background_image'
                 src={pageImages.addAvailabilities}
-                alt="Add Availabilities"
+                alt="Edit Availabilities"
             />
 
 

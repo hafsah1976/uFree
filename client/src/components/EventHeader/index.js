@@ -13,15 +13,15 @@ export default function EventHeader({ event }) {
 
 
     const [descriptionModal, setDescriptionModal] = useState(false);
-    // check if user already has an availability added
     if (loading) return (
         <p>Loading...</p>
-    )
-
-    if (error)  return (
-            <p>An error has occured, please try again</p>
         )
 
+    if (error)  return (
+        <p>An error has occured, please try again</p>
+        )
+
+    // check if user already has an availability added
     const hasAvails = event.availabilities.some(availability => availability.userId === data.me._id);
     // console.log(hasAvails);
 
@@ -87,7 +87,7 @@ export default function EventHeader({ event }) {
                             <Link to={`/events/${event._id}/availabilities/edit`}>
                                 <button className='add_avail_btn btn_large btn_accent'>Edit Your Availability</button>
                             </Link>
-                         
+
                     }
 
         </div>
