@@ -1,11 +1,10 @@
+
 // Import JWT, a library to handle JSON Web Tokens
 const jwt = require("jsonwebtoken");
 
 // Import the secret key from .env
 
-// Set the secret key and expiration time for your JWT token
-// const SECRET_KEY = process.env.JWT_SECRETKEY;
-// const EXPIRATION_TIME = process.env.JWT_EXPIRATION;
+
 
   // Function to validate an email address
 function isValidEmail (email) {
