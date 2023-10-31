@@ -20,7 +20,7 @@ import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditA
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
-import HeaderNavBar from "./components/HeaderNavBar";
+import HeaderNavBar from "./components/HeaderNavBar/index";
 
 // imports Home as landing page for the site
 // uses empty URL

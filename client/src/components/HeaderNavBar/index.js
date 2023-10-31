@@ -1,6 +1,8 @@
 import { React } from "react";
 import { Link } from "react-router-dom";
 import LogoutButton from "../LogoutButton";
+//import Auth from "../../utils/auth";
+
 // contains the elements that will be present inside the header
 // element ids with DEBUG are dev only elements and should be removed in working product
 const HeaderNavBar = ({ logoutFunc, loggedIn }) => {

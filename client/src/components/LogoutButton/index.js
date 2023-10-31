@@ -1,41 +1,27 @@
-import Auth from "../../utils/auth";
-import React, { useState, useEffect } from "react";
+import Auth from '../../utils/auth';
+import React, {useEffect } from "react";
 
-export default function LogoutButton({ logoutFunc }) {
-  // State to store the logout timer
-  const [logoutTimer, setLogoutTimer] = useState(null);
-  // Time in milliseconds before automatic logout (30 minutes)
-  const logoutTimeInMilliseconds = 30 * 60 * 1000;
+const LogoutButton = ({ logoutFunc }) => {
+  const logoutTimeInMilliseconds = 600000; // Define the time (10 minutes)
 
+  // Effect to set up the automatic logout timer when the component mounts
   useEffect(() => {
-    // Set the timer for automatic logout when the component mounts
     const timer = setTimeout(() => {
-      Auth.logout(); // Log out the user
-      logoutFunc(); // Execute the provided logout function
-      // Redirect to the login page or any other appropriate action
-      window.location.assign("/home");
+      Auth.logout();
+      logoutFunc();
+      window.location.assign("/Home");
     }, logoutTimeInMilliseconds);
 
-    // Store the timer in state
-    setLogoutTimer(timer);
-
-    // Clear the timer when the component unmounts
     return () => {
-      if (logoutTimer) {
-        clearTimeout(logoutTimer);
-      }
+      clearTimeout(timer); // Clear the timer when the component unmounts
     };
-  });
+  }, [logoutFunc]);
 
   // Manual logout function
   const handleClick = () => {
-    // Clear the timer if it exists
-    if (logoutTimer) {
-      clearTimeout(logoutTimer);
-    }
-    Auth.logout(); // Log out the user
-    logoutFunc(); // Execute the provided logout function
-    window.location.assign("/home"); 
+    Auth.logout();
+    logoutFunc();
+    window.location.assign("/Home");
   };
 
   // Event listeners to reset the timer on user activity
@@ -43,22 +29,20 @@ export default function LogoutButton({ logoutFunc }) {
     // List of user activity events
     const events = ["load", "mousemove", "mousedown", "click", "scroll", "keypress"];
 
-    // Function to reset the timer on user activity
     const resetTimer = () => {
-      if (logoutTimer) {
-        clearTimeout(logoutTimer); // Clear the existing timer
-      }
+      clearTimeout(timer); // Clear the existing timer
 
       // Restart the timer for automatic logout
       const newTimer = setTimeout(() => {
-        Auth.logout(); // Log out the user
-        logoutFunc(); // Execute the provided logout function
-        window.location.assign("/"); // Redirect to the login page
+        Auth.logout();
+        logoutFunc();
+        window.location.assign("/Home");
       });
 
-      // Store the new timer in state
-      setLogoutTimer(newTimer);
+      timer = newTimer; // Store the new timer
     };
+
+    let timer; // Store the timer variable
 
     // Add event listeners for user activity
     events.forEach((event) => {
@@ -70,8 +54,9 @@ export default function LogoutButton({ logoutFunc }) {
       events.forEach((event) => {
         window.removeEventListener(event, resetTimer);
       });
+      clearTimeout(timer); // Clear the timer when the component unmounts
     };
-  }, [logoutFunc, logoutTimer]);
+  }, [logoutFunc]);
 
   // Render the logout button
   return (
@@ -80,3 +65,5 @@ export default function LogoutButton({ logoutFunc }) {
     </button>
   );
 }
+
+export default LogoutButton;
