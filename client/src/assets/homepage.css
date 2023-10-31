@@ -59,7 +59,7 @@
     opacity: 0;
     transform: translateY(50px);
   }
-  
+
   to {
     opacity: 1;
     transform: translateY(0px);
@@ -100,6 +100,24 @@
   align-items: center;
   margin-top: 22px;
   margin-bottom: 22px;
+}
+/* -------------------------------- */
+/* Join Event Page */
+#content_joinEvent_page {
+  color: var(--light);
+  /* background-color: yellow; */
+  /* display:block; */
+  text-align: center;
+}
+
+#joinnEvent_form {
+  /* text-align: center; */
+  /* align-items: center; */
+}
+
+#join_event_submit {
+  /* padding: 20px; */
+  margin: 10px;
 }
 
 /* .page_container {
