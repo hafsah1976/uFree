@@ -11,8 +11,9 @@ export default function EventHeader({ event }) {
 
     const { loading, error, data } = useQuery(QUERY_ME);
 
-
     const [descriptionModal, setDescriptionModal] = useState(false);
+    const [copyMessage, setCopyMessage] = useState("");
+
     if (loading) return (
         <p>Loading...</p>
         )
@@ -47,6 +48,23 @@ export default function EventHeader({ event }) {
             <div className='justify-content-start align-items-center'>
                 <i className="bi bi-pass"></i>
                 <p>{event.code}</p>
+                <button 
+                    onClick={() => {
+                        navigator.clipboard.writeText(event.code);
+                        setCopyMessage('Code copied!');
+                        setTimeout(() => setCopyMessage(""), 3000);
+                    }}
+                    style={{
+                        marginLeft: '5px',
+                        padding: 0,
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        color: 'var(--light)',
+                    }}
+                >
+                    <i className="bi bi-copy" style={{ margin: 0 }}></i>
+                </button>
+                <p style={{marginLeft: 'var(--padding-sm)'}}>{copyMessage}</p>
             </div>
 
             {event?.description && (
