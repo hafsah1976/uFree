@@ -64,6 +64,9 @@ export const QUERY_ME = gql`
       thumbnail
       week
       location
+      attendees {
+        _id
+      }
     }
   }
 }

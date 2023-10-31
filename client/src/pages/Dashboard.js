@@ -72,7 +72,10 @@ function EventBox({ event }) {
 
                 <div className='event_content'>
                     <p className='event_content_name'>{event.name}</p>
-                    <p className='event_content_week'>Week of {monthAndDay(event.week)}</p>
+                    <div className='event_content_info'>
+                        <p className='event_content_week'>Week of {monthAndDay(event.week)}</p>
+                        <p className='event_content_week'>{event.attendees.length} <i className="bi bi-person-arms-up"></i></p>
+                    </div>
                 </div>
         </Link>
             </div>
