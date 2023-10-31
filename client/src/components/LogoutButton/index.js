@@ -1,69 +1,84 @@
-import Auth from '../../utils/auth';
-import React, {useEffect } from "react";
+import Auth from "../../utils/auth";
+import React, { useEffect } from "react";
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '../.env' });
 
 const LogoutButton = ({ logoutFunc }) => {
-  const logoutTimeInMilliseconds = 600000; // Define the time (10 minutes)
+  
+  // Retrieve the expiration time from the environment variables
+  const expiration = process.env.EXPIRATION_TIME;
 
-  // Effect to set up the automatic logout timer when the component mounts
   useEffect(() => {
+    // Set up the timer for automatic logout when the component mounts
     const timer = setTimeout(() => {
-      Auth.logout();
-      logoutFunc();
-      window.location.assign("/Home");
-    }, logoutTimeInMilliseconds);
+      // Check if the user's token is expired
+      if (Auth.isTokenExpired(Auth.getToken())) {
+        // Token is expired, perform logout
+        Auth.logout();
+        // Redirect to the home page
+        window.location.assign("/");
+      }
+    }, expiration); // Use the expiration time from the .env file
 
     return () => {
-      clearTimeout(timer); // Clear the timer when the component unmounts
+      // Clear the timer when the component unmounts
+      clearTimeout(timer);
     };
   }, [logoutFunc]);
 
-  // Manual logout function
   const handleClick = () => {
+    // Manually log out the user
     Auth.logout();
+    // Execute the provided logout function
     logoutFunc();
-    window.location.assign("/Home");
+    // Redirect to the home page
+    window.location.assign("/");
   };
 
-  // Event listeners to reset the timer on user activity
-  useEffect(() => {
-    // List of user activity events
-    const events = ["load", "mousemove", "mousedown", "click", "scroll", "keypress"];
-
-    const resetTimer = () => {
-      clearTimeout(timer); // Clear the existing timer
-
-      // Restart the timer for automatic logout
-      const newTimer = setTimeout(() => {
-        Auth.logout();
-        logoutFunc();
-        window.location.assign("/Home");
-      });
-
-      timer = newTimer; // Store the new timer
-    };
-
-    let timer; // Store the timer variable
-
-    // Add event listeners for user activity
-    events.forEach((event) => {
-      window.addEventListener(event, resetTimer);
-    });
-
-    // Clean up event listeners when the component unmounts
-    return () => {
-      events.forEach((event) => {
-        window.removeEventListener(event, resetTimer);
-      });
-      clearTimeout(timer); // Clear the timer when the component unmounts
-    };
-  }, [logoutFunc]);
-
-  // Render the logout button
   return (
     <button className="logout_button" onClick={handleClick} type="button">
       Log Out
     </button>
   );
-}
+};
+
+
+
+  // useEffect(() => {
+  //   // List of user activity events to reset the timer
+  //   const events = ["load", "mousemove", "mousedown", "click", "scroll", "keypress"];
+  //   let timer;
+
+  //   const resetTimer = () => {
+  //     clearTimeout(timer);
+  //     const newTimer = setTimeout(() => {
+  //       // Check if the user's token is expired
+  //       if (Auth.isTokenExpired(Auth.getToken())) {
+  //         // Token is expired, perform logout
+  //         Auth.logout();
+  //         // Execute the provided logout function
+  //         logoutFunc();
+  //         // Redirect to the home page
+  //         window.location.assign("/");
+  //       }
+  //     });
+  //     timer = newTimer;
+  //   };
+
+  //   events.forEach((event) => {
+  //     // Add event listeners for user activity
+  //     window.addEventListener(event, resetTimer);
+  //   });
+
+  //   return () => {
+  //     events.forEach((event) => {
+  //       // Remove event listeners when the component unmounts
+  //       window.removeEventListener(event, resetTimer);
+  //     });
+  //     clearTimeout(timer); // Clear the timer when the component unmounts
+  //   };
+  // }, [logoutFunc]);
+
 
 export default LogoutButton;
