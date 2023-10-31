@@ -1,10 +1,8 @@
 import { React, useState } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import Auth from './utils/auth';
 import './helpers.css';
 import './App.css';
-
-
 import {
   ApolloClient,
   InMemoryCache,
@@ -17,18 +15,17 @@ import { setContext } from '@apollo/client/link/context';
 import './normalize.css'
 
 // imports Route as page router through URLs
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route  } from 'react-router-dom';
+import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
-import HeaderNavBar from "./components/HeaderNavBar/index.js";
+import HeaderNavBar from "./components/HeaderNavBar";
 
 // imports Home as landing page for the site
 // uses empty URL
 //import Home from "./pages/Home.js"
 //import Login from './pages/Login.js';
-
-import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -55,6 +52,7 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // State to track user's login status
   const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
 
   return (
@@ -63,51 +61,41 @@ function App() {
         <Router>
           <header className="App-header">
             <section id="content_header">
+              {/* Header component with logout functionality */}
               <HeaderNavBar logoutFunc={() => setLoggedIn(false)} loggedIn={loggedIn} />
             </section>
           </header>
           <section id="page_container">
             <Routes>
-              <Route
-              path='/'
-              element={loggedIn ? <Dashboard /> : <Home />}
-              />
-              <Route
-              path='/login'
-              element={<Login loginFunc={() => setLoggedIn(true)} />}
-              />
-              <Route
-              path='/dashboard'
-              element={<Dashboard />}
-              />
-              <Route
-              path='/events'
-              element={<GoToEvent />}
-              />
-              <Route
-              path='/events/:eventId'
-              element={<Event />}
-              />
-              <Route
-              path='/events/create'
-              element={<CreateEvent />}
-              />
-              <Route
-              path='/signup'
-              element={<SignUp loginFunc={() => setLoggedIn(true)} />}
-              />
-              <Route
-              path='events/:eventId?/availabilities'
-              element={<Availabilities />}
-              />
-              <Route
-              path='events/:eventId?/availabilities/edit'
-              element={<EditAvails />}
-              />
-              <Route
-              path='/events/join'
-              element={<JoinEvent />}
-              />
+              {/* Landing page when the URL is the root */}
+              <Route path='/' element={loggedIn ? <Dashboard /> : <Home />} />
+
+              {/* Login page */}
+              <Route path='/login' element={<Login loginFunc={() => setLoggedIn(true)} />} />
+
+              {/* Dashboard page */}
+              <Route path='/dashboard' element={<Dashboard />} />
+
+              {/* Page to list events */}
+              <Route path='/events' element={<GoToEvent />} />
+
+              {/* Individual event page */}
+              <Route path='/events/:eventId' element={<Event />} />
+
+              {/* Page to create a new event */}
+              <Route path='/events/create' element={<CreateEvent />} />
+
+              {/* Signup page */}
+              <Route path='/signup' element={<SignUp loginFunc={() => setLoggedIn(true)} />} />
+
+              {/* Page to manage event availabilities */}
+              <Route path='events/:eventId?/availabilities' element={<Availabilities />} />
+
+              {/* Page to edit event availabilities */}
+              <Route path='events/:eventId?/availabilities/edit' element={<EditAvails />} />
+
+              {/* Page to join an event */}
+              <Route path='/events/join' element={<JoinEvent />} />
             </Routes>
           </section>
         </Router>
