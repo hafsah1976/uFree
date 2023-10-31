@@ -15,13 +15,13 @@ root.render(
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.unregister(); //must change to register if we want it to work offline
+serviceWorkerRegistration.register(); //must change to register if we want it to work offline
 
 // src/index.js
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js').then(registration => {
-      console.log('Service Worker registered with scope:', registration.scope);
+      console.log('Service Worker registered with scope:', registration.scope); //The scope read-only property of the ServiceWorkerRegistration interface returns a unique identifier for a service worker registration. The service worker must be on the same origin as the document that registers the ServiceWorker.
     }).catch(error => {
       console.log('Service Worker registration failed:', error);
     });
