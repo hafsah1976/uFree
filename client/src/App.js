@@ -17,7 +17,7 @@ import { setContext } from '@apollo/client/link/context';
 import './normalize.css'
 
 // imports Route as page router through URLs
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { createBrowserRouter, createRoutesFromElements, Outlet, BrowserRouter, Routes, Route, redirect, RouterProvider } from 'react-router-dom';
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
@@ -54,63 +54,92 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+function Layout({ loggedIn, setLoggedIn }) {
+  return (
+    <>
+      <header className="App-header">
+              <section id="content_header">
+                <HeaderNavBar logoutFunc={() => setLoggedIn(false)} loggedIn={loggedIn} />
+              </section>
+      </header>
+      <section id="page_container">
+        <Outlet />
+      </section>
+    </>
+  )
+}
+
+
+
+function Root({ loggedIn, setLoggedIn }) {
+  return (
+    <Routes>
+        {/* <Route
+          path='/'
+          element={loggedIn ? <Dashboard /> : <Home />}
+        /> */}
+        {/* <Route
+          path='/login'
+          element={<Login loginFunc={() => setLoggedIn(true)} />}
+        /> */}
+        {/* <Route
+          path='/dashboard'
+          element={<Dashboard />}
+        /> */}
+        {/* <Route
+          path='/events/:eventId'
+          element={<Event />}
+        /> */}
+        {/* <Route
+          path='/events/create'
+          element={<CreateEvent />}
+        /> */}
+        {/* <Route
+          path='/signup'
+          element={<SignUp loginFunc={() => setLoggedIn(true)} />}
+        /> */}
+        {/* <Route
+          path='events/:eventId/availabilities'
+          element={<Availabilities />}
+        /> */}
+        {/* <Route
+          path='events/:eventId/availabilities/edit'
+          element={<EditAvails />}
+        /> */}
+        {/* <Route
+          path='/events/join'
+          element={<JoinEvent />}
+        /> */}
+    </Routes>
+  )
+}
+
+const authLoader = (loggedIn) => {
+  return !loggedIn ? redirect('/login') : null;
+}
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
+
+  const router = createBrowserRouter([
+    { path: "/", Component: () => <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />, children: [
+      { path: "/", Component: Home, loader: () => loggedIn ? redirect('/dashboard') : null },
+      { path: "/signup", Component: () => <SignUp loginFunc={() => setLoggedIn(true)} /> },
+      { path: "/login", Component: () => <Login loginFunc={() => setLoggedIn(true)} /> },
+      { path: '/dashboard', Component: Dashboard, loader: () => authLoader(loggedIn) },
+      { path: '/events/:eventId', Component: Event, loader: () => authLoader(loggedIn) },
+      { path: '/events/create', Component: CreateEvent, loader: () => authLoader(loggedIn) },
+      { path: '/events/join', Component: JoinEvent, loader: () => authLoader(loggedIn) },
+      { path: 'events/:eventId/availabilities', Component: Availabilities, loader: () => authLoader(loggedIn) },
+      { path: 'events/:eventId/availabilities/edit', Component: EditAvails, loader: () => authLoader(loggedIn) },
+    ] },
+    // { path: '*', Component: Root, }
+  ])
 
   return (
     <ApolloProvider client={client}>
       <div className="App">
-        <Router>
-          <header className="App-header">
-            <section id="content_header">
-              <HeaderNavBar logoutFunc={() => setLoggedIn(false)} loggedIn={loggedIn} />
-            </section>
-          </header>
-          <section id="page_container">
-            <Routes>
-              <Route
-              path='/'
-              element={loggedIn ? <Dashboard /> : <Home />}
-              />
-              <Route
-              path='/login'
-              element={<Login loginFunc={() => setLoggedIn(true)} />}
-              />
-              <Route
-              path='/dashboard'
-              element={<Dashboard />}
-              />
-              <Route
-              path='/events'
-              element={<GoToEvent />}
-              />
-              <Route
-              path='/events/:eventId'
-              element={<Event />}
-              />
-              <Route
-              path='/events/create'
-              element={<CreateEvent />}
-              />
-              <Route
-              path='/signup'
-              element={<SignUp loginFunc={() => setLoggedIn(true)} />}
-              />
-              <Route
-              path='events/:eventId?/availabilities'
-              element={<Availabilities />}
-              />
-              <Route
-              path='events/:eventId?/availabilities/edit'
-              element={<EditAvails />}
-              />
-              <Route
-              path='/events/join'
-              element={<JoinEvent />}
-              />
-            </Routes>
-          </section>
-        </Router>
+        <RouterProvider router={router} />
       </div>
     </ApolloProvider>
   );
