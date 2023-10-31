@@ -39,7 +39,6 @@ const resolvers = {
 
         // displays the current logged in user's info
         me: async (parent, args, context) => {
-            console.log('ME RESOLVER EXECUTED.');
             if (context.user) {
                 return await User.findOne({ _id: context.user._id }).populate('events');
             }
@@ -114,7 +113,7 @@ const resolvers = {
             if (context.user) {
 
                 const event = Event.findOne({ code });
-                console.log(event._id);
+                // console.log(event._id);
 
                 if (!event) {
                     throw new Error('Event not found or incorrect access code');
@@ -178,7 +177,7 @@ const resolvers = {
 
             // check if user already has an availability, if so, prevent user from creating
             // another one
-            console.log(event.availabilities.length);
+            // console.log(event.availabilities.length);
             for (let i = 0; i < event.availabilities.length; i++) {
                 // console.log(event.availabilities[i].userId);
                 if (event.availabilities[i].userId == context.user._id) {
@@ -210,7 +209,7 @@ const resolvers = {
 
                 // find availability of user and update it
                 const userAvail = event.availabilities.find(a => a.userId == context.user._id);
-                console.log(userAvail);
+                // console.log(userAvail);
                 userAvail.availabilities = availabilities;
 
                 // save the updated event
@@ -234,9 +233,9 @@ const resolvers = {
 
                 // check if user is admin
                 if (event.admin != context.user._id) {
-                    console.log('You are not an admin: ', event.admin);
-                    console.log(context.user._id);
-                    console.log(context.user._id === event.admin);
+                    // console.log('You are not an admin: ', event.admin);
+                    // console.log(context.user._id);
+                    // console.log(context.user._id === event.admin);
                     throw new Error('Only admins can delete this event');
                 }
 
@@ -244,11 +243,9 @@ const resolvers = {
 
                 // remove event from all user's event's array
                 for (const userId of event.attendees) {
-
-
-                    console.log(userId);
-                    console.log(`Event to be removed: ${event}`);
-                    console.log(`attempting to remove event from  ${userId}'s events array`);
+                    // console.log(userId);
+                    // console.log(`Event to be removed: ${event}`);
+                    // console.log(`attempting to remove event from  ${userId}'s events array`);
 
                     await User.findOneAndUpdate(
                         { _id: userId },
@@ -288,7 +285,7 @@ const resolvers = {
                     { new: true } // return the updated event
                 );
 
-                console.log('Removing event from user');
+                // console.log('Removing event from user');
 
                 await User.findOneAndUpdate(
                     { _id: context.user._id},
@@ -299,7 +296,7 @@ const resolvers = {
                     },
                     { new: true}
                 );
-                console.log(updatedEvent);
+                // console.log(updatedEvent);
 
                 if (!updatedEvent) {
                     throw new Error('Event not found');

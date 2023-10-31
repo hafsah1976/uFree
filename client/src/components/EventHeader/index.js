@@ -23,7 +23,7 @@ export default function EventHeader({ event }) {
 
     // check if user already has an availability added
     const hasAvails = event.availabilities.some(availability => availability.userId === data.me._id);
-    console.log(hasAvails);
+    // console.log(hasAvails);
 
 
     return (

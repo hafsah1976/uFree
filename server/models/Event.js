@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const availabilitiesSchema = require('./AvailabilitiesSchema');
-const generateCode = require('../utils/generateCode');
+const { generateCode } = require('../utils/generateCode');
 
 const CODE_LENGTH = 8;
 
@@ -39,8 +39,7 @@ const eventSchema = new Schema({
     thumbnail: {
         type: String,
     },
-
-})
+});
 
 
 const Event = model('Event', eventSchema);

@@ -37,6 +37,14 @@
 
   color: var(--dark);
   font-size: 20px;
+
+  transition: 0.1s;
+}
+
+.homepage_button:hover {
+  transform: scale(1.05);
+  box-shadow: var(--strong-box-shadow);
+  transition: 0.1s;
 }
 
 .content_home_page {
@@ -63,8 +71,8 @@
   font-weight: bold;
   margin: 10px;
 
-  opacity: 0;
-  animation: var(--fade-in-anim);
+  /* opacity: 0;
+  animation: var(--fade-in-anim); */
 }
 
 

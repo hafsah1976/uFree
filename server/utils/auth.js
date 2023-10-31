@@ -39,7 +39,7 @@ module.exports = {
         const { data } = jwt.verify(token, process.env.SECRET_KEY);
         req.user = data; // Attach user data to the request object
       } catch (error) {
-        console.log("Invalid token:", error); // Handle invalid tokens (for debugging)
+        console.error("Invalid token:", error); // Handle invalid tokens (for debugging)
       }
 
       // Return the updated request object (with or without user data)

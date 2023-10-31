@@ -47,7 +47,7 @@
 	font-size: 14px;
 	outline: none;
 	border: none;
-	width: 370px;
+	width: min(370px, 100%);
 	padding: 10px;
   }
   

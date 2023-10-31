@@ -45,3 +45,4 @@ The following packages were used in the development of uFree:
 - day.js
 - react-modal
 - react-calendar
+- react-select
