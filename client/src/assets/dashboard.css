@@ -41,6 +41,7 @@
     height: 200px;
     /* width: var(--event-box-width); */
     max-width: 470px;
+    overflow: hidden;
 
     background-color: var(--primary);
     box-shadow: var(--common-box-shadow);
@@ -70,18 +71,29 @@
     height: 45%;
     padding: 10px;
     border-radius: 0 0 var(--large-border-radius) var(--large-border-radius);
+
+    /* font-size: 2rem;
+    font-weight: bold; */
+
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }
 
 .event_content_name,
 .event_content_week {
     max-width: 470px;
     margin: 0;
+
+    overflow: hidden;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
 }
 
 .event_content_name {
     margin-bottom: 10px;
+    padding-bottom: 5px;
 
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: bold;
 
     text-wrap: nowrap;
