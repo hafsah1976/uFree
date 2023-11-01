@@ -63,7 +63,7 @@ const Dashboard = () => {
 function EventBox({ event }) {
     return (
         <div className='event_box'>
-                <Link to={`/events/${event._id}`}>
+            <Link to={`/events/${event._id}`}>
                 <div className='event_header' style={{
                     backgroundImage: `url("${event.thumbnail}")`,
                     backgroundSize: 'cover',
@@ -77,8 +77,8 @@ function EventBox({ event }) {
                         <p className='event_content_week'>{event.attendees.length} <i className="bi bi-person-arms-up"></i></p>
                     </div>
                 </div>
-        </Link>
-            </div>
+            </Link>
+        </div>
     );
 };
 
