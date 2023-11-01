@@ -18,13 +18,17 @@ export default function EventHeader({ event }) {
         <p>Loading...</p>
         )
 
-    if (error)  return (
+    if (error) return (
         <p>An error has occured, please try again</p>
         )
 
     // check if user already has an availability added
     const hasAvails = event.availabilities.some(availability => availability.userId === data.me._id);
     // console.log(hasAvails);
+
+    function hasAddedAvails(userId) {
+        return event.availabilities.some(availability => availability.userId === userId);
+    }
 
 
     return (
@@ -88,7 +92,18 @@ export default function EventHeader({ event }) {
                     }
                 }}>
                     <i className="modal_x bi bi-x" onClick={() => setDescriptionModal(false)}></i>
+                    
+                    <p className='modal_heading'>Description</p>
                     <p>{event?.description}</p>
+
+                    <p className='modal_heading'>Attendees</p>
+                    <ul>
+                        {event.attendees.map(user => (
+                            <li key={user._id}>{user.username} {hasAddedAvails(user._id) ? "" : "*"}</li>
+                        ))}
+                    </ul>
+
+                    <small>* has not added availabilities</small>
 
                     <p className='modal_close' onClick={() => setDescriptionModal(false)}>Close</p>
 
