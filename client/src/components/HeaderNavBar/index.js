@@ -1,9 +1,14 @@
 import { React } from "react";
 import { Link } from "react-router-dom";
+
+import Auth from "../../utils/auth";
+
+// import AccountButton from "../AccountButton";
 import LogoutButton from "../LogoutButton";
 // contains the elements that will be present inside the header
 // element ids with DEBUG are dev only elements and should be removed in working product
 const HeaderNavBar = ({ logoutFunc, loggedIn }) => {
+    console.log();
     return (
         <nav id="content_header_nav">
             <Link to="/" className="nav_brand">uFree</Link>
@@ -13,7 +18,14 @@ const HeaderNavBar = ({ logoutFunc, loggedIn }) => {
             {/* <Link to="/dashboard"><div id="DEBUG_button_dashboard" className="header_nav_button">Dashboard</div></Link> */}
             {/* <Link to="/events/create"><div id="button_createEvent"className="header_nav_button">Create Event</div></Link> */}
             {/* <Link to="/events"><div id="DEBUG_button_eventPage" className="header_nav_button">Search Event</div></Link> */}
-            {loggedIn && <LogoutButton logoutFunc={logoutFunc} />}
+            {loggedIn && (
+                <div style={{
+                    display: 'flex',
+                }}>
+                    <span className="account_button">{Auth.getProfile().data.username}</span>
+                    <LogoutButton logoutFunc={logoutFunc} />
+                </div>
+            )}
         </nav>
     )
 }
