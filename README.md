@@ -1,4 +1,6 @@
 # uFree: Collaborative Event Scheduling
+<!-- add picture of home page -->
+![Homepage](./assets/images/ufree_homepage.png)
 
 ## Table of Contents
 - [Introduction](#introduction)
@@ -6,6 +8,7 @@
 - [Installation](#Installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
+- [Technologies Used](#Technologies-Used)
 - [Credits](#credits)
 - [License](#license)
 
@@ -22,32 +25,54 @@ With uFree, you can effortlessly schedule events, see your friends' availability
 **uFree** offers a range of powerful features to streamline the event planning process:
 
 - **Event Scheduling**: Create events with details, including date, time, and location.
+<!-- Create event image -->
+![Creating an event](./assets/images/createEvent.png)
 
 - **Collaborative Scheduling**: Invite attendees to your event and see their availability in real-time.
+<!--  Add availability image -->
+![Adding your availability](./assets/images/addAvailability.png)
 
 - **Availability Analysis**: uFree intelligently matches attendees' schedules to find common free time slots.
+<!-- Event page image -->
+![Event page](./assets/images/dashboard.png)
+
 
 - **User-Friendly Interface**: uFree's intuitive design makes it easy to navigate and use.
+<!-- Log in image -->
+![Log in page](./assets/images/login.png)
 
 ## Installation
 
 You may use this project on your local environment via these steps:
-- Clone this repository onto your machine.
-- Using a terminal from the root directory, run the commands "npm run install" then "npm run develop."
+Navigate to the [uFree](https://ufree-f24a66c626ea.herokuapp.com/) webiste and create an account. After you're logged in,
+you have the option of creating an event or joining an event if someone has sent you an event code. You may also download
+the application by clicking the desktop icon.
+<!-- - Clone this repository onto your machine.
+- Using a terminal from the root directory, run the commands "npm run install" then "npm run develop." -->
 
 ## Usage
 You can use the uFree application to coordinate with other logged in users on event availabilities to synchronize personal schedules. After logging in, you can access your dashboard to see your events, join an event directly via "Join Events," or create you own event via "Create Events." Clicking on an event will bring you to the availability page and you will find the date and times in which you and others are available for said event.
+
+## Technologies Used
+The following technolgies were used in this project:
+- Apollo
+- Day.js
+- Express
+- JWT
+- MongoDB
+- Mongoose
+- React
+- React Bootstrap
+- React Calendar
+- React Modal
+- React Router
+- React Select
+- React Time Picker
 
 ## Credits
 
 Images from [Storyset](https://storyset.com/).
 
-The following packages were used in the development of uFree:
-
-- day.js
-- react-modal
-- react-calendar
-- react-select
 
 ## License
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
