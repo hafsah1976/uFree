@@ -30,16 +30,16 @@ With uFree, you can effortlessly schedule events, see your friends' availability
 
 - **Collaborative Scheduling**: Invite attendees to your event and see their availability in real-time.
 <!--  Add availability image -->
-![Adding your availability](./assets/images/addAvailability.png)
+![Joining an event](./assets/images/joinEvent.png)
 
 - **Availability Analysis**: uFree intelligently matches attendees' schedules to find common free time slots.
 <!-- Event page image -->
-![Event page](./assets/images/dashboard.png)
+![Event page](./assets/images/eventPage.png)
 
 
 - **User-Friendly Interface**: uFree's intuitive design makes it easy to navigate and use.
 <!-- Log in image -->
-![Log in page](./assets/images/login.png)
+![Dashboard](./assets/images/dashboard.png)
 
 ## Installation
 
