@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import { SIGN_UP } from "../utils/mutations";
 import { pageImages } from "../images";
 
-const Signup = () => {
+const Signup = ({ loginFunc }) => {
   // State to hold user input and form validation
   const [userCredentials, setUserCredentials] = useState({
     username: "",
@@ -70,6 +70,7 @@ const Signup = () => {
         // Check if the registration was successful
         if (data.signup) {
           Auth.login(data.signup.token); // Log in the user
+          loginFunc();
           navigate("/dashboard"); // Navigate to the dashboard
           setShowAlert(true); // Display an alert
         }
