@@ -70,7 +70,6 @@ The following technolgies were used in this project:
 - MongoDB
 - Mongoose
 - React
-- React Bootstrap
 - React Calendar
 - React Modal
 - React Router
