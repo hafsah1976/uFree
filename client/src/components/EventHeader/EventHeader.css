@@ -43,12 +43,20 @@
 }
 
 .event_read_more {
-    display: inline;
+    display: block;
+    margin: 0;
+    /* display: inline; */
     text-decoration: underline;
 }
 
 .event_read_more:hover {
     cursor: pointer;
+}
+
+.modal_heading {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0.1rem;
 }
 
 .modal_close {
