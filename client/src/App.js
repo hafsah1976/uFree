@@ -114,8 +114,9 @@ function Root({ loggedIn, setLoggedIn }) {
   )
 }
 
-const authLoader = (loggedIn) => {
-  return !loggedIn ? redirect('/login') : null;
+const authLoader = () => {
+  return !Auth.loggedIn() ? redirect('/login') : null;
+
 }
 
 function App() {
@@ -126,12 +127,12 @@ function App() {
       { path: "/", Component: Home, loader: () => loggedIn ? redirect('/dashboard') : null },
       { path: "/signup", Component: () => <SignUp loginFunc={() => setLoggedIn(true)} /> },
       { path: "/login", Component: () => <Login loginFunc={() => setLoggedIn(true)} /> },
-      { path: '/dashboard', Component: Dashboard, loader: () => authLoader(loggedIn) },
-      { path: '/events/:eventId', Component: Event, loader: () => authLoader(loggedIn) },
-      { path: '/events/create', Component: CreateEvent, loader: () => authLoader(loggedIn) },
-      { path: '/events/join', Component: JoinEvent, loader: () => authLoader(loggedIn) },
-      { path: 'events/:eventId/availabilities', Component: Availabilities, loader: () => authLoader(loggedIn) },
-      { path: 'events/:eventId/availabilities/edit', Component: EditAvails, loader: () => authLoader(loggedIn) },
+      { path: '/dashboard', Component: Dashboard, loader: authLoader },
+      { path: '/events/:eventId', Component: Event, loader: authLoader },
+      { path: '/events/create', Component: CreateEvent, loader: authLoader },
+      { path: '/events/join', Component: JoinEvent, loader: authLoader },
+      { path: 'events/:eventId/availabilities', Component: Availabilities, loader: authLoader },
+      { path: 'events/:eventId/availabilities/edit', Component: EditAvails, loader: authLoader },
     ] },
     { path: '*', Component: () => <Navigate to="/" />, }
   ])
