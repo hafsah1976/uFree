@@ -7,8 +7,8 @@
 - [Features](#features)
 - [Installation](#Installation)
 - [Usage](#usage)
-- [Contributing](#contributing)
-- [Technologies Used](#Technologies-Used)
+- [Contributors](#contributors)
+- [Technologies Used](#technologies-used)
 - [Credits](#credits)
 - [License](#license)
 
@@ -52,6 +52,14 @@ the application by clicking the desktop icon.
 
 ## Usage
 You can use the uFree application to coordinate with other logged in users on event availabilities to synchronize personal schedules. After logging in, you can access your dashboard to see your events, join an event directly via "Join Events," or create you own event via "Create Events." Clicking on an event will bring you to the availability page and you will find the date and times in which you and others are available for said event.
+
+## Contributors
+Please find links to the repositories of the people who contributed to this project:
+- [Hafsah Nasreen](https://github.com/hafsah1976)
+- [Ibrahima Barry](https://github.com/iab-19)
+- [Jacob Medina](https://github.com/jacob-medina)
+- [Rhon Ramos](https://github.com/rhonvyramos)
+- [Tyler Webster](https://github.com/tyler315)
 
 ## Technologies Used
 The following technolgies were used in this project:
