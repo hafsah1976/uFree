@@ -30,6 +30,17 @@ app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
+  app.get('/service-worker.js', (req, res) => {
+    // Set the 'Content-Type' header to 'application/javascript'
+    res.setHeader('Content-Type', 'application/javascript');
+  
+    // Read the service worker file
+    const serviceWorkerPath = path.join(__dirname, '../../service-worker.js');
+    const serviceWorkerFile = fs.readFileSync(serviceWorkerPath, 'utf8');
+  
+    // Send the service worker file as the response
+    res.send(serviceWorkerFile);
+  });
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
