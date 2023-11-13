@@ -5,12 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { LOG_IN } from "../utils/mutations";
 import Auth from '../utils/auth';
+import { useAuthDispatch } from '../utils/AuthContext';
 import { pageImages } from '../images';
 
 import "../assets/login.css";
 
 // Define the Login component
-const Login = ({ loginFunc }) => {
+const Login = () => {
     // Initialize state to store user's email and password
     const [userCredentials, setUserCredentials] = useState({ email: "", password: "" });
         
@@ -22,6 +23,8 @@ const Login = ({ loginFunc }) => {
 
     // Initialize a function to execute the login mutation
     const [loginuser] = useMutation(LOG_IN);
+
+    const dispatch = useAuthDispatch();
 
     // Initialize a state to control the disabled property of the login button
     // const [isLoginFormValid, setIsLoginFormValid] = useState(true)
@@ -73,8 +76,12 @@ const Login = ({ loginFunc }) => {
             }
 
             // Store the user's token and navigate to the dashboard
-            Auth.login(data.login.token);
-            loginFunc();
+            dispatch({
+                type: 'login',
+                payload: {
+                    token: data.login.token
+                }
+            });
             navigate("/dashboard");
 
         } catch (error) {

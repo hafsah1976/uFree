@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import Auth from "../utils/auth";
 import { useMutation } from "@apollo/client";
+
+import { useAuthDispatch } from "../utils/AuthContext";
 import { SIGN_UP } from "../utils/mutations";
 import { pageImages } from "../images";
 
-const Signup = ({ loginFunc }) => {
+const Signup = () => {
   // State to hold user input and form validation
   const [userCredentials, setUserCredentials] = useState({
     username: "",
@@ -22,6 +22,8 @@ const Signup = ({ loginFunc }) => {
 
   // Use the signUp mutation
   const [signup] = useMutation(SIGN_UP);
+
+  const dispatch = useAuthDispatch();
 
   // Function to handle changes in form inputs
   const handleInputChange = (event) => {
@@ -69,8 +71,12 @@ const Signup = ({ loginFunc }) => {
         // alert(data);
         // Check if the registration was successful
         if (data.signup) {
-          Auth.login(data.signup.token); // Log in the user
-          loginFunc();
+          dispatch({
+            type: 'login',
+            payload: {
+              token: data.signup.token
+            }
+          });
           navigate("/dashboard"); // Navigate to the dashboard
           setShowAlert(true); // Display an alert
         }
