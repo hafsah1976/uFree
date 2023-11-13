@@ -4,6 +4,8 @@ import Auth from './utils/auth';
 import './helpers.css';
 import './App.css';
 
+import { useContext } from 'react';
+import { AuthProvider, useAuth } from './utils/AuthContext.js';
 
 import {
   ApolloClient,
@@ -115,18 +117,18 @@ function Root({ loggedIn, setLoggedIn }) {
 }
 
 const authLoader = () => {
-  return !Auth.loggedIn() ? redirect('/login') : null;
-
+  if (Auth.loggedIn()) return null;
+  return redirect('/login');
+  // return !Auth.loggedIn() ? redirect('/login') : null;
 }
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(Auth.loggedIn());
 
   const router = createBrowserRouter([
-    { path: "/", Component: () => <Layout loggedIn={loggedIn} setLoggedIn={setLoggedIn} />, children: [
-      { path: "/", Component: Home, loader: () => loggedIn ? redirect('/dashboard') : null },
-      { path: "/signup", Component: () => <SignUp loginFunc={() => setLoggedIn(true)} /> },
-      { path: "/login", Component: () => <Login loginFunc={() => setLoggedIn(true)} /> },
+    { path: "/", Component: () => <Layout />, children: [
+      { path: "/", Component: Home, loader: () => Auth.loggedIn() ? redirect('/dashboard') : null },
+      { path: "/signup", Component: () => <SignUp /> },
+      { path: "/login", Component: () => <Login /> },
       { path: '/dashboard', Component: Dashboard, loader: authLoader },
       { path: '/events/:eventId', Component: Event, loader: authLoader },
       { path: '/events/create', Component: CreateEvent, loader: authLoader },
@@ -139,9 +141,11 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <div className="App">
-        <RouterProvider router={router} />
-      </div>
+      <AuthProvider>
+        <div className="App">
+          <RouterProvider router={router} />
+        </div>
+      </AuthProvider>
     </ApolloProvider>
   );
 }

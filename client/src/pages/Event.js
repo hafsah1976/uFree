@@ -1,9 +1,9 @@
 import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
-import { GET_EVENT, QUERY_ME } from '../utils/queries';
+import { GET_EVENT } from '../utils/queries';
 import { DELETE_EVENT, LEAVE_EVENT } from '../utils/mutations';
-// import Auth from '../utils/auth';
+import { useAuth } from '../utils/AuthContext';
 import EventHeader from '../components/EventHeader';
 import EventDaySelector from '../components/EventDaySelector';
 
@@ -16,32 +16,12 @@ const Event = () => {
   });
   const event = data?.event;
 
-  const { data: userData, queryMeError } = useQuery(QUERY_ME);
-
-  const user = userData?.me;
+  const { user } = useAuth();
 
   const [deleteEvent] = useMutation(DELETE_EVENT);
   const [leaveEvent] = useMutation(LEAVE_EVENT);
 
   const handleDeleteEvent = async () => {
-    // const token = Auth.loggedIn() ? Auth.getToken() : null;
-    // if (!token) {
-    //   // User is not logged in, handle this scenario as needed
-    //   return;
-    // }
-
-    // if (!user) {
-    //   // No user data available, handle this scenario as needed
-    //   return;
-    // }
-
-    // // Check if the logged-in user is the admin of the event
-    // if (user.email !== data.event.admin.email) {
-    //   // Display a message or take appropriate action (e.g., return or show an error message)
-    //   console.log("You do not have permission to delete this event");
-    //   return;
-    // }
-
     try {
       await deleteEvent({
         variables: { eventId },
@@ -75,7 +55,7 @@ const Event = () => {
     return <p>Loading...</p>;
   }
 
-  if (error || queryMeError) {
+  if (error) {
     return <p>Error loading data</p>;
   }
 

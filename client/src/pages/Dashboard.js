@@ -11,16 +11,30 @@ const Dashboard = () => {
     const { loading, error, data } = useQuery(QUERY_ME);
     const events = data?.me.events;
 
-    if (loading) return (
-        <p>Loading...</p>
-    )
+    function eventBoxes() {
+        if (error) return (
+            <p>Oops! An error occurred.</p>
+        );
 
-    if (error) return (
-        <p>Oops! An error occurred.</p>
-    )
+        if (loading) return (
+            <p>Loading...</p>
+        );
+    
+        if (events.length === 0) return (
+            <p>You have no events.</p>
+        )
+
+        return (
+            <div id='board_elements'>
+                {events.map((event) => 
+                    <EventBox key={event._id} event={event} />
+                )}
+            </div>
+        )
+    }
+
 
     return (
-      
         <section id="content_dashboard_page">
             <section id="dashboard_content">
                 <div id="header_content">
@@ -44,16 +58,7 @@ const Dashboard = () => {
                     <h2 id='board_title'>
                         Events
                     </h2>
-                    {(events.length === 0)
-                        ?
-                            <p>You have no events.</p>
-                        :
-                            <div id='board_elements'>
-                                {events.map((event) => 
-                                    <EventBox key={event._id} event={event} />
-                                )}
-                            </div>
-                    }
+                    {eventBoxes()}
                 </div>
             </section>
         </section>

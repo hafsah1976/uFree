@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
-import Auth from "../utils/auth";
 import { useMutation } from "@apollo/client";
+
+import { useAuth, useAuthDispatch } from "../utils/AuthContext";
 import { SIGN_UP } from "../utils/mutations";
 import { pageImages } from "../images";
 
-const Signup = ({ loginFunc }) => {
+const Signup = () => {
   // State to hold user input and form validation
   const [userCredentials, setUserCredentials] = useState({
     username: "",
@@ -20,8 +20,13 @@ const Signup = ({ loginFunc }) => {
   // Initialize an error state for handling sign-up errors
   const [error, setError] = useState('');
 
+  // State for pressing sign up button
+  const [signupPressed, setSignupPressed] = useState(false);
+
   // Use the signUp mutation
   const [signup] = useMutation(SIGN_UP);
+
+  const dispatch = useAuthDispatch();
 
   // Function to handle changes in form inputs
   const handleInputChange = (event) => {
@@ -50,6 +55,8 @@ const Signup = ({ loginFunc }) => {
     // if (signupForm.checkValidity() === false) {
     //   event.preventDefault();    }
 
+    console.log('submit!');
+
     try {
       // Attempt to sign up the user by calling the signUp mutation
       const { data, error } = await signup({
@@ -62,20 +69,23 @@ const Signup = ({ loginFunc }) => {
         setError("Failed to sign up. Please try again."); // Set an error message
         setShowAlert("Please enter a valid email to sign up"); // Display an alert
         return;
-      } else {
-        // Sign-up was successful, log in the user
-        // console.log('Data:', data);
-        // console.log('Data:', data.signup);
-        // alert(data);
-        // Check if the registration was successful
-        if (data.signup) {
-          Auth.login(data.signup.token); // Log in the user
-          loginFunc();
-          navigate("/dashboard"); // Navigate to the dashboard
-          setShowAlert(true); // Display an alert
-        }
       }
-    } catch (error) {
+
+      // Check if the registration was not successful
+      if (!data.signup) return;
+
+      console.log(data);
+
+      await dispatch({
+        type: 'login',
+        payload: {
+          token: data.signup.token
+        }
+      });
+      setSignupPressed(true);
+      setShowAlert(true); // Display an alert
+    }
+    catch (error) {
       console.error("Failed to sign-up user", error);
       // Handle additional errors if needed
     }
@@ -87,6 +97,18 @@ const Signup = ({ loginFunc }) => {
       });
 
   };
+
+  const auth = useAuth();
+
+  // navigate to dashboard if signup is pressed and user context is recieved
+  useEffect(() => {
+    if (!signupPressed) return;
+    if (!auth.user?._id) return;
+    
+    setSignupPressed(false);
+    navigate('/dashboard');
+    
+  }, [auth, navigate, signupPressed, setSignupPressed])
 
   return (
     <div className='page-container blue_page_background no_navbar'>
