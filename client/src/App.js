@@ -117,8 +117,9 @@ function Root({ loggedIn, setLoggedIn }) {
 }
 
 const authLoader = () => {
-  return !Auth.loggedIn() ? redirect('/login') : null;
-
+  if (Auth.loggedIn()) return null;
+  return redirect('/login');
+  // return !Auth.loggedIn() ? redirect('/login') : null;
 }
 
 function App() {

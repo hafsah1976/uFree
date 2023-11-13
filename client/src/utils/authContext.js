@@ -33,10 +33,11 @@ function authReducer(state, action) {
 
 const initialAuth = {
     loggedIn: () => Auth.loggedIn(),
-    user: {},
+    user: Auth.loggedIn() ? Auth.getProfile().data : {},
 }
 
 export function AuthProvider({ children }) {
+    
     const [auth, dispatch] = useReducer(authReducer, initialAuth);
 
     return (
