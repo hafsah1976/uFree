@@ -28,8 +28,8 @@ const Event = () => {
       });
 
       // After successful deletion, navigate to a different page (e.g., event list)
-      // navigate('/dashboard');
-      window.location.assign('/dashboard');
+      navigate('/dashboard');
+      // window.location.assign('/dashboard');
       
     } catch (err) {
       console.error(err);
@@ -42,9 +42,8 @@ const Event = () => {
         variables: { eventId },
       });
       
-      window.location.assign('/dashboard');
-      // navigate('/dashboard');
-      // window.location.reload();
+      // window.location.assign('/dashboard');
+      navigate('/dashboard');
     }
     catch(err) {
       console.error(err);

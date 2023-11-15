@@ -1,25 +1,14 @@
 import React from 'react';
 import { Link, useLoaderData } from 'react-router-dom';
-import "../assets/dashboard.css";
 
-// import GET_EVENT query
-import { QUERY_ME } from '../utils/queries';
-import { useQuery } from '@apollo/client';
 import { monthAndDay } from '../utils/convertDate';
 
+import "../assets/dashboard.css";
+
 const Dashboard = () => {
-    // const { loading, error, data } = useQuery(QUERY_ME);
     const { events } = useLoaderData()
 
-    function eventBoxes() {
-        // if (error) return (
-        //     <p>Oops! An error occurred.</p>
-        // );
-
-        // if (loading) return (
-        //     <p>Loading...</p>
-        // );
-    
+    function renderEventBoxes() {
         if (events.length === 0) return (
             <p>You have no events.</p>
         )
@@ -32,7 +21,6 @@ const Dashboard = () => {
             </div>
         )
     }
-
 
     return (
         <section id="content_dashboard_page">
@@ -58,7 +46,7 @@ const Dashboard = () => {
                     <h2 id='board_title'>
                         Events
                     </h2>
-                    {eventBoxes()}
+                    {renderEventBoxes()}
                 </div>
             </section>
         </section>

@@ -6,20 +6,22 @@ import { client } from "./apolloClient";
 import Auth from "./auth";
 
 // queries and mutations
-import { QUERY_ME } from '../utils/queries';
+import { QUERY_MY_EVENTS } from '../utils/queries';
 
 
+// redirects user to login page not logged in
 export function authLoader() {
     if (Auth.loggedIn()) return null;
     return redirect('/login');
 }
-  
+
+// loads user's events
 export async function dashboardLoader() {
     const authRes = authLoader();
     if (authRes !== null) return authRes;
 
     const { data } = await client.query({
-        query: QUERY_ME
+        query: QUERY_MY_EVENTS
     });
 
     return data.me;
