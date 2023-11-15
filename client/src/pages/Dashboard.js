@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLoaderData } from 'react-router-dom';
 import "../assets/dashboard.css";
 
 // import GET_EVENT query
@@ -8,17 +8,17 @@ import { useQuery } from '@apollo/client';
 import { monthAndDay } from '../utils/convertDate';
 
 const Dashboard = () => {
-    const { loading, error, data } = useQuery(QUERY_ME);
-    const events = data?.me.events;
+    // const { loading, error, data } = useQuery(QUERY_ME);
+    const { events } = useLoaderData()
 
     function eventBoxes() {
-        if (error) return (
-            <p>Oops! An error occurred.</p>
-        );
+        // if (error) return (
+        //     <p>Oops! An error occurred.</p>
+        // );
 
-        if (loading) return (
-            <p>Loading...</p>
-        );
+        // if (loading) return (
+        //     <p>Loading...</p>
+        // );
     
         if (events.length === 0) return (
             <p>You have no events.</p>

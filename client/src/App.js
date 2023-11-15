@@ -1,25 +1,19 @@
 import { React, useState } from 'react';
-import logo from './logo.svg';
+import { ApolloProvider } from '@apollo/client';
+
+import { client } from './utils/apolloClient.js';
 import Auth from './utils/auth';
+import { AuthProvider } from './utils/AuthContext.js';
+import { authLoader, dashboardLoader } from './utils/loaders.js';
+
+// importing normalize.css to normalize page element styling
+// import logo from './logo.svg';
+import './normalize.css'
 import './helpers.css';
 import './App.css';
 
-import { useContext } from 'react';
-import { AuthProvider, useAuth } from './utils/AuthContext.js';
-
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-
-// importing normalize.css to normalize page element styling
-import './normalize.css'
-
 // imports Route as page router through URLs
-import { createBrowserRouter, createRoutesFromElements, Outlet, BrowserRouter, Routes, Route, redirect, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Outlet, redirect, RouterProvider, Navigate } from 'react-router-dom';
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
@@ -30,31 +24,7 @@ import HeaderNavBar from "./components/HeaderNavBar/index.js";
 //import Home from "./pages/Home.js"
 //import Login from './pages/Login.js';
 
-import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
-
-// Construct our main GraphQL API endpoint
-const httpLink = createHttpLink({
-  uri: (process.env.NODE_ENV === 'development') ? 'http://localhost:3001/graphql' : '/graphql',
-});
-
-// Construct request middleware that will attach the JWT token to every request as an `authorization` header
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
-});
-
-const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
+import { Login, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
 
 function Layout({ loggedIn, setLoggedIn }) {
   return (
@@ -71,65 +41,13 @@ function Layout({ loggedIn, setLoggedIn }) {
   )
 }
 
-
-
-function Root({ loggedIn, setLoggedIn }) {
-  return (
-    <Routes>
-        {/* <Route
-          path='/'
-          element={loggedIn ? <Dashboard /> : <Home />}
-        /> */}
-        {/* <Route
-          path='/login'
-          element={<Login loginFunc={() => setLoggedIn(true)} />}
-        /> */}
-        {/* <Route
-          path='/dashboard'
-          element={<Dashboard />}
-        /> */}
-        {/* <Route
-          path='/events/:eventId'
-          element={<Event />}
-        /> */}
-        {/* <Route
-          path='/events/create'
-          element={<CreateEvent />}
-        /> */}
-        {/* <Route
-          path='/signup'
-          element={<SignUp loginFunc={() => setLoggedIn(true)} />}
-        /> */}
-        {/* <Route
-          path='events/:eventId/availabilities'
-          element={<Availabilities />}
-        /> */}
-        {/* <Route
-          path='events/:eventId/availabilities/edit'
-          element={<EditAvails />}
-        /> */}
-        {/* <Route
-          path='/events/join'
-          element={<JoinEvent />}
-        /> */}
-    </Routes>
-  )
-}
-
-const authLoader = () => {
-  if (Auth.loggedIn()) return null;
-  return redirect('/login');
-  // return !Auth.loggedIn() ? redirect('/login') : null;
-}
-
 function App() {
-
   const router = createBrowserRouter([
     { path: "/", Component: () => <Layout />, children: [
       { path: "/", Component: Home, loader: () => Auth.loggedIn() ? redirect('/dashboard') : null },
       { path: "/signup", Component: () => <SignUp /> },
       { path: "/login", Component: () => <Login /> },
-      { path: '/dashboard', Component: Dashboard, loader: authLoader },
+      { path: '/dashboard', Component: Dashboard, loader: dashboardLoader },
       { path: '/events/:eventId', Component: Event, loader: authLoader },
       { path: '/events/create', Component: CreateEvent, loader: authLoader },
       { path: '/events/join', Component: JoinEvent, loader: authLoader },
