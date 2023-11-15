@@ -4,7 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 import { client } from './utils/apolloClient.js';
 import Auth from './utils/auth';
 import { AuthProvider } from './utils/AuthContext.js';
-import { authLoader, dashboardLoader, eventLoader } from './utils/loaders.js';
+import { homeLoader, authLoader, dashboardLoader, eventLoader } from './utils/loaders.js';
 
 // importing normalize.css to normalize page element styling
 // import logo from './logo.svg';
@@ -13,7 +13,7 @@ import './helpers.css';
 import './App.css';
 
 // imports Route as page router through URLs
-import { createBrowserRouter, Outlet, redirect, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Outlet, redirect, RouterProvider } from 'react-router-dom';
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
@@ -38,19 +38,30 @@ function Layout() {
 
 function App() {
   const router = createBrowserRouter([
+    // root component, adds navbar and page padding
     { path: "/", Component: Layout, ErrorBoundary: ServerError, children: [
-      { path: "/", Component: Home, loader: () => Auth.loggedIn() ? redirect('/dashboard') : null },
-      { path: "/signup", Component: () => <SignUp /> },
-      { path: "/login", Component: () => <Login /> },
-      { path: '/dashboard', Component: Dashboard, loader: dashboardLoader },
-      { path: '/events/:eventId', Component: Event, loader: eventLoader },
-      { path: '/events/create', Component: CreateEvent, loader: authLoader },
-      { path: '/events/join', Component: JoinEvent, loader: authLoader },
-      { path: 'events/:eventId/availabilities', Component: Availabilities, loader: authLoader },
-      { path: 'events/:eventId/availabilities/edit', Component: EditAvails, loader: authLoader },
+
+      // public pages (do not need to be logged in)
+      { path: "/", Component: Home, loader: homeLoader },
+      { path: "/signup", Component: SignUp },
+      { path: "/login", Component: Login },
+
+      // error pages
+      { path: '/404', Component: Error404 },
+      // { path: '/error', Component: ServerError },
+      { path: '*', Component: Error404 },
+
+      // auth pages (need to be logged in)
+      { loader: authLoader, children: [
+        { path: '/dashboard', Component: Dashboard, loader: dashboardLoader },
+        { path: '/events/:eventId', Component: Event, loader: eventLoader },
+        { path: '/events/create', Component: CreateEvent },
+        { path: '/events/join', Component: JoinEvent },
+        { path: 'events/:eventId/availabilities', Component: Availabilities },
+        { path: 'events/:eventId/availabilities/edit', Component: EditAvails },
+      ] },
     ] },
-    { path: '*', Component: Error404, ErrorBoundary: ServerError }
-  ])
+  ]);
 
   return (
     <ApolloProvider client={client}>

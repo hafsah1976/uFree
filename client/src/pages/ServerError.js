@@ -7,7 +7,7 @@ export default function ServerError() {
     const navigate = useNavigate();
     const error = useRouteError();
 
-    console.error(error);
+    if (error) console.error(error);
 
     // navigate to 404 page if error code is "NOT_FOUND"
     useEffect(() => {

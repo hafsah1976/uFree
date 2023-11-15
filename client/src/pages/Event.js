@@ -1,7 +1,6 @@
 import React from 'react';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
-import { GET_EVENT } from '../utils/queries';
 import { DELETE_EVENT, LEAVE_EVENT } from '../utils/mutations';
 import { useAuth } from '../utils/AuthContext';
 import EventHeader from '../components/EventHeader';
@@ -9,12 +8,9 @@ import EventDaySelector from '../components/EventDaySelector';
 
 const Event = () => {
   const { eventId } = useParams();
-  const navigate = useNavigate();
-
-  // const { data, loading, error } = useQuery(GET_EVENT, {
-  //   variables: { eventId },
-  // });
   const event = useLoaderData();
+
+  const navigate = useNavigate();
 
   const { user } = useAuth();
 
@@ -29,9 +25,8 @@ const Event = () => {
 
       // After successful deletion, navigate to a different page (e.g., event list)
       navigate('/dashboard');
-      // window.location.assign('/dashboard');
-      
-    } catch (err) {
+    } 
+    catch (err) {
       console.error(err);
     }
   };
@@ -42,7 +37,6 @@ const Event = () => {
         variables: { eventId },
       });
       
-      // window.location.assign('/dashboard');
       navigate('/dashboard');
     }
     catch(err) {

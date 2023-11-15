@@ -9,17 +9,20 @@ import Auth from "./auth";
 import { QUERY_MY_EVENTS, GET_EVENT } from '../utils/queries';
 
 
-// redirects user to login page not logged in
+// redirects to dashboard if user is logged in
+export function homeLoader() {
+    if (Auth.loggedIn()) return redirect('/dashboard');
+    return null;
+}
+
+// redirects to login page if user is not logged in
 export function authLoader() {
     if (Auth.loggedIn()) return null;
     return redirect('/login');
 }
 
-// loads user's events
 export async function dashboardLoader() {
-    const authRes = authLoader();
-    if (authRes !== null) return authRes;
-
+    // loads user's events
     const { data } = await client.query({
         query: QUERY_MY_EVENTS
     });
@@ -27,13 +30,10 @@ export async function dashboardLoader() {
     return data.me;
 }
 
-// loads event
 export async function eventLoader({ params }) {
-    const authRes = authLoader();
-    if (authRes !== null) return authRes;
-
     const { eventId } = params;
-
+    
+    // loads event
     const { data, error } = await client.query({
         query: GET_EVENT,
         variables: { eventId }

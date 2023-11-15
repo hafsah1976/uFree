@@ -80,7 +80,7 @@ export const QUERY_MY_EVENTS = gql`
       name
       thumbnail
       week
-      location
+      # location
       attendees {
         _id
       }
