@@ -39,7 +39,7 @@ export async function eventLoader({ params }) {
         variables: { eventId }
     });
 
-    if (error) throw new Error(error);
+    if (error) throw error;
 
     return data.event;
 }

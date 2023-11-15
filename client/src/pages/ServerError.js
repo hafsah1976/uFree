@@ -1,9 +1,21 @@
-import { useRouteError, useNavigate } from "react-router-dom"
+import { useEffect } from "react";
+import { useRouteError, useNavigate } from "react-router-dom";
+
+const NOT_FOUND = "ERROR CODE: NOT_FOUND";
 
 export default function ServerError() {
     const navigate = useNavigate();
     const error = useRouteError();
+
     console.error(error);
+
+    // navigate to 404 page if error code is "NOT_FOUND"
+    useEffect(() => {
+        if (String(error).includes(NOT_FOUND)) {
+            navigate('/404');
+        }
+    }, [error, navigate]);
+
 
     return (
         <section>

@@ -1,4 +1,5 @@
 const { AuthenticationError } = require('apollo-server-express');
+const { GraphQLError } = require('graphql');
 const { User, Event, AvailabilitiesSchema } = require('../models');
 const { ObjectId } = require('mongoose').Types;
 const { signToken } = require('../utils/auth');
@@ -22,7 +23,12 @@ const resolvers = {
                 .populate('attendees')
                 .exec();
 
-            if (!event) throw new Error(`Could not find event with ID ${eventId}!`);
+            if (!event) throw new GraphQLError(
+                `Could not find event with ID ${eventId}!`,
+                {
+                    extensions: { code: 'NOT_FOUND' }
+                }
+            );
             return event;
 
         },

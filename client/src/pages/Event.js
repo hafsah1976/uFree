@@ -11,9 +11,9 @@ const Event = () => {
   const { eventId } = useParams();
   const navigate = useNavigate();
 
-  const { data, loading, error } = useQuery(GET_EVENT, {
-    variables: { eventId },
-  });
+  // const { data, loading, error } = useQuery(GET_EVENT, {
+  //   variables: { eventId },
+  // });
   const event = useLoaderData();
 
   const { user } = useAuth();
@@ -50,37 +50,20 @@ const Event = () => {
     }
   }
 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error loading data</p>;
-  }
-
   const isAdmin = user?._id === event?.admin._id;
 
   return (
-    <>
-      {loading
-        ? (
-          <p>Loading...</p>
-        ) : (
-          <section id="content_event_page">
-            <EventHeader event={event} />
-            <EventDaySelector event={event} user={user} avails={event.availabilities} attendees={event.attendees} />
+    <section id="content_event_page">
+      <EventHeader event={event} />
+      <EventDaySelector event={event} user={user} avails={event.availabilities} attendees={event.attendees} />
 
-            <div>
-                {isAdmin 
-                  ? (
-                    <button className="drop_event_btn btn btn_accent" onClick={handleDeleteEvent}>Delete Event</button>
-                  ) : (
-                    <button className="drop_event_btn btn btn_accent" onClick={handleLeaveEvent}>Leave Event</button>
-                )}
-            </div>
-          </section>
-      )}
-    </>
+      <div>
+          {isAdmin 
+            ? <button className="drop_event_btn btn btn_accent" onClick={handleDeleteEvent}>Delete Event</button>
+            : <button className="drop_event_btn btn btn_accent" onClick={handleLeaveEvent}>Leave Event</button>
+          }
+      </div>
+    </section>
   );
 };
 

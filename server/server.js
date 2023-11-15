@@ -10,12 +10,14 @@ const { ApolloServer } = require('apollo-server-express');
 const { authMiddleware } = require('./utils/auth');
 
 const { typeDefs, resolvers } = require('./schemas');
+const formatError = require('./utils/formatError');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  formatError,
   context: authMiddleware,
 });
 
