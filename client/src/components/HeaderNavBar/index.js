@@ -1,21 +1,14 @@
 import { React } from "react";
 import { Link } from "react-router-dom";
 
-import { useAuth, useAuthDispatch } from "../../utils/AuthContext";
+import { useAuth } from "../../utils/AuthContext";
 
-// import AccountButton from "../AccountButton";
 import LogoutButton from "../LogoutButton";
+
 // contains the elements that will be present inside the header
 // element ids with DEBUG are dev only elements and should be removed in working product
 const HeaderNavBar = () => {
     const auth = useAuth();
-    const dispatch = useAuthDispatch();
-
-    function handleLogout() {
-        dispatch({
-            type: 'logout',
-        });
-    }
 
     return (
         <nav id="content_header_nav">
@@ -31,7 +24,7 @@ const HeaderNavBar = () => {
                     display: 'flex',
                 }}>
                     <span className="account_button">{auth.user.username}</span>
-                    <LogoutButton logoutFunc={handleLogout} />
+                    <LogoutButton />
                 </div>
             )}
         </nav>
