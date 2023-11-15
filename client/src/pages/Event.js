@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
 import { GET_EVENT } from '../utils/queries';
 import { DELETE_EVENT, LEAVE_EVENT } from '../utils/mutations';
 import { useAuth } from '../utils/AuthContext';
@@ -14,7 +14,7 @@ const Event = () => {
   const { data, loading, error } = useQuery(GET_EVENT, {
     variables: { eventId },
   });
-  const event = data?.event;
+  const event = useLoaderData();
 
   const { user } = useAuth();
 
