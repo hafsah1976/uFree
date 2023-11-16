@@ -1,4 +1,4 @@
-.loading-container {
+.message-container {
     height: calc(100vh - var(--header-height) - (2 * var(--page-padding)));
     padding-top: 2rem;
     position: relative;

@@ -57,7 +57,7 @@ function App() {
 
       // error pages
       { path: '/404', Component: Error404 },
-      // { path: '/error', Component: ServerError },
+      { path: '/error', Component: ServerError },
       { path: '*', Component: Error404 },
 
       // auth pages (need to be logged in)

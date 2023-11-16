@@ -1,19 +1,22 @@
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import { useAuth } from "../utils/AuthContext";
+import { pageImages } from "../images";
 
 export default function Error404() {
-    const navigate = useNavigate();
     const { loggedIn } = useAuth();
 
     const buttonClasses = "btn_large btn_accent";
 
     return (
-        <section>
-            <h1>404</h1>
-            <p>The page you're looking for does not exist.</p>
-            <button className={buttonClasses} onClick={() => navigate('/')}>
-                {loggedIn() ? 'Go To Dashboard' : 'Go Home'}
-            </button>
+        <section className="message-container server-error-container">
+            <p className="server-error-message">The page you're looking for doesn't exist.</p>
+            <img className="message-container-image" src={pageImages.error404} alt="" />
+            <Link to='/'>
+                <button className={buttonClasses}>
+                    {loggedIn() ? 'Go To Dashboard' : 'Go Home'}
+                </button>
+            </Link>
         </section>
     )
 }

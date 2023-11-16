@@ -6,7 +6,7 @@ import './GlobalLoader.css';
 export default function GlobalLoader({ loading, loadDelay, Outlet }) {
     const loadingOutput = useMemo(
       () => 
-        <div className='loading-container'>
+        <div className='message-container'>
             <p className='loading-message'>Loading...</p>
             <img className='loading-image' src={pageImages.loading} alt="" />
         </div>,

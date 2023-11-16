@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useRouteError, useNavigate } from "react-router-dom";
 
+import { pageImages } from "../images";
+
+import '../assets/serverError.css';
+
 const NOT_FOUND = "ERROR CODE: NOT_FOUND";
 
 export default function ServerError() {
@@ -18,8 +22,9 @@ export default function ServerError() {
 
 
     return (
-        <section>
-            <h1>Oops! Something went wrong...</h1>
+        <section className="message-container server-error-container">
+            <p className="server-error-message">Oops! Something went wrong...</p>
+            <img className="message-container-image" src={pageImages.serverError} alt="" />
             <button className="btn_large btn_accent" onClick={() => navigate(-1)}>Go Back</button>
         </section>
     )

@@ -5,6 +5,8 @@ import addAvailabilities from './add-availabilities.png';
 import login from './login.png';
 import signup from './signup.png';
 import loading from './loading.svg';
+import error404 from './error-404.svg';
+import serverError from './server-error.svg';
 
 const pageImages = {
     home,
@@ -13,6 +15,8 @@ const pageImages = {
     login,
     signup,
     loading,
+    error404,
+    serverError,
 }
 
 export default pageImages;

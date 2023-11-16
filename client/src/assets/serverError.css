@@ -1,0 +1,26 @@
+.server-error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.server-error-message {
+    margin: 0;
+
+    background-color: var(--light);
+
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.message-container-image {
+    height: calc(100vh - var(--header-height) - 140px);
+    width: calc(100vw - (2 * var(--page-padding)));
+}
+
+@media screen and (min-width: 320px) {
+    .server-error-message {
+        font-size: 2rem;
+    }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useMutation } from '@apollo/client';
-import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
+import { useParams, useNavigate, useLoaderData, Link } from 'react-router-dom';
 import { DELETE_EVENT, LEAVE_EVENT } from '../utils/mutations';
 import { useAuth } from '../utils/AuthContext';
 import EventHeader from '../components/EventHeader';
