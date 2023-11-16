@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toBeginningOfWeek, monthAndDay } from '../utils/convertDate';
 import { pageImages, eventThumbnails } from '../images';
 import { CREATE_EVENT } from '../utils/mutations';
@@ -12,7 +12,7 @@ import Calendar from 'react-calendar';
 import Select from 'react-select';
 
 const CreateEvent = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const [eventInputs, setEventInputs] = useState({
         event_name: '',
@@ -63,8 +63,7 @@ const CreateEvent = () => {
         }
 
         if (data.createEvent) {
-            window.location.assign(`/events/${data.createEvent._id}`);
-            // navigate(`/events/${data.createEvent._id}`);
+            navigate(`/events/${data.createEvent._id}`);
         }
     }
 

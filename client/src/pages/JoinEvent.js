@@ -21,7 +21,7 @@ const JoinEvent = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        // console.log(joinEventInput);
+        
         const { data, error } = await joinEvent({
             variables: {
                 code: joinEventInput.event_joincode
@@ -40,13 +40,11 @@ const JoinEvent = () => {
 
     return(
         <section id='content_joinEvent_page' className='blue_page_background'>
-            {/* <p id="DEBUG_joinEvent_page_text" className='DEBUG_text'> */}
             <div>
                 <p className='joinT'> Join an Event</p>
                 <p className='joinTT'>Type your event code below</p>
             </div>
 
-            {/* </p> */}
             <section id="joinEvent_form">
                 <form onSubmit={handleSubmit} className='forme'>
                     <input
