@@ -146,14 +146,14 @@ const Login = () => {
                             {/* Display an error message if there is an error */}
                             <div className={`error_msg ${showAlert ? '' : 'invisible'}`}>{error}</div>
                             {/* Disable the button if the form is not valid */}
-                           <button type="submit" className='nav_btn'> 
+                           <button type="submit" className='nav_btn btn_accent btn'> 
                                 Log In
                             </button>
                         </form>
                         <div>
                             <h3>Don't have an account?</h3>
                             <Link to="/signup">
-                                <button className='nav_btn'>
+                                <button className='nav_btn btn_accent btn'>
                                     Sign Up Now
                                 </button>
                             </Link>

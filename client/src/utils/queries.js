@@ -72,6 +72,23 @@ export const QUERY_ME = gql`
 }
 `;
 
+export const QUERY_MY_EVENTS = gql`
+  query myEvents {
+  me {
+    events {
+      _id
+      name
+      thumbnail
+      week
+      # location
+      attendees {
+        _id
+      }
+    }
+  }
+}
+`;
+
 export const QUERY_USER_AVAILABILITY = gql`
 query availability($eventId: String!) {
   availability(eventId: $eventId) {

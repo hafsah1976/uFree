@@ -1,143 +1,76 @@
-import { React, useState } from 'react';
-import logo from './logo.svg';
-import Auth from './utils/auth';
+import { React, useEffect, useState, useMemo, useRef } from 'react';
+import { ApolloProvider } from '@apollo/client';
+
+import { client } from './utils/apolloClient.js';
+import { AuthProvider } from './utils/AuthContext.js';
+import { homeLoader, authLoader, dashboardLoader, eventLoader } from './utils/loaders.js';
+
+// importing normalize.css to normalize page element styling
+// import logo from './logo.svg';
+import './normalize.css'
 import './helpers.css';
 import './App.css';
 
-import { useContext } from 'react';
-import { AuthProvider, useAuth } from './utils/AuthContext.js';
-
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-
-// importing normalize.css to normalize page element styling
-import './normalize.css'
-
 // imports Route as page router through URLs
-import { createBrowserRouter, createRoutesFromElements, Outlet, BrowserRouter, Routes, Route, redirect, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Outlet, RouterProvider, useNavigation } from 'react-router-dom';
 
 // imports HeaderNav
 // elements in HeaderNav will be used as the elements present in the page header
+import GlobalLoader from './components/GlobalLoader/index.js';
 import HeaderNavBar from "./components/HeaderNavBar/index.js";
+import { Login, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent, ServerError, Error404 } from "./pages/PageContainer.js";
 
-// imports Home as landing page for the site
-// uses empty URL
-//import Home from "./pages/Home.js"
-//import Login from './pages/Login.js';
 
-import { Login, GoToEvent, Event, Dashboard, SignUp, Home, Availabilities, EditAvails, CreateEvent, JoinEvent } from "./pages/PageContainer.js";
+function Layout() {
+  const navigation = useNavigation();
 
-// Construct our main GraphQL API endpoint
-const httpLink = createHttpLink({
-  uri: (process.env.NODE_ENV === 'development') ? 'http://localhost:3001/graphql' : '/graphql',
-});
+  const isLoading = (navigation.state === 'loading');
 
-// Construct request middleware that will attach the JWT token to every request as an `authorization` header
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
-});
-
-const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
-
-function Layout({ loggedIn, setLoggedIn }) {
   return (
     <>
       <header className="App-header">
-              <section id="content_header">
-                <HeaderNavBar logoutFunc={() => setLoggedIn(false)} loggedIn={loggedIn} />
-              </section>
+        <section id="content_header">
+          <HeaderNavBar />
+        </section>
       </header>
+
       <section id="page_container">
-        <Outlet />
+        <GlobalLoader loading={isLoading} Outlet={Outlet} loadDelay={200} />
+        {/* {isLoading
+          ? <p>Loading...</p>
+          : <Outlet />
+        } */}
       </section>
     </>
   )
 }
 
-
-
-function Root({ loggedIn, setLoggedIn }) {
-  return (
-    <Routes>
-        {/* <Route
-          path='/'
-          element={loggedIn ? <Dashboard /> : <Home />}
-        /> */}
-        {/* <Route
-          path='/login'
-          element={<Login loginFunc={() => setLoggedIn(true)} />}
-        /> */}
-        {/* <Route
-          path='/dashboard'
-          element={<Dashboard />}
-        /> */}
-        {/* <Route
-          path='/events/:eventId'
-          element={<Event />}
-        /> */}
-        {/* <Route
-          path='/events/create'
-          element={<CreateEvent />}
-        /> */}
-        {/* <Route
-          path='/signup'
-          element={<SignUp loginFunc={() => setLoggedIn(true)} />}
-        /> */}
-        {/* <Route
-          path='events/:eventId/availabilities'
-          element={<Availabilities />}
-        /> */}
-        {/* <Route
-          path='events/:eventId/availabilities/edit'
-          element={<EditAvails />}
-        /> */}
-        {/* <Route
-          path='/events/join'
-          element={<JoinEvent />}
-        /> */}
-    </Routes>
-  )
-}
-
-const authLoader = () => {
-  if (Auth.loggedIn()) return null;
-  return redirect('/login');
-  // return !Auth.loggedIn() ? redirect('/login') : null;
-}
-
 function App() {
-
   const router = createBrowserRouter([
-    { path: "/", Component: () => <Layout />, children: [
-      { path: "/", Component: Home, loader: () => Auth.loggedIn() ? redirect('/dashboard') : null },
-      { path: "/signup", Component: () => <SignUp /> },
-      { path: "/login", Component: () => <Login /> },
-      { path: '/dashboard', Component: Dashboard, loader: authLoader },
-      { path: '/events/:eventId', Component: Event, loader: authLoader },
-      { path: '/events/create', Component: CreateEvent, loader: authLoader },
-      { path: '/events/join', Component: JoinEvent, loader: authLoader },
-      { path: 'events/:eventId/availabilities', Component: Availabilities, loader: authLoader },
-      { path: 'events/:eventId/availabilities/edit', Component: EditAvails, loader: authLoader },
+    // root component, adds navbar and page padding
+    { path: "/", Component: Layout, ErrorBoundary: ServerError, children: [
+
+      // public pages (do not need to be logged in)
+      { path: "/", Component: Home, loader: homeLoader },
+      { path: "/signup", Component: SignUp },
+      { path: "/login", Component: Login },
+
+      // error pages
+      { path: '/404', Component: Error404 },
+      { path: '/error', Component: ServerError },
+      { path: '*', Component: Error404 },
+
+      // auth pages (need to be logged in)
+      { loader: authLoader, children: [
+        { path: '/dashboard', Component: Dashboard, loader: dashboardLoader },
+        { path: '/events/:eventId', Component: Event, loader: eventLoader },
+        { path: '/events/create', Component: CreateEvent },
+        { path: '/events/join', Component: JoinEvent },
+        { path: 'events/:eventId/availabilities', Component: Availabilities },
+        { path: 'events/:eventId/availabilities/edit', Component: EditAvails },
+      ] },
     ] },
-    { path: '*', Component: () => <Navigate to="/" />, }
-  ])
+  ]);
 
   return (
     <ApolloProvider client={client}>

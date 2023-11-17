@@ -1,0 +1,27 @@
+.message-container {
+    height: calc(100vh - var(--header-height) - (2 * var(--page-padding)));
+    padding-top: 2rem;
+    position: relative;
+}
+
+.loading-message {
+    margin: 0;
+
+    background-color: var(--light);
+
+    font-size: 2rem;
+    text-align: center;
+}
+
+.loading-image {
+    height: calc(100vh - var(--header-height));
+    width: calc(50vw);
+
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    z-index: -1;
+}

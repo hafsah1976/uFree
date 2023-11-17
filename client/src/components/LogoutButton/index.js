@@ -1,19 +1,22 @@
-import Auth from "../../utils/auth";
 import React from "react";
-//  import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-export default function LogoutButton({ logoutFunc }) {
-     // const navigate = useNavigate();
+import { useAuthDispatch } from "../../utils/AuthContext";
 
-     function handleClick() {
-          Auth.logout();
-          logoutFunc();
-          // navigate("/");
-          window.location.assign('/')
+export default function LogoutButton() {
+     const navigate = useNavigate();
+     const dispatch = useAuthDispatch();
+
+     function handleLogout() {
+          dispatch({
+               type: 'logout',
+          });
+
+          // navigate after the event cycle to give time for dispatch to occur
+          setTimeout(() => navigate('/'));
      }
 
      return (
-          <button className="logout_button" onClick={handleClick} type="button">Log Out</button >
+          <button className="logout_button" onClick={handleLogout} type="button">Log Out</button >
      )
-
  }
