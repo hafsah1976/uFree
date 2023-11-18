@@ -53,33 +53,6 @@
     cursor: pointer;
 }
 
-.modal_heading {
-    font-size: 1.5rem;
-    margin-top: 1rem;
-    margin-bottom: 0.1rem;
-}
-
-.modal_close {
-    float: right;
-    font-weight: bold;
-    padding: 5px;
-    margin-bottom: 0;
-    /* text-decoration: underline; */
-}
-
-.modal_x {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    font-size: 1.5rem;
-}
-
-.modal_close:hover,
-.modal_x:hover {
-    cursor: pointer;
-}
-
 .add_avail_btn {
     margin-top: var(--padding-lg);
 }

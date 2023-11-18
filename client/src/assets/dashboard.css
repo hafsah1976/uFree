@@ -4,11 +4,13 @@
     flex-direction: column;
 }
 
-/* #header_buttons {
+#header_buttons {
     display: flex;
-    flex-direction: row;
-    justify-content: center
-} */
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: var(--padding-lg);
+    margin-bottom: var(--padding-lg);
+}
 
 /* .dashboard_button {
     margin: 10px;
@@ -20,10 +22,10 @@
     text-decoration: none;
 } */
 
-.dashboard_btn {
+/* .dashboard_btn {
     margin-right: var(--padding-lg);
     margin-bottom: var(--padding-lg);
-}
+} */
 
 #board_title {
     margin-top: 0;
