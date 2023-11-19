@@ -4,7 +4,7 @@ import { useAuth } from '../../utils/AuthContext';
 import './EventHeader.css';
 
 import { Link } from "react-router-dom";
-import ReactModal from 'react-modal';
+import Modal from '../Modal';
 
 export default function EventHeader({ event }) {
 
@@ -62,57 +62,50 @@ export default function EventHeader({ event }) {
                 <p style={{marginLeft: 'var(--padding-sm)'}}>{copyMessage}</p>
             </div>
 
-            {event?.description && (
-                <p className='event_read_more' onClick={() => setDescriptionModal(true)}>Read more</p>
-            )}
+            <p className='event_read_more' onClick={() => setDescriptionModal(true)}>Read more</p>
 
-            <ReactModal isOpen={descriptionModal} onRequestClose={() => setDescriptionModal(false)} appElement={document.querySelector('.App')} style={{
-                    overlay: {
-                        backgroundColor: 'rgba(0,0,0,0.5)',
-                    },
-                    content: {
-                        whiteSpace: 'pre-line',
-                        border: 'none',
-                        borderRadius: 'var(--large-border-radius)',
-                        width: 'fit-content',
-                        height: 'fit-content',
-                        padding: '30px',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                    }
-                }}>
-                    <i className="modal_x bi bi-x" onClick={() => setDescriptionModal(false)}></i>
-                    
-                    <p className='modal_heading'>Description</p>
-                    <p>{event?.description}</p>
+            {/* Description modal */}
+            <Modal
+                isOpen={descriptionModal}
+                onRequestClose={() => setDescriptionModal(false)}
+                modalBody={
+                    <>
+                        {event?.description && (
+                            <>
+                                <p className='modal_heading'>Description</p>
+                                <p>{event?.description}</p>
+                            </>
+                        )}
 
-                    <p className='modal_heading'>Attendees</p>
-                    <ul>
-                        {event.attendees.map(user => (
-                            <li key={user._id}>{user.username} {hasAddedAvails(user._id) ? "" : "*"}</li>
-                        ))}
-                    </ul>
+                        <p className='modal_heading'>Attendees</p>
+                        <ul>
+                            {event.attendees.map(user => (
+                                <li key={user._id}>{user.username} {hasAddedAvails(user._id) ? "" : "*"}</li>
+                            ))}
+                        </ul>
 
-                    <small>* has not added availabilities</small>
-
+                        <small>* has not added availabilities</small>
+                    </>
+                }
+                modalFooter={
                     <p className='modal_close' onClick={() => setDescriptionModal(false)}>Close</p>
-
-            </ReactModal>
+                }
+            />
 
             <br/>
-            {(hasAvails === false)
-                        ?
-                            // display add availability if user does not have an availability
-                            <Link to={`/events/${event._id}/availabilities`}>
-                                <button className='add_avail_btn btn_large btn_accent'>Add Your Availability</button>
-                            </Link>
-                        :
-                            <Link to={`/events/${event._id}/availabilities/edit`}>
-                                <button className='add_avail_btn btn_large btn_accent'>Edit Your Availability</button>
-                            </Link>
 
-                    }
+            {!hasAvails
+                ?
+                    // display add availability if user does not have an availability
+                    <Link to={`/events/${event._id}/availabilities`}>
+                        <button className='add_avail_btn btn_large btn_accent'>Add Your Availability</button>
+                    </Link>
+                :
+                    <Link to={`/events/${event._id}/availabilities/edit`}>
+                        <button className='add_avail_btn btn_large btn_accent'>Edit Your Availability</button>
+                    </Link>
+
+            }
 
         </div>
     )

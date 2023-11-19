@@ -1,0 +1,39 @@
+.modal_heading {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 0.1rem;
+}
+
+.modal_close {
+    float: right;
+    font-weight: bold;
+    padding: 5px;
+    margin-bottom: 0;
+}
+
+.modal_footer {
+    margin-top: 0.5rem;
+}
+
+.modal_x {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    font-size: 1.5rem;
+}
+
+.modal_close,
+.modal_x {
+    transition: 0.1s;
+}
+
+.modal_close:hover,
+.modal_x:hover {
+    cursor: pointer;
+    color: var(--primary);
+}
+
+.modal_close_danger:hover {
+    color: var(--danger);
+}
