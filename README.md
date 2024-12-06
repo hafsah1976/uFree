@@ -59,7 +59,7 @@ Please find links to the repositories of the people who contributed to this proj
 - [Ibrahima Barry](https://github.com/iab-19)
 - [Jacob Medina](https://github.com/jacob-medina)
 - [Rhon Ramos](https://github.com/rhonvyramos)
-- [Tyler Webster](https://github.com/tyler315)
+- [Tyler Webster](https://github.com/Tyythedeveloper33)
 
 ## Technologies Used
 The following technolgies were used in this project:
